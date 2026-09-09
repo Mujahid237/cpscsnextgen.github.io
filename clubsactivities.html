@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="bn" class="theme-normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubs & Activities - CPSCS NextGen Campus</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Hind Siliguri & Amiri for Arabic Accent) -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* 1. NORMAL THEME (CYBER BLUE) */
+        html.theme-normal body {
+            background: linear-gradient(to bottom right, #020617, #0f172a, #020617);
+            color: #f8fafc;
+        }
+        html.theme-normal .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        html.theme-normal .glass-sidebar {
+            background: rgba(15, 23, 42, 0.92);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        html.theme-normal .glass-modal {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 50px rgba(14, 165, 233, 0.25);
+        }
+        html.theme-normal .card-text-muted { color: #cbd5e1; }
+        html.theme-normal .card-heading { color: #ffffff; }
+
+        /* 2. DARK THEME (PURE BLACK) */
+        html.theme-dark body {
+            background: #000000;
+            color: #f1f5f9;
+        }
+        html.theme-dark .glass-card {
+            background: #09090b;
+            backdrop-filter: blur(0px);
+            border: 1px solid #27272a;
+        }
+        html.theme-dark .glass-sidebar {
+            background: #09090b;
+            border-right: 1px solid #27272a;
+        }
+        html.theme-dark .glass-modal {
+            background: #09090b;
+            border: 1px solid #27272a;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+        }
+        html.theme-dark .card-text-muted { color: #a1a1aa; }
+        html.theme-dark .card-heading { color: #ffffff; }
+
+        /* 3. LIGHT THEME (CLEAN WHITE) */
+        html.theme-light body {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        html.theme-light .glass-card {
+            background: #ffffff;
+            backdrop-filter: blur(0px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        html.theme-light .glass-sidebar {
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+        }
+        html.theme-light .glass-modal {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        html.theme-light .card-text-muted { color: #475569; }
+        html.theme-light .card-heading { color: #0f172a; }
+        html.theme-light .nav-text { color: #334155 !important; }
+        html.theme-light .nav-text:hover { color: #0284c7 !important; background: #f1f5f9 !important; }
+
+        .blue-glow {
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+        }
+        .sidebar-collapsed {
+            width: 80px !important;
+        }
+        .sidebar-collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        .sidebar-collapsed .center-on-collapse {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 4px;
+        }
+
+        .modal-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: scale(1) !important;
+        }
+
+        /* Modern Pulse Ring Effect for Circular Cards */
+        .circle-glow-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .circle-glow-hover:hover {
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.45);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex relative">
+
+    <!-- 1. LEFT SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="w-72 h-screen sticky top-0 glass-sidebar flex flex-col justify-between p-4 z-40 shrink-0 relative transition-all duration-300">
+        
+        <button onclick="toggleSidebar()" id="toggleBtn" class="absolute -right-3.5 top-10 bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-110 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-lg border border-white/20 transition duration-300 z-50">
+            <i id="toggleIcon" class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+
+        <div class="space-y-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-blue-500/20 center-on-collapse">
+                <div class="w-12 h-12 flex items-center justify-center shrink-0 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]">
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <path d="M100 10 L130 30 L170 30 L170 70 L190 100 L170 130 L170 170 L130 170 L100 190 L70 170 L30 170 L30 130 L10 100 L30 70 L30 30 L70 30 Z" fill="#38bdf8" stroke="#dc2626" stroke-width="6"/>
+                        <circle cx="100" cy="100" r="62" fill="#ffffff" stroke="#1e3a8a" stroke-width="4"/>
+                        <circle cx="100" cy="100" r="42" fill="#dc2626"/>
+                        <circle cx="100" cy="100" r="36" fill="#facc15"/>
+                        <path d="M75 90 C85 85 95 88 100 93 C105 88 115 85 125 90 L125 115 C115 110 105 113 100 118 C95 113 85 110 75 115 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="3"/>
+                        <line x1="100" y1="93" x2="100" y2="118" stroke="#1e3a8a" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="hide-on-collapse">
+                    <h1 class="font-bold text-lg card-heading leading-tight">CPSCS</h1>
+                    <p class="text-xs text-cyan-500 font-semibold tracking-wide">NextGen Campus</p>
+                </div>
+            </div>
+
+            <nav class="space-y-1.5 font-medium text-sm">
+                <a href="index.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-house w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_home">Home</span>
+                </a>
+                <button onclick="openModal('aboutUsModal')" class="w-full nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse text-left">
+                    <i class="fa-solid fa-circle-info w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_about">About Us</span>
+                </button>
+                <a href="administration.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-user-shield w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_admin">Administration</span>
+                </a>
+                <a href="academics.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-graduation-cap w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_academics">Academics</span>
+                </a>
+                <a href="index.html#teachers" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_teachers">Teachers</span>
+                </a>
+                <a href="facilities.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-building-columns w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_facilities">Facilities</span>
+                </a>
+                <a href="clubsactivities.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold blue-glow transition center-on-collapse">
+                    <i class="fa-solid fa-trophy w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_clubs">Clubs & Activities</span>
+                </a>
+                <a href="index.html#notices" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-scroll w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_notices">Notices & Results</span>
+                </a>
+                <a href="index.html#dashboard" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-id-card w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_dashboard">Student Dashboard</span>
+                </a>
+                <a href="contact.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-headset w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_contact">Contact Us</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="pt-4 border-t border-blue-500/20">
+            <button onclick="openModal('portalLoginModal')" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> 
+                <span class="hide-on-collapse" data-key="portal_login">পোর্টাল লগইন</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+        
+        <!-- HEADER / TOPBAR -->
+        <div class="bg-blue-900/30 border-b border-blue-500/20 px-6 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+            <div class="flex items-center gap-3 min-w-0 flex-1 w-full md:w-auto">
+                <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold uppercase animate-pulse shrink-0" data-key="notice_tag">Notice</span>
+                <marquee behavior="scroll" direction="left" class="font-medium text-cyan-500" data-key="marquee_text">
+                    🏆 CPSCS NextGen Campus-এ স্বাগতম! | শিক্ষার্থীদের সহ-শিক্ষা কার্যক্রম, খেলাধুলা ও সৃজনশীল মেধা বিকাশে আমাদের বিভিন্ন ক্লাব সক্রিয় ভূমিকা পালন করছে।
+                </marquee>
+            </div>
+
+            <div class="glass-card border border-blue-500/30 p-1 rounded-xl flex items-center gap-1 shrink-0">
+                <button onclick="toggleLanguage('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                    BN
+                </button>
+                <button onclick="toggleLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white">
+                    EN
+                </button>
+            </div>
+
+            <div onclick="openModal('searchModal')" class="w-full md:w-80 glass-card hover:bg-blue-500/10 border border-blue-500/30 px-3.5 py-1.5 rounded-xl flex items-center justify-between cursor-pointer transition group shrink-0">
+                <div class="flex items-center gap-2 text-slate-400 group-hover:text-cyan-400 transition text-xs">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span class="card-text-muted font-medium" data-key="search_placeholder">কী খুঁজতে চান?</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">Ctrl</kbd>
+                    <span class="text-slate-500 text-[10px]">+</span>
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">K</kbd>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLUBS & ACTIVITIES CONTENT SECTION -->
+        <div class="flex-1 p-6 md:p-8 max-w-[1600px] w-full mx-auto space-y-8">
+            
+            <!-- HEADER TITLE -->
+            <div class="glass-card p-8 rounded-3xl border border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                <div class="space-y-3 z-10 text-center md:text-left">
+                    <span class="bg-blue-500/20 border border-blue-400/30 text-cyan-400 px-4 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-2">
+                        <i class="fa-solid fa-trophy text-yellow-400"></i> Co-Curricular & Clubs
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-tight card-heading" data-key="clubs_title">
+                        ক্লাব ও সহ-শিক্ষা কার্যক্রম
+                    </h1>
+                    <p class="card-text-muted text-sm md:text-base max-w-2xl" data-key="clubs_subtitle">
+                        শিক্ষার্থীদের শারীরিক সুস্থতা, নেতৃত্বের গুণাবলী এবং সৃজনশীলতার বিকাশে আমাদের নানা ধরনের ক্লাব ও কার্যক্রম পরিচালিত হয়।
+                    </p>
+                </div>
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-3xl md:text-4xl shadow-xl blue-glow shrink-0 z-10">
+                    <i class="fa-solid fa-medal"></i>
+                </div>
+            </div>
+
+            <!-- 5 CLUBS & ACTIVITIES OPTIONS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 1. Sports Activities -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-futbol"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">01</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="club_1_title">Sports Activities</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="club_1_bn">ক্রীড়া ও খেলাধুলা কার্যক্রম</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="club_1_desc">
+                                ফুটবল, ক্রিকেট, ভলিবল, ব্যাডমিন্টনসহ বাৎসরিক ক্রীড়া প্রতিযোগিতা ও শারীরিক দক্ষতার জন্য প্রশিক্ষণের সুব্যবস্থা।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('sportsModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_details">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Club Activities -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">02</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="club_2_title">Club Activities</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="club_2_bn">সাধারণ বিষয়ভিত্তিক ক্লাবসমূহ</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="club_2_desc">
+                                বিজ্ঞান ক্লাব, ডিবেটিং ক্লাব, ল্যাঙ্গুয়েজ ক্লাব ও আইসিটি ক্লাবসহ ১৪টি বিশেষায়িত ক্লাবে দক্ষতা অর্জনের চমৎকার প্ল্যাটফর্ম।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('clubsModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_details">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. BNCC Activities -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-person-military-rifle"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">03</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="club_3_title">BNCC Activities</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="club_3_bn">বাংলাদেশ ন্যাশনাল ক্যাডেট কোর</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="club_3_desc">
+                                শৃঙ্খলা, নেতৃত্ব, সামরিক ড্রিল এবং জাতীয় দুর্যোগকালে সেবামূলক কাজে অংশগ্রহণের বিশেষ প্রশিক্ষণ সুবিধা।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('bnccModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_details">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Scouts Activities -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-campground"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">04</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="club_4_title">Scouts Activities</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="club_4_bn">স্কাউট ও গার্ল গাইড কার্যক্রম</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="club_4_desc">
+                                আত্মনির্ভরশীলতা, সমাজসেবা, হাইকিং ও জ্যাম্বুরীতে অংশ নিয়ে সুনাগরিক হিসেবে গড়ে ওঠার সুবর্ণ সুযোগ।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('scoutsModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_details">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. Creative Board Display Competition -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between md:col-span-2 lg:col-span-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">05</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="club_5_title">Creative Board Display Competition</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="club_5_bn">সৃজনশীল ওয়ালবোর্ড প্রদর্শন প্রতিযোগিতা</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="club_5_desc">
+                                শিক্ষার্থীদের শিল্পমনস্কতা, দেয়াল পত্রিকা প্রকাশনা ও সৃজনশীলতার মূল্যায়নে নিয়মিত প্রতিযোগিতা আয়োজন।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('boardDisplayModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_details">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- THEME SWITCHER WIDGET -->
+            <div class="max-w-md mx-auto pt-4">
+                <div class="glass-card p-2.5 rounded-2xl border border-blue-500/30 flex items-center justify-between gap-1 shadow-xl">
+                    <button onclick="setTheme('normal')" id="btn-normal" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Normal
+                    </button>
+                    <button onclick="setTheme('dark')" id="btn-dark" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-white">
+                        <i class="fa-solid fa-moon text-xs"></i> Dark
+                    </button>
+                    <button onclick="setTheme('light')" id="btn-light" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-blue-600">
+                        <i class="fa-solid fa-sun text-xs"></i> Light
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-auto border-t border-blue-500/20 py-5 text-center text-xs card-text-muted">
+            <p data-key="footer_text">© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning</p>
+        </footer>
+    </div>
+
+    <!-- MODALS FOR THE ACTIVITIES -->
+
+    <!-- 1. SPORTS ACTIVITIES MODAL -->
+    <div id="sportsModal" onclick="closeModalOnBackdrop(event, 'sportsModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('sportsModal')" class="sticky top-0 float-right w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-futbol"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Sports Activities</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">Cantonment Public School & College, Saidpur</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-sm card-text-muted leading-relaxed">
+                <p>
+                    To enhance physical fitness, develop motor skills, improve mental capabilities, and foster social and personal development the sports club of cantonment Public School & College, Saidpur has been formed. The other objectives include improving athletic performance, building teamwork, promoting sportsmanship, and increasing awareness of health and wellness. Our institution runs different sports activities for the overall development of the students. The main aims and objectives of the sports activities of our institution are physical and motor Skill Development, mental and cognitive benefits, social and personal development. Sports activities will also give them :
+                </p>
+
+                <div class="space-y-2 pl-2">
+                    <p><strong>Health Education:</strong> Sports activities can raise awareness about healthy lifestyles, proper nutrition, and the importance of physical activity for overall well-being.</p>
+                    <p><strong>Recreation and Leisure:</strong> Sports provide opportunities for recreation, fun, and social interaction, contributing to a positive and enjoyable lifestyle.</p>
+                    <p><strong>Cultural Understanding:</strong> Participating in different sports can expose individuals to various cultures and traditions, promoting diversity and understanding.</p>
+                    <p><strong>Gender Equality:</strong> Sports can help break down gender stereotypes and empower girls and women, promoting equality and inclusivity.</p>
+                </div>
+
+                <p class="pt-2 font-semibold card-heading">
+                    At present a variety of events are arranged in our Institution around the year. These are:
+                </p>
+
+                <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 pl-2">
+                    <li>Annual Sports.</li>
+                    <li>Inter House Cricket Tournament.</li>
+                    <li>Inter House Football Tournament.</li>
+                    <li>Inter House Handball Tournament.</li>
+                    <li>Inter House Badminton Tournament.</li>
+                    <li>Inter House Chess Tournament.</li>
+                    <li>Inter House Volleyball Tournament.</li>
+                    <li>Inter House Basket Ball Tournament.</li>
+                    <li>Inter House Table Tennis Tournament.</li>
+                    <li>Inter House Scrabble Tournament</li>
+                    <li>Sports Club.</li>
+                </ul>
+            </div>
+
+            <!-- 10 IMAGES GALLERY SECTION -->
+            <div class="pt-6 border-t border-blue-500/20 space-y-3">
+                <h3 class="text-lg font-bold card-heading flex items-center gap-2">
+                    <i class="fa-solid fa-images text-cyan-400"></i> Sports Gallery
+                </h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2026/08/1-1/1510892055.jpg" alt="Sports Activity 1" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2026/04/1-9/3894383720.jpg" alt="Sports Activity 2" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/12/0-1/3863834372.jpg" alt="Sports Activity 3" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/11/1-3/3953937699.jpg" alt="Sports Activity 4" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/01/0-1/1468570425.jpeg" alt="Sports Activity 5" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/10/7/3400832404.jpg" alt="Sports Activity 6" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/10/1-2/2983005.jpg" alt="Sports Activity 7" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/10/1-1/4111363915.jpg" alt="Sports Activity 8" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/02/1-4/2544381580.jpeg" alt="Sports Activity 9" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group sm:col-span-2 md:col-span-1">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/cache/2025/02/7-1/2887340600.jpeg" alt="Sports Activity 10" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. CLUB ACTIVITIES MODAL (WITH SCIENCE, LANGUAGE & CULTURAL CLUB INTERACTION) -->
+    <div id="clubsModal" onclick="closeModalOnBackdrop(event, 'clubsModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            
+            <button onclick="closeModal('clubsModal')" class="sticky top-0 float-right w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-users-gear"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Club Activities</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">আমাদের ক্যাম্পাসের ১৪টি বিশেষায়িত ক্লাব</p>
+                </div>
+            </div>
+
+            <!-- 14 CIRCULAR CARDS GRID -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 pt-4">
+                
+                <!-- 1. Science Club (Click opens Science Modal) -->
+                <div onclick="openModal('scienceClubModal')" class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 relative">
+                        <i class="fa-solid fa-atom text-3xl md:text-4xl text-cyan-400 group-hover:rotate-45 transition duration-500"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Science Club</span>
+                </div>
+
+                <!-- 2. Language Club (Click opens Language Club Popup) -->
+                <div onclick="openModal('languageClubModal')" class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 relative">
+                        <i class="fa-solid fa-language text-3xl md:text-4xl text-cyan-400 group-hover:scale-110 transition duration-300"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Language Club</span>
+                </div>
+
+                <!-- 3. Cultural Club (Click opens Cultural Club Sub-Modal) -->
+                <div onclick="openModal('culturalClubModal')" class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 relative">
+                        <i class="fa-solid fa-masks-theater text-3xl md:text-4xl text-cyan-400 group-hover:scale-110 transition duration-300"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Cultural Club</span>
+                </div>
+
+                <!-- 4. Arts and Crafts Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-paintbrush text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Arts & Crafts Club</span>
+                </div>
+
+                <!-- 5. Festive Hand-writing Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-pen-nib text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Festive Hand-writing Club</span>
+                </div>
+
+                <!-- 6. Green Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-leaf text-3xl md:text-4xl text-emerald-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Green Club</span>
+                </div>
+
+                <!-- 7. Fitness Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-dumbbell text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Fitness Club</span>
+                </div>
+
+                <!-- 8. Debate Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-comments text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Debate Club</span>
+                </div>
+
+                <!-- 9. GK Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-lightbulb text-3xl md:text-4xl text-yellow-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">GK Club</span>
+                </div>
+
+                <!-- 10. IT Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-laptop-code text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">IT Club</span>
+                </div>
+
+                <!-- 11. STEM Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-microchip text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">STEM Club</span>
+                </div>
+
+                <!-- 12. History and Geography Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-earth-americas text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">History & Geography</span>
+                </div>
+
+                <!-- 13. MUN (Management) Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-gavel text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">MUN (Management) Club</span>
+                </div>
+
+                <!-- 14. Chess Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/40 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/20 relative">
+                        <i class="fa-solid fa-chess-knight text-3xl md:text-4xl text-cyan-400 transition"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Chess Club</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SUB-POPUP 1: SCIENCE CLUB MODAL -->
+    <div id="scienceClubModal" onclick="closeModalOnBackdrop(event, 'scienceClubModal')" class="fixed inset-0 bg-black/85 backdrop-blur-lg z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-3xl w-full space-y-6 relative border border-cyan-400/50 shadow-2xl">
+            
+            <button onclick="closeModal('scienceClubModal')" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0 blue-glow">
+                    <i class="fa-solid fa-flask text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Science Club Wings</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">বিজ্ঞান ক্লাবের শাখা ও বিশেষায়িত ক্লাবসমূহ</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4">
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/50 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 relative">
+                        <i class="fa-solid fa-atom text-3xl md:text-4xl text-cyan-400 group-hover:rotate-180 transition duration-700"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Physics Club</span>
+                </div>
+
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/50 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 relative">
+                        <i class="fa-solid fa-vials text-3xl md:text-4xl text-cyan-400 group-hover:bounce transition duration-300"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Chemistry Club</span>
+                </div>
+
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/50 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 relative">
+                        <i class="fa-solid fa-dna text-3xl md:text-4xl text-cyan-400 group-hover:scale-125 transition duration-300"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Biology Club</span>
+                </div>
+
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-tr from-blue-600/30 to-cyan-400/20 border-2 border-cyan-400/50 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 relative">
+                        <i class="fa-solid fa-square-root-variable text-3xl md:text-4xl text-cyan-400 group-hover:rotate-12 transition duration-300"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-semibold card-heading group-hover:text-cyan-400 transition">Math Club</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUB-POPUP 2: LANGUAGE CLUB MODAL -->
+    <div id="languageClubModal" onclick="closeModalOnBackdrop(event, 'languageClubModal')" class="fixed inset-0 bg-black/85 backdrop-blur-lg z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-3xl w-full space-y-6 relative border border-cyan-400/50 shadow-2xl">
+            
+            <button onclick="closeModal('languageClubModal')" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0 blue-glow">
+                    <i class="fa-solid fa-language text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Language Club Wings</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">ভাষা ক্লাবের বিশেষায়িত শাখা সমূহ 🌐✨</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-6 pb-2">
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-emerald-600/30 via-cyan-500/20 to-blue-600/30 border-2 border-emerald-400/50 group-hover:border-emerald-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg circle-glow-hover relative overflow-hidden">
+                        <div class="absolute inset-0 bg-emerald-500/10 group-hover:bg-emerald-500/20 transition"></div>
+                        <div class="flex flex-col items-center justify-center z-10 space-y-1">
+                            <span class="text-3xl font-black text-emerald-400 group-hover:scale-110 transition duration-300 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]">অ</span>
+                            <i class="fa-solid fa-book-bookmark text-xs text-emerald-300"></i>
+                        </div>
+                    </div>
+                    <span class="mt-4 text-base font-bold card-heading group-hover:text-emerald-400 transition">Bangla Language Club</span>
+                    <p class="text-[11px] text-cyan-400/80 font-medium mt-0.5">বাংলা ভাষা ও সাহিত্য পরিষদ</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-blue-600/30 via-cyan-500/20 to-sky-400/30 border-2 border-cyan-400/50 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg circle-glow-hover relative overflow-hidden">
+                        <div class="absolute inset-0 bg-cyan-500/10 group-hover:bg-cyan-500/20 transition"></div>
+                        <div class="flex flex-col items-center justify-center z-10 space-y-1">
+                            <span class="text-3xl font-black text-cyan-400 group-hover:scale-110 transition duration-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.5)]">A</span>
+                            <i class="fa-solid fa-globe text-xs text-cyan-300"></i>
+                        </div>
+                    </div>
+                    <span class="mt-4 text-base font-bold card-heading group-hover:text-cyan-400 transition">English Language Club</span>
+                    <p class="text-[11px] text-cyan-400/80 font-medium mt-0.5">English Communication Wing</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-amber-600/30 via-yellow-500/20 to-amber-400/30 border-2 border-amber-400/50 group-hover:border-amber-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg circle-glow-hover relative overflow-hidden">
+                        <div class="absolute inset-0 bg-amber-500/10 group-hover:bg-amber-500/20 transition"></div>
+                        <div class="flex flex-col items-center justify-center z-10 space-y-1">
+                            <span class="text-3xl font-black text-amber-400 font-['Amiri'] group-hover:scale-110 transition duration-300 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]">ع</span>
+                            <i class="fa-solid fa-star-and-crescent text-xs text-amber-300"></i>
+                        </div>
+                    </div>
+                    <span class="mt-4 text-base font-bold card-heading group-hover:text-amber-400 transition">Arabic Language Club</span>
+                    <p class="text-[11px] text-cyan-400/80 font-medium mt-0.5">نادي اللغة العربية</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUB-POPUP 3: CULTURAL CLUB MODAL (3 MODERN CIRCULAR CARDS: DRAMA, MUSIC & DANCE) -->
+    <div id="culturalClubModal" onclick="closeModalOnBackdrop(event, 'culturalClubModal')" class="fixed inset-0 bg-black/85 backdrop-blur-lg z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-3xl w-full space-y-6 relative border border-purple-400/50 shadow-2xl">
+            
+            <button onclick="closeModal('culturalClubModal')" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-900 border border-purple-400/50 text-purple-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4 pb-4 border-b border-purple-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0 blue-glow">
+                    <i class="fa-solid fa-masks-theater text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Cultural Club Wings</h2>
+                    <p class="text-xs md:text-sm text-purple-400 font-medium">সাংস্কৃতিক ক্লাবের বিশেষায়িত শাখা সমূহ 🎭🎶💃</p>
+                </div>
+            </div>
+
+            <!-- 3 MODERN CIRCULAR CARDS GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-6 pb-2">
+                
+                <!-- 1. Drama Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-purple-600/30 via-indigo-500/20 to-pink-500/30 border-2 border-purple-400/50 group-hover:border-purple-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg circle-glow-hover relative overflow-hidden">
+                        <div class="absolute inset-0 bg-purple-500/10 group-hover:bg-purple-500/20 transition"></div>
+                        <div class="flex flex-col items-center justify-center z-10 space-y-1">
+                            <i class="fa-solid fa-masks-theater text-4xl text-purple-400 group-hover:scale-110 transition duration-300 drop-shadow-[0_0_12px_rgba(192,132,252,0.6)]"></i>
+                            <i class="fa-solid fa-clapperboard text-xs text-purple-300 mt-1"></i>
+                        </div>
+                    </div>
+                    <span class="mt-4 text-base font-bold card-heading group-hover:text-purple-400 transition">Drama Club</span>
+                    <p class="text-[11px] text-purple-400/80 font-medium mt-0.5">নাট্য ও অভিনয় পরিষদ</p>
+                </div>
+
+                <!-- 2. Music Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-cyan-600/30 via-blue-500/20 to-teal-400/30 border-2 border-cyan-400/50 group-hover:border-cyan-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg circle-glow-hover relative overflow-hidden">
+                        <div class="absolute inset-0 bg-cyan-500/10 group-hover:bg-cyan-500/20 transition"></div>
+                        <div class="flex flex-col items-center justify-center z-10 space-y-1">
+                            <i class="fa-solid fa-headphones text-4xl text-cyan-400 group-hover:scale-110 transition duration-300 drop-shadow-[0_0_12px_rgba(56,189,248,0.6)]"></i>
+                            <i class="fa-solid fa-music text-xs text-cyan-300 mt-1"></i>
+                        </div>
+                    </div>
+                    <span class="mt-4 text-base font-bold card-heading group-hover:text-cyan-400 transition">Music Club</span>
+                    <p class="text-[11px] text-cyan-400/80 font-medium mt-0.5">সঙ্গীত ও সুর পরিষদ</p>
+                </div>
+
+                <!-- 3. Dance Club -->
+                <div class="flex flex-col items-center text-center group cursor-pointer">
+                    <div class="w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-rose-600/30 via-pink-500/20 to-red-400/30 border-2 border-rose-400/50 group-hover:border-rose-400 group-hover:scale-110 transition duration-300 flex items-center justify-center shadow-lg circle-glow-hover relative overflow-hidden">
+                        <div class="absolute inset-0 bg-rose-500/10 group-hover:bg-rose-500/20 transition"></div>
+                        <div class="flex flex-col items-center justify-center z-10 space-y-1">
+                            <i class="fa-solid fa-child-reaching text-4xl text-rose-400 group-hover:scale-110 transition duration-300 drop-shadow-[0_0_12px_rgba(251,113,133,0.6)]"></i>
+                            <i class="fa-solid fa-icons text-xs text-rose-300 mt-1"></i>
+                        </div>
+                    </div>
+                    <span class="mt-4 text-base font-bold card-heading group-hover:text-rose-400 transition">Dance Club</span>
+                    <p class="text-[11px] text-rose-400/80 font-medium mt-0.5">নৃত্যকলা পরিষদ</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. BNCC ACTIVITIES MODAL -->
+    <div id="bnccModal" onclick="closeModalOnBackdrop(event, 'bnccModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('bnccModal')" class="sticky top-0 float-right w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-person-military-rifle"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">BNCC Activities</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">BANGLADESH NATIONAL CADET CORPS (BNCC)</p>
+                </div>
+            </div>
+
+            <!-- EXACT TEXT CONTENT -->
+            <div class="space-y-4 text-sm card-text-muted leading-relaxed">
+                <p class="font-bold text-base text-cyan-400 border-b border-cyan-500/20 pb-1">
+                    BANGLADESH NATIONAL CADET CORPS (BNCC)
+                </p>
+
+                <p>
+                    Bangladesh National Cadet Corps (BNCC) of Cantonment Public School and College, Saidpur was established on 10 May 2004. Here one Senior Mix Platoon of BNCC which includes the students of class XI and XII. This platoon has 31 BNCC cadets both male and female. Appointed teachers are 2 Lt. Dr. Md. Ashraful Kabir (CCO-0377), Senior Lecturer (Zoology); Acting PUO Ferdousi Yesmin, Lecturer (Bangla); Acting PUO Md. Lokman Hossain, Lecturer (Chemistry) have been assigned with the duty of BNCC. Cadets are trained by a trainer (staff) from Bangladesh Army twice a week.
+                </p>
+
+                <p>
+                    In order to ensure knowledge, discipline, and unity of the students, this unit has been formed.
+                </p>
+
+                <div class="space-y-2">
+                    <p class="font-semibold card-heading">BNCC Cadets take part in the following activities―</p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 pl-2">
+                        <li>Capsule training (yearly 2);</li>
+                        <li>Annual training camp (yearly 1);</li>
+                        <li>Central training camp (yearly 1);</li>
+                        <li>Tree plantation program;</li>
+                        <li>Natural disaster program;</li>
+                        <li>Preventing eve-teasing;</li>
+                        <li>Anti-drug campaign; and</li>
+                        <li>Various social and cultural activities</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <p class="font-semibold card-heading">Objectives:</p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 pl-2">
+                        <li>To develop individual character, leadership qualities, and sense of dedication to national affairs;</li>
+                        <li>To provide military training to young students so as to stimulate their interest for the defense of the country;</li>
+                        <li>To provide disciplined volunteers for the national development programs and during natural disasters;</li>
+                        <li>To provide a second-line defense in the face of external aggression and invasion;</li>
+                        <li>To build up a reserve of potential leaders for various walks of national life including the armed forces.</li>
+                    </ul>
+                </div>
+
+                <p class="pt-2">
+                    <strong class="text-cyan-400">Motto of BNCC:</strong> Grooming Future Leader
+                </p>
+
+                <p>
+                    The other name of BNCC is discipline. The disciplined activities BNCC cadets are exhibited when our institution authority engage them in various works. They have shown their great caliber during the July uprising by maintaining the discipline of Traffic. Because of their extra-ordinary talent many of them have got admission as Officer Cadets in Bangladesh army.
+                </p>
+            </div>
+
+            <!-- EXACT 7 IMAGES GALLERY SECTION -->
+            <div class="pt-6 border-t border-blue-500/20 space-y-3">
+                <h3 class="text-lg font-bold card-heading flex items-center gap-2">
+                    <i class="fa-solid fa-images text-cyan-400"></i> BNCC Activities Gallery
+                </h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Image 1 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/2-4-396x360.jpeg" alt="BNCC Activity 1" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 2 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/4-3-396x360.jpeg" alt="BNCC Activity 2" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 3 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/6-2-396x360.jpeg" alt="BNCC Activity 3" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 4 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/3-3-396x323.jpeg" alt="BNCC Activity 4" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 5 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/1-4-396x360.jpeg" alt="BNCC Activity 5" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 6 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/5-2-396x360.jpeg" alt="BNCC Activity 6" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 7 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group sm:col-span-2 md:col-span-1">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/7-1-396x360.jpeg" alt="BNCC Activity 7" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. SCOUTS ACTIVITIES MODAL (UPDATED WITH SIR'S EXACT TEXT & 5 IMAGES GALLERY) -->
+    <div id="scoutsModal" onclick="closeModalOnBackdrop(event, 'scoutsModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('scoutsModal')" class="sticky top-0 float-right w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition z-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-campground"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Scouts Activities</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">Cantonment Public School and College, Saidpur</p>
+                </div>
+            </div>
+
+            <!-- EXACT TEXT CONTENT -->
+            <div class="space-y-4 text-sm card-text-muted leading-relaxed">
+                <p class="font-bold text-base text-cyan-400 border-b border-cyan-500/20 pb-1">
+                    Scouts Activities
+                </p>
+
+                <p>
+                    To foster the development of young people physically, intellectually, socially, and spiritually Scouts has always played an important role. This is achieved through a variety of methods, including character development, citizenship training, personal fitness, and leadership development. Scouting also aims to provide opportunities for skill acquisition, belonging to a group, and contributing to a worthy cause. To build up ideal and responsible citizens, Scouts has always played a pioneering role. Scouts unit of Cantonment Public School and College, Saidpur was established on 1st May, 2018. Here a mixed Scouts unit of Girl and a Boy has been running well with its activities. It includes the students of class Six to Ten. This unit has 32 girl scouts and 32 boy scouts in number. A senior teacher of high school section, Rowshon Ara Chowdhury has been assigned with the duty of unit leader. This Scouts unit has been working for the physical, mental and moral development of the students and encourages them to participate in various social service activities.
+                </p>
+
+                <div class="space-y-2">
+                    <p class="font-semibold card-heading">Functions: Scouts are trained by Scouts unit leader twice a week. Scouts take part in the following activities:</p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 pl-2">
+                        <li>Yearly Training Camp</li>
+                        <li>B.P. Day</li>
+                        <li>Tree plantation Programme</li>
+                        <li>Electricity Saving Campaign</li>
+                        <li>Preventing Eve-teasing</li>
+                        <li>Anti-drug Campaign</li>
+                        <li>Various Cleaning Activities</li>
+                        <li>Helping Flood-affected people</li>
+                        <li>Various Special Activities</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <p class="font-semibold card-heading">Objectives:</p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 pl-2">
+                        <li>To develop individual character, leadership qualities and sense of dedication to national affairs</li>
+                        <li>To provide disciplined volunteers for the national development programmes and during natural disasters.</li>
+                        <li>To build up a reserve of potential leaders for various walks of national life</li>
+                        <li>To develop potential human resources for the development of nation</li>
+                    </ul>
+                </div>
+
+                <p class="pt-2">
+                    The display of the organized activities of the Scouts is very much visible when they are given responsibility to maintain the discipline of the institution during the time some kind of both institutional and national programmes are held. They have been awarded by the Local Government Authority for their outstanding performances in different camps.
+                </p>
+            </div>
+
+            <!-- EXACT 5 IMAGES GALLERY SECTION -->
+            <div class="pt-6 border-t border-blue-500/20 space-y-3">
+                <h3 class="text-lg font-bold card-heading flex items-center gap-2">
+                    <i class="fa-solid fa-images text-cyan-400"></i> Scouts Activities Gallery
+                </h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <!-- Image 1 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/11/DSC_0001-396x360.jpg" alt="Scouts Activity 1" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 2 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/11/sa3-396x360.jpg" alt="Scouts Activity 2" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 3 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/11/sa4-396x360.jpg" alt="Scouts Activity 3" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 4 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/11/sa1-396x360.jpg" alt="Scouts Activity 4" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                    <!-- Image 5 -->
+                    <div class="overflow-hidden rounded-2xl border border-blue-500/30 group">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/11/DSC_0047-396x360.jpg" alt="Scouts Activity 5" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. CREATIVE BOARD DISPLAY COMPETITION MODAL -->
+    <div id="boardDisplayModal" onclick="closeModalOnBackdrop(event, 'boardDisplayModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-2xl w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('boardDisplayModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Creative Board Display Competition</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">সৃজনশীল বোর্ড ও দেয়াল পত্রিকা প্রতিযোগিতা</p>
+                </div>
+            </div>
+            <div class="space-y-3 text-sm card-text-muted leading-relaxed">
+                <p>শিক্ষার্থীদের নান্দনিক চেতনা এবং শিল্পমনস্কতা বিকাশে নিয়মিত সৃজনশীল দেয়াল পত্রিকা ও বোর্ড ডিসপ্লে প্রতিযোগিতার আয়োজন করা হয়।</p>
+                <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                    <li>জাতীয় ও আন্তর্জাতিক বিশেষ দিবস উপলক্ষে থিম ভিত্তিক ডিসপ্লে</li>
+                    <li>শিক্ষার্থীদের কবিতা, চিত্রকর্ম, প্রবন্ধ ও ক্যালিগ্রাফি প্রদর্শন</li>
+                    <li>সেরা হাউস বা শ্রেণীর জন্য আকর্ষণীয় পুরষ্কার প্রদান</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH MODAL -->
+    <div id="searchModal" onclick="closeModalOnBackdrop(event, 'searchModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 rounded-3xl max-w-lg w-full space-y-4 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('searchModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" placeholder="ক্যাম্পাসের যেকোনো তথ্য খুঁজুন..." class="w-full bg-slate-950/60 border border-blue-500/30 rounded-2xl py-3 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
+            </div>
+        </div>
+    </div>
+
+    <!-- PORTAL LOGIN MODAL -->
+    <div id="portalLoginModal" onclick="closeModalOnBackdrop(event, 'portalLoginModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-md w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('portalLoginModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-bold card-heading">পোর্টাল লগইন</h2>
+                <p class="text-xs text-cyan-400">শিক্ষার্থী ও শিক্ষক একাউন্টে প্রবেশ করুন</p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('লগইন প্রসেস করা হচ্ছে...');" class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 card-text-muted">ইউজার আইডি / রোল</label>
+                    <input type="text" required placeholder="উদাহরণ: 2026001" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 card-text-muted">পাসওয়ার্ড</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:from-blue-500 hover:to-cyan-400 transition">
+                    লগইন করুন
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // SIDEBAR TOGGLE
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            sidebar.classList.toggle('sidebar-collapsed');
+            
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+            } else {
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+            }
+        }
+
+        // THEME MANAGEMENT
+        function setTheme(theme) {
+            const html = document.documentElement;
+            html.className = '';
+            html.classList.add('theme-' + theme);
+
+            const btnNormal = document.getElementById('btn-normal');
+            const btnDark = document.getElementById('btn-dark');
+            const btnLight = document.getElementById('btn-light');
+
+            const activeClasses = ['bg-gradient-to-r', 'from-blue-600', 'to-cyan-500', 'text-white', 'shadow-md'];
+            
+            [btnNormal, btnDark, btnLight].forEach(btn => {
+                if(btn) {
+                    btn.classList.remove(...activeClasses);
+                    btn.classList.add('card-text-muted');
+                }
+            });
+
+            const activeBtn = document.getElementById('btn-' + theme);
+            if(activeBtn) {
+                activeBtn.classList.remove('card-text-muted');
+                activeBtn.classList.add(...activeClasses);
+            }
+
+            localStorage.setItem('cpscs_theme', theme);
+        }
+
+        // LANGUAGE TOGGLE
+        const translations = {
+            bn: {
+                nav_home: "Home",
+                nav_about: "About Us",
+                nav_admin: "Administration",
+                nav_academics: "Academics",
+                nav_teachers: "Teachers",
+                nav_facilities: "Facilities",
+                nav_clubs: "Clubs & Activities",
+                nav_notices: "Notices & Results",
+                nav_dashboard: "Student Dashboard",
+                nav_contact: "Contact Us",
+                portal_login: "পোর্টাল লগইন",
+                notice_tag: "Notice",
+                marquee_text: "🏆 CPSCS NextGen Campus-এ স্বাগতম! | শিক্ষার্থীদের সহ-শিক্ষা কার্যক্রম, খেলাধুলা ও সৃজনশীল মেধা বিকাশে আমাদের বিভিন্ন ক্লাব সক্রিয় ভূমিকা পালন করছে।",
+                search_placeholder: "কী খুঁজতে চান?",
+                clubs_title: "ক্লাব ও সহ-শিক্ষা কার্যক্রম",
+                clubs_subtitle: "শিক্ষার্থীদের শারীরিক সুস্থতা, নেতৃত্বের গুণাবলী এবং সৃজনশীলতার বিকাশে আমাদের নানা ধরনের ক্লাব ও কার্যক্রম পরিচালিত হয়।",
+                club_1_title: "Sports Activities",
+                club_1_bn: "ক্রীড়া ও খেলাধুলা কার্যক্রম",
+                club_1_desc: "ফুটবল, ক্রিকেট, ভলিবল, ব্যাডমিন্টনসহ বাৎসরিক ক্রীড়া প্রতিযোগিতা ও শারীরিক দক্ষতার জন্য প্রশিক্ষণের সুব্যবস্থা।",
+                club_2_title: "Club Activities",
+                club_2_bn: "সাধারণ বিষয়ভিত্তিক ক্লাবসমূহ",
+                club_2_desc: "বিজ্ঞান ক্লাব, ডিবেটিং ক্লাব, ল্যাঙ্গুয়েজ ক্লাব ও আইসিটি ক্লাবসহ ১৪টি বিশেষায়িত ক্লাবে দক্ষতা অর্জনের চমৎকার প্ল্যাটফর্ম।",
+                club_3_title: "BNCC Activities",
+                club_3_bn: "বাংলাদেশ ন্যাশনাল ক্যাডেট কোর",
+                club_3_desc: "শৃঙ্খলা, নেতৃত্ব, সামরিক ড্রিল এবং জাতীয় দুর্যোগকালে সেবামূলক কাজে অংশগ্রহণের বিশেষ প্রশিক্ষণ সুবিধা।",
+                club_4_title: "Scouts Activities",
+                club_4_bn: "স্কাউট ও গার্ল গাইড কার্যক্রম",
+                club_4_desc: "আত্মনির্ভরশীলতা, সমাজসেবা, হাইকিং ও জ্যাম্বুরীতে অংশ নিয়ে সুনাগরিক হিসেবে গড়ে ওঠার সুবর্ণ সুযোগ।",
+                club_5_title: "Creative Board Display Competition",
+                club_5_bn: "সৃজনশীল ওয়ালবোর্ড প্রদর্শন প্রতিযোগিতা",
+                club_5_desc: "শিক্ষার্থীদের শিল্পমনস্কতা, দেয়াল পত্রিকা প্রকাশনা ও সৃজনশীলতার মূল্যায়নে নিয়মিত প্রতিযোগিতা আয়োজন।",
+                btn_view_details: "বিস্তারিত দেখুন",
+                footer_text: "© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning"
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About Us",
+                nav_admin: "Administration",
+                nav_academics: "Academics",
+                nav_teachers: "Teachers",
+                nav_facilities: "Facilities",
+                nav_clubs: "Clubs & Activities",
+                nav_notices: "Notices & Results",
+                nav_dashboard: "Student Dashboard",
+                nav_contact: "Contact Us",
+                portal_login: "Portal Login",
+                notice_tag: "Notice",
+                marquee_text: "🏆 Welcome to CPSCS NextGen Campus! | Our clubs play an active role in student co-curricular development, sports, and creativity.",
+                search_placeholder: "Search anything...",
+                clubs_title: "Clubs & Activities",
+                clubs_subtitle: "We offer diverse co-curricular clubs and activities to foster fitness, leadership skills, and student creativity.",
+                club_1_title: "Sports Activities",
+                club_1_bn: "Sports & Physical Activities",
+                club_1_desc: "Annual sports competitions and training for football, cricket, volleyball, badminton, and physical fitness.",
+                club_2_title: "Club Activities",
+                club_2_bn: "Subject-based Clubs",
+                club_2_desc: "A platform for skill development through Science Club, Debating Club, Language Club, ICT Club and 10 other specialized clubs.",
+                club_3_title: "BNCC Activities",
+                club_3_bn: "Bangladesh Cadet Corps",
+                club_3_desc: "Specialized training in discipline, leadership, military drills, and community service during national emergencies.",
+                club_4_title: "Scouts Activities",
+                club_4_bn: "Scout & Girl Guide",
+                club_4_desc: "An opportunity to become good citizens through self-reliance, social work, hiking, and jamboree participation.",
+                club_5_title: "Creative Board Display Competition",
+                club_5_bn: "Wall Magazine & Board Display",
+                club_5_desc: "Regular competitions evaluating students' artistic mindsets, wall magazine publications, and creativity.",
+                btn_view_details: "View Details",
+                footer_text: "© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning"
+            }
+        };
+
+        function toggleLanguage(lang) {
+            const btnBn = document.getElementById('lang-bn');
+            const btnEn = document.getElementById('lang-en');
+
+            if (lang === 'bn') {
+                btnBn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                btnEn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            } else {
+                btnEn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                btnBn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            }
+
+            document.querySelectorAll('[data-key]').forEach(elem => {
+                const key = elem.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.textContent = translations[lang][key];
+                }
+            });
+
+            localStorage.setItem('cpscs_lang', lang);
+        }
+
+        // MODAL HANDLERS
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('modal-active');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('modal-active');
+            }
+        }
+
+        function closeModalOnBackdrop(event, modalId) {
+            if (event.target.id === modalId) {
+                closeModal(modalId);
+            }
+        }
+
+        // KEYBOARD SHORTCUTS
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                openModal('searchModal');
+            }
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-active').forEach(modal => {
+                    modal.classList.remove('modal-active');
+                });
+            }
+        });
+
+        // INIT ON LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('cpscs_theme') || 'normal';
+            setTheme(savedTheme);
+
+            const savedLang = localStorage.getItem('cpscs_lang') || 'bn';
+            toggleLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>

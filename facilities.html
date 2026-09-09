@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="bn" class="theme-normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilities - CPSCS NextGen Campus</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Hind Siliguri) -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* 1. NORMAL THEME (CYBER BLUE) */
+        html.theme-normal body {
+            background: linear-gradient(to bottom right, #020617, #0f172a, #020617);
+            color: #f8fafc;
+        }
+        html.theme-normal .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        html.theme-normal .glass-sidebar {
+            background: rgba(15, 23, 42, 0.92);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        html.theme-normal .glass-modal {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 50px rgba(14, 165, 233, 0.25);
+        }
+        html.theme-normal .card-text-muted { color: #cbd5e1; }
+        html.theme-normal .card-heading { color: #ffffff; }
+
+        /* 2. DARK THEME (PURE BLACK) */
+        html.theme-dark body {
+            background: #000000;
+            color: #f1f5f9;
+        }
+        html.theme-dark .glass-card {
+            background: #09090b;
+            backdrop-filter: blur(0px);
+            border: 1px solid #27272a;
+        }
+        html.theme-dark .glass-sidebar {
+            background: #09090b;
+            border-right: 1px solid #27272a;
+        }
+        html.theme-dark .glass-modal {
+            background: #09090b;
+            border: 1px solid #27272a;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+        }
+        html.theme-dark .card-text-muted { color: #a1a1aa; }
+        html.theme-dark .card-heading { color: #ffffff; }
+
+        /* 3. LIGHT THEME (CLEAN WHITE) */
+        html.theme-light body {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        html.theme-light .glass-card {
+            background: #ffffff;
+            backdrop-filter: blur(0px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        html.theme-light .glass-sidebar {
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+        }
+        html.theme-light .glass-modal {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        html.theme-light .card-text-muted { color: #475569; }
+        html.theme-light .card-heading { color: #0f172a; }
+        html.theme-light .nav-text { color: #334155 !important; }
+        html.theme-light .nav-text:hover { color: #0284c7 !important; background: #f1f5f9 !important; }
+
+        .blue-glow {
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+        }
+        .sidebar-collapsed {
+            width: 80px !important;
+        }
+        .sidebar-collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        .sidebar-collapsed .center-on-collapse {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 4px;
+        }
+
+        .modal-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: scale(1) !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex relative">
+
+    <!-- 1. LEFT SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="w-72 h-screen sticky top-0 glass-sidebar flex flex-col justify-between p-4 z-40 shrink-0 relative transition-all duration-300">
+        
+        <button onclick="toggleSidebar()" id="toggleBtn" class="absolute -right-3.5 top-10 bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-110 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-lg border border-white/20 transition duration-300 z-50">
+            <i id="toggleIcon" class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+
+        <div class="space-y-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-blue-500/20 center-on-collapse">
+                <div class="w-12 h-12 flex items-center justify-center shrink-0 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]">
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <path d="M100 10 L130 30 L170 30 L170 70 L190 100 L170 130 L170 170 L130 170 L100 190 L70 170 L30 170 L30 130 L10 100 L30 70 L30 30 L70 30 Z" fill="#38bdf8" stroke="#dc2626" stroke-width="6"/>
+                        <circle cx="100" cy="100" r="62" fill="#ffffff" stroke="#1e3a8a" stroke-width="4"/>
+                        <circle cx="100" cy="100" r="42" fill="#dc2626"/>
+                        <circle cx="100" cy="100" r="36" fill="#facc15"/>
+                        <path d="M75 90 C85 85 95 88 100 93 C105 88 115 85 125 90 L125 115 C115 110 105 113 100 118 C95 113 85 110 75 115 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="3"/>
+                        <line x1="100" y1="93" x2="100" y2="118" stroke="#1e3a8a" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="hide-on-collapse">
+                    <h1 class="font-bold text-lg card-heading leading-tight">CPSCS</h1>
+                    <p class="text-xs text-cyan-500 font-semibold tracking-wide">NextGen Campus</p>
+                </div>
+            </div>
+
+            <nav class="space-y-1.5 font-medium text-sm">
+                <a href="index.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-house w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_home">Home</span>
+                </a>
+                <button onclick="openModal('aboutUsModal')" class="w-full nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse text-left">
+                    <i class="fa-solid fa-circle-info w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_about">About Us</span>
+                </button>
+                <a href="administration.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-user-shield w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_admin">Administration</span>
+                </a>
+                <a href="academics.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-graduation-cap w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_academics">Academics</span>
+                </a>
+                <a href="index.html#teachers" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_teachers">Teachers</span>
+                </a>
+                <a href="facilities.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold blue-glow transition center-on-collapse">
+                    <i class="fa-solid fa-building-columns w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_facilities">Facilities</span>
+                </a>
+                <a href="index.html#clubs" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-trophy w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_clubs">Clubs & Activities</span>
+                </a>
+                <a href="index.html#notices" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-scroll w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_notices">Notices & Results</span>
+                </a>
+                <a href="index.html#dashboard" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-id-card w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_dashboard">Student Dashboard</span>
+                </a>
+                <a href="index.html#contact" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-headset w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_contact">Contact Us</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="pt-4 border-t border-blue-500/20">
+            <button onclick="openModal('portalLoginModal')" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> 
+                <span class="hide-on-collapse" data-key="portal_login">পোর্টাল লগইন</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+        
+        <!-- HEADER / TOPBAR -->
+        <div class="bg-blue-900/30 border-b border-blue-500/20 px-6 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+            <div class="flex items-center gap-3 min-w-0 flex-1 w-full md:w-auto">
+                <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold uppercase animate-pulse shrink-0" data-key="notice_tag">Notice</span>
+                <marquee behavior="scroll" direction="left" class="font-medium text-cyan-500" data-key="marquee_text">
+                    🎓 CPSCS NextGen Campus-এ স্বাগতম! | আধুনিক ও বিশ্বমানের ক্যাম্পাস সুবিধার মাধ্যমে শিক্ষার্থীদের সর্বাঙ্গীন বিকাশ সুনিশ্চিত করা হচ্ছে।
+                </marquee>
+            </div>
+
+            <div class="glass-card border border-blue-500/30 p-1 rounded-xl flex items-center gap-1 shrink-0">
+                <button onclick="toggleLanguage('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                    BN
+                </button>
+                <button onclick="toggleLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white">
+                    EN
+                </button>
+            </div>
+
+            <div onclick="openModal('searchModal')" class="w-full md:w-80 glass-card hover:bg-blue-500/10 border border-blue-500/30 px-3.5 py-1.5 rounded-xl flex items-center justify-between cursor-pointer transition group shrink-0">
+                <div class="flex items-center gap-2 text-slate-400 group-hover:text-cyan-400 transition text-xs">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span class="card-text-muted font-medium" data-key="search_placeholder">কী খুঁজতে চান?</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">Ctrl</kbd>
+                    <span class="text-slate-500 text-[10px]">+</span>
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">K</kbd>
+                </div>
+            </div>
+        </div>
+
+        <!-- FACILITIES CONTENT SECTION -->
+        <div class="flex-1 p-6 md:p-8 max-w-[1600px] w-full mx-auto space-y-8">
+            
+            <!-- HEADER TITLE -->
+            <div class="glass-card p-8 rounded-3xl border border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                <div class="space-y-3 z-10 text-center md:text-left">
+                    <span class="bg-blue-500/20 border border-blue-400/30 text-cyan-400 px-4 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-2">
+                        <i class="fa-solid fa-building-columns text-yellow-400"></i> Campus Facilities
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-tight card-heading" data-key="facilities_title">
+                        ক্যাম্পাস সুবিধাসমূহ
+                    </h1>
+                    <p class="card-text-muted text-sm md:text-base max-w-2xl" data-key="facilities_subtitle">
+                        শিক্ষার্থীদের শারীরিক, মানসিক এবং অ্যাকাডেমিক উন্নয়নের জন্য আমাদের ক্যাম্পাসে রয়েছে বিশ্বমানের সুযোগ-সুবিধা।
+                    </p>
+                </div>
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-3xl md:text-4xl shadow-xl blue-glow shrink-0 z-10">
+                    <i class="fa-solid fa-landmark"></i>
+                </div>
+            </div>
+
+            <!-- 5 FACILITIES OPTIONS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- 1. Hostel -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-hotel"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">01</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="fac_1_title">Hostel</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="fac_1_bn">ছাত্রবাস ও ছাত্রীনিবাস</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="fac_1_desc">
+                                দূর-দূরান্তের শিক্ষার্থীদের জন্য নিরিবিলি, নিরাপদ এবং সুশৃঙ্খল আবাসন ব্যবস্থা। রয়েছে আধুনিক মেস সুবিধা ও সার্বক্ষণিক নিরাপত্তা।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('hostelModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_hostel">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Library -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-book-reader"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">02</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="fac_2_title">Library</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="fac_2_bn">কেন্দ্রীয় গ্রন্থাগার ও ই-লাইব্রেরি</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="fac_2_desc">
+                                হাজারো দেশি-বিদেশি বই, গবেষণা সাময়িকী এবং ডিজিটাল ই-বুকের সমাহারে সমৃদ্ধ একটি আধুনিক ও নিরিবিলি লাইব্রেরি।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('libraryModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_library">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Laboratories -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-vials"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">03</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="fac_3_title">Laboratories</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="fac_3_bn">বিজ্ঞান ও কম্পিউটার ল্যাব</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="fac_3_desc">
+                                পদার্থ, রসায়ন, জীববিজ্ঞান এবং আধুনিক হাই-স্পিড ইন্টারনেট সমৃদ্ধ কম্পিউটার ল্যাবের বাস্তব ব্যবহারিক সুবিধা।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('laboratoriesModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_labs">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Health Center -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-notes-medical"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">04</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="fac_4_title">Health Center</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="fac_4_bn">স্বাস্থ্যসেবা কেন্দ্র</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="fac_4_desc">
+                                শিক্ষার্থীদের প্রাথমিক চিকিৎসা ও জরুরি শারীরিক অসুস্থতায় দ্রুত সেবা প্রদানের জন্য দক্ষ মেডিকেল টিম ও ফার্স্ট এইড ব্যবস্থা।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('healthCenterModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_health">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. Counselling Center -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden flex flex-col justify-between md:col-span-2 lg:col-span-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-comments"></i>
+                            </div>
+                            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">05</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="fac_5_title">Counselling Center</h3>
+                            <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="fac_5_bn">কাউন্সেলিং ও ক্যারিয়ার সেন্টার</p>
+                            <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="fac_5_desc">
+                                শিক্ষার্থীদের মানসিক চাপ নিরসন, দিকনির্দেশনা প্রদান এবং ভবিষ্যতের ক্যারিয়ার গঠনে অভিজ্ঞ কাউন্সেলরদের পরামর্শ সেবা।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="openModal('counsellingModal')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_counselling">বিস্তারিত দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- THEME SWITCHER WIDGET -->
+            <div class="max-w-md mx-auto pt-4">
+                <div class="glass-card p-2.5 rounded-2xl border border-blue-500/30 flex items-center justify-between gap-1 shadow-xl">
+                    <button onclick="setTheme('normal')" id="btn-normal" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Normal
+                    </button>
+                    <button onclick="setTheme('dark')" id="btn-dark" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-white">
+                        <i class="fa-solid fa-moon text-xs"></i> Dark
+                    </button>
+                    <button onclick="setTheme('light')" id="btn-light" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-blue-600">
+                        <i class="fa-solid fa-sun text-xs"></i> Light
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-auto border-t border-blue-500/20 py-5 text-center text-xs card-text-muted">
+            <p data-key="footer_text">© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning</p>
+        </footer>
+    </div>
+
+    <!-- 1. HOSTEL SELECTION MODAL -->
+    <div id="hostelModal" onclick="closeModalOnBackdrop(event, 'hostelModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-xl w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('hostelModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-10" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-building-user"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading" data-key="hostel_modal_title">Hostel Facilities</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium" data-key="hostel_modal_subtitle">আপনার কাঙ্ক্ষিত হোস্টেল নির্বাচন করুন</p>
+                </div>
+            </div>
+
+            <!-- BOYS & GIRLS OPTIONS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <!-- Boys Hostel Option -->
+                <div onclick="closeModal('hostelModal'); openModal('boysHostelModal');" class="glass-card p-6 rounded-2xl border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/10 transition-all duration-300 flex flex-col items-center text-center space-y-3 group cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-3xl group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition duration-300 shadow-md">
+                        <i class="fa-solid fa-mars"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold card-heading group-hover:text-cyan-400 transition" data-key="boys_hostel_title">Boys Hostel</h3>
+                        <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="boys_hostel_bn">ছাত্রবাস</p>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-300 group-hover:text-white flex items-center gap-1">
+                        <span data-key="btn_view">প্রবেশ করুন</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </div>
+
+                <!-- Girls Hostel Option -->
+                <div onclick="closeModal('hostelModal'); openModal('girlsHostelModal');" class="glass-card p-6 rounded-2xl border border-blue-500/30 hover:border-pink-400 hover:bg-pink-600/10 transition-all duration-300 flex flex-col items-center text-center space-y-3 group cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl bg-pink-600/20 border border-pink-400/30 flex items-center justify-center text-pink-400 text-3xl group-hover:scale-110 group-hover:bg-pink-600 group-hover:text-white transition duration-300 shadow-md">
+                        <i class="fa-solid fa-venus"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold card-heading group-hover:text-pink-400 transition" data-key="girls_hostel_title">Girls Hostel</h3>
+                        <p class="text-xs text-pink-400 font-medium mt-0.5" data-key="girls_hostel_bn">ছাত্রীনিবাস</p>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-300 group-hover:text-white flex items-center gap-1">
+                        <span data-key="btn_view">প্রবেশ করুন</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOYS HOSTEL DETAIL POP-UP MODAL -->
+    <div id="boysHostelModal" onclick="closeModalOnBackdrop(event, 'boysHostelModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 md:p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('boysHostelModal')" class="sticky top-0 float-right -mt-2 -mr-2 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-20" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <!-- HEADER -->
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-mars"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold card-heading">Boys’ Hostel</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-semibold">Cantonment Public School & College, Saidpur</p>
+                </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="text-sm card-text-muted leading-relaxed space-y-3 bg-blue-950/30 p-4 rounded-2xl border border-blue-500/20">
+                <p>
+                    To serve the purpose of accommodating the remote students a modern hostel has been functioning since the 1st January, 2015. The hostel has a 5th floor foundation, but currently it is a three storied building with the accommodation capacity of around 250 students. The hostel provides a very pleasant environment for the students to have their proper meal study, accommodation, health service, recreation, safety and security. The Hostel is directly conducted by a Hostel Super, an Assistant Hostel Super, an Assistant Teacher (Residential), a hostel manager and fifteen supporting employees. It is also being observed and monitored accordingly by different subject teachers every day. Above all, the Principal of the institution has direct supervision for the overall betterment of the students.
+                </p>
+            </div>
+
+            <!-- FACILITIES LIST -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-bold text-cyan-400 border-b border-cyan-500/30 pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> Facilities
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                    
+                    <!-- Safety and Security -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-blue-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-cyan-400"></i> Safety and Security:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>24/7 Security guard</li>
+                            <li>CCTV surveillance</li>
+                            <li>Biometric or Card access entry.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Accommodation -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-blue-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-bed text-cyan-400"></i> Accommodation:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>Spacious room furnished with Bed, Mattress, Pillow, Study Table-Chair, Fans and others.</li>
+                            <li>Hygienic washrooms with sufficient toiletries.</li>
+                            <li>AC Room for Parents’ waiting.</li>
+                            <li>A Guest Room.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Food -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-blue-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-utensils text-cyan-400"></i> Food:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>Everyday meals with proper nutrition.</li>
+                            <li>Meal schedule (breakfast, lunch, snacks and dinner & improved diet twice a month)</li>
+                            <li>Filtered drinking water.</li>
+                            <li>Meals served in a neat and clean dining hall.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cleanliness and Maintenance -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-blue-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-broom text-cyan-400"></i> Cleanliness and Maintenance:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>Daily cleaning of washrooms</li>
+                            <li>Regular sanitization of common areas</li>
+                            <li>Waste disposal system</li>
+                        </ul>
+                    </div>
+
+                    <!-- Health Care -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-blue-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-kit-medical text-cyan-400"></i> Health Care:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>First Aid kit</li>
+                            <li>24/7 Emergency Medical service by an MBBS doctor.</li>
+                            <li>Emergency treatment provided by CMH.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Recreation and Common Areas -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-blue-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-cyan-400"></i> Recreation and Common Areas:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>A huge Recreation Room.</li>
+                            <li>A Large TV</li>
+                            <li>Indoor games (Carom, Chess, Table Tennis etc.)</li>
+                            <li>Outdoor games (Badminton, Volleyball, Football, Cricket etc.)</li>
+                            <li>Daily newspaper.</li>
+                            <li>Computer with internet facilities.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- IMAGE GALLERY -->
+            <div class="space-y-4 pt-4 border-t border-blue-500/20">
+                <h3 class="text-xl font-bold text-cyan-400 flex items-center gap-2">
+                    <i class="fa-solid fa-images"></i> Photo Gallery
+                </h3>
+                <p class="text-xs card-text-muted">ছবিতে ক্লিক করে বড় স্ক্রিনে দেখুন:</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/1-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/1-2-768x570.jpg" alt="Hostel Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/2-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/2-2-768x570.jpg" alt="Hostel Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/3-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/3-2-768x570.jpg" alt="Hostel Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/4-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/4-2-768x570.jpg" alt="Hostel Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/5-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/5-2-768x570.jpg" alt="Hostel Image 5" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/6-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/6-2-768x570.jpg" alt="Hostel Image 6" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/7-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/7-2-768x570.jpg" alt="Hostel Image 7" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2024/09/Dining-Room-1-1.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/Dining-Room-1-1.jpg" alt="Dining Room" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2024/09/Bed-Room-4.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/Bed-Room-4.jpg" alt="Bed Room" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2024/09/Prayer-Room-2-768x576.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/Prayer-Room-2-768x576.jpg" alt="Prayer Room" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- GIRLS HOSTEL DETAIL POP-UP MODAL -->
+    <div id="girlsHostelModal" onclick="closeModalOnBackdrop(event, 'girlsHostelModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 md:p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-pink-500/40 shadow-2xl">
+            <button onclick="closeModal('girlsHostelModal')" class="sticky top-0 float-right -mt-2 -mr-2 w-9 h-9 rounded-full bg-slate-900 border border-pink-400/50 text-pink-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-20" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <!-- HEADER -->
+            <div class="flex items-center gap-4 pb-4 border-b border-pink-500/20">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-pink-600 to-rose-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-venus"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold card-heading">Girls’ Hostel</h2>
+                    <p class="text-xs md:text-sm text-pink-400 font-semibold">Cantonment Public School & College, Saidpur</p>
+                </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="text-sm card-text-muted leading-relaxed space-y-3 bg-pink-950/20 p-4 rounded-2xl border border-pink-500/20">
+                <p>
+                    For the accommodation of the girls of this institution there are two Girls’ Hostel- one is four storied and the other is one storied building inside the institution premises with the accommodation capacity of 82 students. It is well decorated with every kind of facilities. The Hostel provides a very pleasant environment for the students to have their proper meal study and accommodation. The Hostel is directly conducted by one Hostel Super, one Additional Hostel Super, one Assistant Hostel Super, one hostel manager and seven supporting employees. It is also being observed and monitored accordingly by different subject teachers every day. Above all, the Principal of the institution has direct supervision for the overall betterment of the students.
+                </p>
+            </div>
+
+            <!-- FACILITIES LIST -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-bold text-pink-400 border-b border-pink-500/30 pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> Facilities
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                    
+                    <!-- Safety and Security -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-pink-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-pink-400"></i> Safety and Security:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>24/7 Security guard</li>
+                            <li>CCTV surveillance</li>
+                            <li>Biometric or Card access entry.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Accommodation -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-pink-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-bed text-pink-400"></i> Accommodation:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>Furnished with Bed, Mattress, Pillow, Study Table -Chair, fans and others.</li>
+                            <li>Hygienic washrooms with sufficient toiletries.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Food -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-pink-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-utensils text-pink-400"></i> Food:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>Everyday meals with proper nutrition.</li>
+                            <li>Meal schedule (breakfast, lunch, snacks and dinner & improved diet twice a month)</li>
+                            <li>Filtered drinking water.</li>
+                            <li>Meals served in a neat and clean dining hall.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cleanliness and Maintenance -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-pink-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-broom text-pink-400"></i> Cleanliness and Maintenance:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>Daily cleaning of washrooms</li>
+                            <li>Regular sanitization of common areas</li>
+                            <li>Waste disposal system</li>
+                        </ul>
+                    </div>
+
+                    <!-- Health Care -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-pink-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-kit-medical text-pink-400"></i> Health Care:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>First aid kit</li>
+                            <li>24/7 Medical emergency contact.</li>
+                            <li>Emergency treatment provided by CMH.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Recreation and Common Areas -->
+                    <div class="bg-slate-900/50 p-4 rounded-2xl border border-pink-500/20 space-y-2">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-pink-400"></i> Recreation and Common Areas:
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1 card-text-muted">
+                            <li>Common lounge/ TV room.</li>
+                            <li>Indoor games (Carom, Chess etc.)</li>
+                            <li>Outdoor games (Badminton, Handball etc.)</li>
+                            <li>Daily newspaper.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- IMAGE GALLERY -->
+            <div class="space-y-4 pt-4 border-t border-pink-500/20">
+                <h3 class="text-xl font-bold text-pink-400 flex items-center gap-2">
+                    <i class="fa-solid fa-images"></i> Photo Gallery
+                </h3>
+                <p class="text-xs card-text-muted">ছবিতে ক্লিক করে বড় স্ক্রিনে দেখুন:</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/10-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-pink-500/30 cursor-pointer hover:border-pink-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/10-2-768x570.jpg" alt="Girls Hostel Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus text-xl"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/11-2-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-pink-500/30 cursor-pointer hover:border-pink-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/11-2-768x570.jpg" alt="Girls Hostel Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus text-xl"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/14-1-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-pink-500/30 cursor-pointer hover:border-pink-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/14-1-768x570.jpg" alt="Girls Hostel Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus text-xl"></i></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 2. LIBRARY POP-UP MODAL -->
+    <div id="libraryModal" onclick="closeModalOnBackdrop(event, 'libraryModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 md:p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('libraryModal')" class="sticky top-0 float-right -mt-2 -mr-2 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-20" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <!-- HEADER -->
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-book-reader"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold card-heading">Library</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-semibold">Cantonment Public School And College, Saidpur</p>
+                </div>
+            </div>
+
+            <!-- MAIN DESCRIPTION TEXT -->
+            <div class="text-sm card-text-muted leading-relaxed bg-blue-950/30 p-5 rounded-2xl border border-blue-500/20">
+                <p>
+                    There is an enriched library in Cantonment Public School And College, Saidpur. It has a considerable collection of books. Around five thousand books from different walks of life like history books, biography, religious books, liberation war books, science fictions, novels, dramas, short stories, magazines, journals, Olympiad books, different reference books are kept here in an arranged way. The library is run by a librarian along with three supporting members. The students, teachers & employees can borrow book by using their ID through online system. It plays a significant role in the field of teaching-learning activities of this institution.
+                </p>
+            </div>
+
+            <!-- ACTIVITIES & FACILITIES SECTION -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                
+                <!-- Activities -->
+                <div class="bg-slate-900/50 p-5 rounded-2xl border border-blue-500/20 space-y-3">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-cyan-500/30 pb-2">
+                        <i class="fa-solid fa-list-check"></i> Activities:-
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-xs md:text-sm card-text-muted leading-relaxed">
+                        <li>All of the students, teachers and employees can borrow books according to their demand from library .</li>
+                        <li>During leisure time they can study in library and take part in co-curriculum activities.</li>
+                        <li>Students has regular scheduled classes in the library.</li>
+                        <li>Everybody can read daily newspaper and magazine in library .</li>
+                        <li>Students can practise by themselves for GK, Olympiad, Drawing, debate, spelling etc. for different kinds of competitions both nationally and internationally.</li>
+                    </ul>
+                </div>
+
+                <!-- Library Facilities -->
+                <div class="bg-slate-900/50 p-5 rounded-2xl border border-blue-500/20 space-y-3">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-cyan-500/30 pb-2">
+                        <i class="fa-solid fa-star"></i> Library facilities:
+                    </h3>
+                    <ul class="space-y-2 text-xs md:text-sm card-text-muted leading-relaxed">
+                        <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 font-bold">i.</span>
+                            <span>Students and teachers can borrow books</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-cyan-400 font-bold">ii.</span>
+                            <span>Students have regular scheduled class periods in the library</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- IMAGE GALLERY WITH LIGHTBOX INTERACTION -->
+            <div class="space-y-4 pt-4 border-t border-blue-500/20">
+                <h3 class="text-xl font-bold text-cyan-400 flex items-center gap-2">
+                    <i class="fa-solid fa-images"></i> Photo Gallery
+                </h3>
+                <p class="text-xs card-text-muted">ছবিতে ক্লিক করে বড় স্ক্রিনে দেখুন:</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/1-3-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/1-3-768x570.jpg" alt="Library Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus text-xl"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/3-3-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/3-3-768x570.jpg" alt="Library Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus text-xl"></i></div>
+                    </div>
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/4-3-768x570.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/4-3-768x570.jpg" alt="Library Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus text-xl"></i></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 3. LABORATORIES MODAL -->
+    <div id="laboratoriesModal" onclick="closeModalOnBackdrop(event, 'laboratoriesModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-2xl w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('laboratoriesModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-10" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-vials"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Science & Computer Labs</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">ব্যবহারিক শিক্ষা ও গবেষণা ল্যাব</p>
+                </div>
+            </div>
+            <div class="space-y-3 text-sm card-text-muted leading-relaxed">
+                <p>শিক্ষার্থীদের তাত্ত্বিক জ্ঞানের পাশাপাশি আন্তর্জাতিক মানের ব্যবহারিক শিক্ষা প্রদানে সুসজ্জিত ল্যাবসমূহ কাজ করে যাচ্ছে।</p>
+                <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                    <li>পদার্থবিজ্ঞান, রসায়ন ও জীববিজ্ঞান ল্যাব</li>
+                    <li>হাই-স্পিড ইন্টারনেটসহ কম্পিউটার ও এআই ল্যাব</li>
+                    <li>নিরাপদ ও আধুনিক যন্ত্রপাতি</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. HEALTH CENTER POP-UP MODAL (UPDATED WITH EXACT TEXT & 5 IMAGES) -->
+    <div id="healthCenterModal" onclick="closeModalOnBackdrop(event, 'healthCenterModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 md:p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('healthCenterModal')" class="sticky top-0 float-right -mt-2 -mr-2 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-20" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <!-- HEADER -->
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-notes-medical"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold card-heading">Health Centre</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-semibold">Medical Centre of CPSCS</p>
+                </div>
+            </div>
+
+            <!-- EXACT TEXT FROM USER -->
+            <div class="text-sm card-text-muted leading-relaxed space-y-4 bg-blue-950/30 p-5 rounded-2xl border border-blue-500/20">
+                <p>
+                    Considering the obvious importance of attention to the health of the students, teachers and staffs medical centre was established in 2010 inside the campus. CPSCSauthority appointed a medical officer (MBBS) and a medical assistantto serve the purpose.
+                </p>
+                <p>
+                    Now a well established medical centre provides the students with all possible modern techniques and equipments. Authority provides medications and health and hygiene facilities. Now, the centre has an oxygen cylinder, a nebulizer machine, a refrigerator, surgical instruments, diabetic kit and so on.
+                </p>
+                <p>
+                    All kinds of possible facilities are available here. The physical and mental health of the students are the main concern. The services also include counseling, motivation, awareness about personal hygiene, medical tips, emergency ambulance services etc.If also provides 24 hour emergency health services to the students residing at hostels.
+                </p>
+                <p>
+                    The medical centre aims to promote the wellbeing of every individuals related to CPSCS and encourage healthy lifestyles, prevent disease, illness and injury.
+                </p>
+            </div>
+
+            <!-- IMAGE GALLERY (5 IMAGES) WITH LIGHTBOX INTERACTION -->
+            <div class="space-y-4 pt-4 border-t border-blue-500/20">
+                <h3 class="text-xl font-bold text-cyan-400 flex items-center gap-2">
+                    <i class="fa-solid fa-images"></i> Medical Centre Gallery
+                </h3>
+                <p class="text-xs card-text-muted">ছবিতে ক্লিক করে বড় স্ক্রিনে দেখুন:</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                    <!-- Image 1 -->
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/1-4-300x223.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/1-4-300x223.jpg" alt="Health Centre Image 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Image 2 -->
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/8-3-300x223.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/8-3-300x223.jpg" alt="Health Centre Image 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Image 3 -->
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/7-3-300x223.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/7-3-300x223.jpg" alt="Health Centre Image 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Image 4 -->
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/5-4-300x223.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/5-4-300x223.jpg" alt="Health Centre Image 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Image 5 -->
+                    <div onclick="openLightbox('https://cpscs.edu.bd/wp-content/uploads/2025/05/9-3-300x223.jpg')" class="group relative aspect-video rounded-xl overflow-hidden border border-blue-500/30 cursor-pointer hover:border-cyan-400 transition shadow-md">
+                        <img src="https://cpscs.edu.bd/wp-content/uploads/2025/05/9-3-300x223.jpg" alt="Health Centre Image 5" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 5. COUNSELLING CENTER MODAL -->
+    <div id="counsellingModal" onclick="closeModalOnBackdrop(event, 'counsellingModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-2xl w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('counsellingModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-10" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading">Counselling Center</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">মানসিক স্বাস্থ্য ও দিকনির্দেশনা কেন্দ্র</p>
+                </div>
+            </div>
+            <div class="space-y-3 text-sm card-text-muted leading-relaxed">
+                <p>শিক্ষার্থীদের মানসিক প্রশান্তি, পরীক্ষার ভয় দূরীকরণ এবং উচ্চশিক্ষার ক্যারিয়ার গাইডলাইন প্রদানে পেশাদার কাউন্সেলর সাহায্য করে থাকেন।</p>
+                <ul class="list-disc list-inside space-y-1 text-xs text-slate-300">
+                    <li>একক ও দলগত কাউন্সেলিং সেশন</li>
+                    <li>ক্যারিয়ার প্ল্যানিং ও পরামর্শ</li>
+                    <li>মানসিক চাপ ব্যবস্থাপনা সেশন</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX MODAL FOR BIG IMAGE VIEW -->
+    <div id="lightboxModal" onclick="closeModalOnBackdrop(event, 'lightboxModal')" class="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <button onclick="closeModal('lightboxModal')" class="absolute top-5 right-5 w-11 h-11 rounded-full bg-slate-900/80 border border-white/20 text-white hover:text-rose-400 flex items-center justify-center text-xl shadow-2xl transition hover:scale-110 z-50">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="max-w-5xl max-h-[85vh] p-2">
+            <img id="lightboxImg" src="" alt="Full View" class="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl border border-blue-500/30">
+        </div>
+    </div>
+
+    <!-- SEARCH MODAL -->
+    <div id="searchModal" onclick="closeModalOnBackdrop(event, 'searchModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 rounded-3xl max-w-lg w-full space-y-4 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('searchModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" placeholder="ক্যাম্পাসের যেকোনো তথ্য খুঁজুন..." class="w-full bg-slate-950/60 border border-blue-500/30 rounded-2xl py-3 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-cyan-400 transition">
+            </div>
+        </div>
+    </div>
+
+    <!-- PORTAL LOGIN MODAL -->
+    <div id="portalLoginModal" onclick="closeModalOnBackdrop(event, 'portalLoginModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-md w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('portalLoginModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-bold card-heading">পোর্টাল লগইন</h2>
+                <p class="text-xs text-cyan-400">শিক্ষার্থী ও শিক্ষক একাউন্টে প্রবেশ করুন</p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('লগইন প্রসেস করা হচ্ছে...');" class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 card-text-muted">ইউজার আইডি / রোল</label>
+                    <input type="text" required placeholder="উদাহরণ: 2026001" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 card-text-muted">পাসওয়ার্ড</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:from-blue-500 hover:to-cyan-400 transition">
+                    লগইন করুন
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // SIDEBAR TOGGLE
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            sidebar.classList.toggle('sidebar-collapsed');
+            
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+            } else {
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+            }
+        }
+
+        // THEME MANAGEMENT
+        function setTheme(theme) {
+            const html = document.documentElement;
+            html.className = '';
+            html.classList.add('theme-' + theme);
+
+            // Update theme buttons UI
+            const btnNormal = document.getElementById('btn-normal');
+            const btnDark = document.getElementById('btn-dark');
+            const btnLight = document.getElementById('btn-light');
+
+            const activeClasses = ['bg-gradient-to-r', 'from-blue-600', 'to-cyan-500', 'text-white', 'shadow-md'];
+            
+            [btnNormal, btnDark, btnLight].forEach(btn => {
+                if(btn) {
+                    btn.classList.remove(...activeClasses);
+                    btn.classList.add('card-text-muted');
+                }
+            });
+
+            const activeBtn = document.getElementById('btn-' + theme);
+            if(activeBtn) {
+                activeBtn.classList.remove('card-text-muted');
+                activeBtn.classList.add(...activeClasses);
+            }
+
+            localStorage.setItem('cpscs_theme', theme);
+        }
+
+        // LANGUAGE TOGGLE
+        const translations = {
+            bn: {
+                nav_home: "Home",
+                nav_about: "About Us",
+                nav_admin: "Administration",
+                nav_academics: "Academics",
+                nav_teachers: "Teachers",
+                nav_facilities: "Facilities",
+                nav_clubs: "Clubs & Activities",
+                nav_notices: "Notices & Results",
+                nav_dashboard: "Student Dashboard",
+                nav_contact: "Contact Us",
+                portal_login: "পোর্টাল লগইন",
+                notice_tag: "Notice",
+                marquee_text: "🎓 CPSCS NextGen Campus-এ স্বাগতম! | আধুনিক ও বিশ্বমানের ক্যাম্পাস সুবিধার মাধ্যমে শিক্ষার্থীদের সর্বাঙ্গীন বিকাশ সুনিশ্চিত করা হচ্ছে।",
+                search_placeholder: "কী খুঁজতে চান?",
+                facilities_title: "ক্যাম্পাস সুবিধাসমূহ",
+                facilities_subtitle: "শিক্ষার্থীদের শারীরিক, মানসিক এবং অ্যাকাডেমিক উন্নয়নের জন্য আমাদের ক্যাম্পাসে রয়েছে বিশ্বমানের সুযোগ-সুবিধা।",
+                fac_1_title: "Hostel",
+                fac_1_bn: "ছাত্রবাস ও ছাত্রীনিবাস",
+                fac_1_desc: "দূর-দূরান্তের শিক্ষার্থীদের জন্য নিরিবিলি, নিরাপদ এবং সুশৃঙ্খল আবাসন ব্যবস্থা। রয়েছে আধুনিক মেস সুবিধা ও সার্বক্ষণিক নিরাপত্তা।",
+                fac_2_title: "Library",
+                fac_2_bn: "কেন্দ্রীয় গ্রন্থাগার ও ই-লাইব্রেরি",
+                fac_2_desc: "হাজারো দেশি-বিদেশি বই, গবেষণা সাময়িকী এবং ডিজিটাল ই-বুকের সমাহারে সমৃদ্ধ একটি আধুনিক ও নিরিবিলি লাইব্রেরি।",
+                fac_3_title: "Laboratories",
+                fac_3_bn: "বিজ্ঞান ও কম্পিউটার ল্যাব",
+                fac_3_desc: "পদার্থ, রসায়ন, জীববিজ্ঞান এবং আধুনিক হাই-স্পিড ইন্টারনেট সমৃদ্ধ কম্পিউটার ল্যাবের বাস্তব ব্যবহারিক সুবিধা।",
+                fac_4_title: "Health Center",
+                fac_4_bn: "স্বাস্থ্যসেবা কেন্দ্র",
+                fac_4_desc: "শিক্ষার্থীদের প্রাথমিক চিকিৎসা ও জরুরি শারীরিক অসুস্থতায় দ্রুত সেবা প্রদানের জন্য দক্ষ মেডিকেল টিম ও ফার্স্ট এইড ব্যবস্থা।",
+                fac_5_title: "Counselling Center",
+                fac_5_bn: "কাউন্সেলিং ও ক্যারিয়ার সেন্টার",
+                fac_5_desc: "শিক্ষার্থীদের মানসিক চাপ নিরসন, দিকনির্দেশনা প্রদান এবং ভবিষ্যতের ক্যারিয়ার গঠনে অভিজ্ঞ কাউন্সেলরদের পরামর্শ সেবা।",
+                btn_view_hostel: "বিস্তারিত দেখুন",
+                btn_view_library: "বিস্তারিত দেখুন",
+                btn_view_labs: "বিস্তারিত দেখুন",
+                btn_view_health: "বিস্তারিত দেখুন",
+                btn_view_counselling: "বিস্তারিত দেখুন",
+                footer_text: "© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning",
+                hostel_modal_title: "Hostel Facilities",
+                hostel_modal_subtitle: "আপনার কাঙ্ক্ষিত হোস্টেল নির্বাচন করুন",
+                boys_hostel_title: "Boys Hostel",
+                boys_hostel_bn: "ছাত্রবাস",
+                girls_hostel_title: "Girls Hostel",
+                girls_hostel_bn: "ছাত্রীনিবাস",
+                btn_view: "প্রবেশ করুন"
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About Us",
+                nav_admin: "Administration",
+                nav_academics: "Academics",
+                nav_teachers: "Teachers",
+                nav_facilities: "Facilities",
+                nav_clubs: "Clubs & Activities",
+                nav_notices: "Notices & Results",
+                nav_dashboard: "Student Dashboard",
+                nav_contact: "Contact Us",
+                portal_login: "Portal Login",
+                notice_tag: "Notice",
+                marquee_text: "🎓 Welcome to CPSCS NextGen Campus! | Ensuring holistic development of students through world-class campus facilities.",
+                search_placeholder: "Search anything...",
+                facilities_title: "Campus Facilities",
+                facilities_subtitle: "We offer world-class facilities to support students' physical, mental, and academic growth.",
+                fac_1_title: "Hostel",
+                fac_1_bn: "Dormitories & Residency",
+                fac_1_desc: "Safe and structured accommodation for long-distance students with modern dining and 24/7 security.",
+                fac_2_title: "Library",
+                fac_2_bn: "Central Library & E-Library",
+                fac_2_desc: "A modern library equipped with thousands of books, journals, and digital e-book resources.",
+                fac_3_title: "Laboratories",
+                fac_3_bn: "Science & Computer Labs",
+                fac_3_desc: "Hands-on practical facilities in Physics, Chemistry, Biology, and high-speed computer labs.",
+                fac_4_title: "Health Center",
+                fac_4_bn: "Medical & Health Care",
+                fac_4_desc: "First aid and emergency medical services managed by dedicated health staff.",
+                fac_5_title: "Counselling Center",
+                fac_5_bn: "Mental Health & Guidance",
+                fac_5_desc: "Expert counseling sessions for stress management, mental well-being, and career planning.",
+                btn_view_hostel: "View Details",
+                btn_view_library: "View Details",
+                btn_view_labs: "View Details",
+                btn_view_health: "View Details",
+                btn_view_counselling: "View Details",
+                footer_text: "© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning",
+                hostel_modal_title: "Hostel Facilities",
+                hostel_modal_subtitle: "Select your desired hostel category",
+                boys_hostel_title: "Boys Hostel",
+                boys_hostel_bn: "Boys Dormitory",
+                girls_hostel_title: "Girls Hostel",
+                girls_hostel_bn: "Girls Dormitory",
+                btn_view: "Enter"
+            }
+        };
+
+        function toggleLanguage(lang) {
+            const btnBn = document.getElementById('lang-bn');
+            const btnEn = document.getElementById('lang-en');
+
+            if (lang === 'bn') {
+                btnBn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                btnEn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            } else {
+                btnEn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                btnBn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            }
+
+            document.querySelectorAll('[data-key]').forEach(elem => {
+                const key = elem.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.textContent = translations[lang][key];
+                }
+            });
+
+            localStorage.setItem('cpscs_lang', lang);
+        }
+
+        // MODAL HANDLERS
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('modal-active');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('modal-active');
+            }
+        }
+
+        function closeModalOnBackdrop(event, modalId) {
+            if (event.target.id === modalId) {
+                closeModal(modalId);
+            }
+        }
+
+        // LIGHTBOX FOR IMAGES
+        function openLightbox(imgSrc) {
+            const lightboxImg = document.getElementById('lightboxImg');
+            lightboxImg.src = imgSrc;
+            openModal('lightboxModal');
+        }
+
+        // KEYBOARD SHORTCUTS (Ctrl+K for Search, Esc for Closing Modals)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                openModal('searchModal');
+            }
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-active').forEach(modal => {
+                    modal.classList.remove('modal-active');
+                });
+            }
+        });
+
+        // INIT ON LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('cpscs_theme') || 'normal';
+            setTheme(savedTheme);
+
+            const savedLang = localStorage.getItem('cpscs_lang') || 'bn';
+            toggleLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>

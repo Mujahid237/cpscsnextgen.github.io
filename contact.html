@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="bn" class="theme-normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - CPSCS NextGen Campus</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* 1. NORMAL THEME (CYBER BLUE) */
+        html.theme-normal body {
+            background: linear-gradient(to bottom right, #020617, #0f172a, #020617);
+            color: #f8fafc;
+        }
+        html.theme-normal .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        html.theme-normal .glass-sidebar {
+            background: rgba(15, 23, 42, 0.92);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        html.theme-normal .glass-modal {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 50px rgba(14, 165, 233, 0.25);
+        }
+        html.theme-normal .card-text-muted { color: #cbd5e1; }
+        html.theme-normal .card-heading { color: #ffffff; }
+
+        /* 2. DARK THEME (PURE BLACK) */
+        html.theme-dark body {
+            background: #000000;
+            color: #f1f5f9;
+        }
+        html.theme-dark .glass-card {
+            background: #09090b;
+            backdrop-filter: blur(0px);
+            border: 1px solid #27272a;
+        }
+        html.theme-dark .glass-sidebar {
+            background: #09090b;
+            border-right: 1px solid #27272a;
+        }
+        html.theme-dark .glass-modal {
+            background: #09090b;
+            border: 1px solid #27272a;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+        }
+        html.theme-dark .card-text-muted { color: #a1a1aa; }
+        html.theme-dark .card-heading { color: #ffffff; }
+
+        /* 3. LIGHT THEME (CLEAN WHITE) */
+        html.theme-light body {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        html.theme-light .glass-card {
+            background: #ffffff;
+            backdrop-filter: blur(0px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        html.theme-light .glass-sidebar {
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+        }
+        html.theme-light .glass-modal {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        html.theme-light .card-text-muted { color: #475569; }
+        html.theme-light .card-heading { color: #0f172a; }
+        html.theme-light .nav-text { color: #334155 !important; }
+        html.theme-light .nav-text:hover { color: #0284c7 !important; background: #f1f5f9 !important; }
+
+        .blue-glow {
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+        }
+        .sidebar-collapsed {
+            width: 80px !important;
+        }
+        .sidebar-collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        .sidebar-collapsed .center-on-collapse {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex relative">
+
+    <!-- 1. LEFT SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="w-72 h-screen sticky top-0 glass-sidebar flex flex-col justify-between p-4 z-40 shrink-0 relative transition-all duration-300">
+        
+        <button onclick="toggleSidebar()" id="toggleBtn" class="absolute -right-3.5 top-10 bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-110 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-lg border border-white/20 transition duration-300 z-50">
+            <i id="toggleIcon" class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+
+        <div class="space-y-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-blue-500/20 center-on-collapse">
+                <div class="w-12 h-12 flex items-center justify-center shrink-0 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]">
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <path d="M100 10 L130 30 L170 30 L170 70 L190 100 L170 130 L170 170 L130 170 L100 190 L70 170 L30 170 L30 130 L10 100 L30 70 L30 30 L70 30 Z" fill="#38bdf8" stroke="#dc2626" stroke-width="6"/>
+                        <circle cx="100" cy="100" r="62" fill="#ffffff" stroke="#1e3a8a" stroke-width="4"/>
+                        <circle cx="100" cy="100" r="42" fill="#dc2626"/>
+                        <circle cx="100" cy="100" r="36" fill="#facc15"/>
+                        <path d="M75 90 C85 85 95 88 100 93 C105 88 115 85 125 90 L125 115 C115 110 105 113 100 118 C95 113 85 110 75 115 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="3"/>
+                        <line x1="100" y1="93" x2="100" y2="118" stroke="#1e3a8a" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="hide-on-collapse">
+                    <h1 class="font-bold text-lg card-heading leading-tight">CPSCS</h1>
+                    <p class="text-xs text-cyan-500 font-semibold tracking-wide">NextGen Campus</p>
+                </div>
+            </div>
+
+            <nav class="space-y-1.5 font-medium text-sm">
+                <a href="index.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-house w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Home</span>
+                </a>
+                <a href="about.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-circle-info w-5 text-center"></i> 
+                    <span class="hide-on-collapse">About Us</span>
+                </a>
+                <a href="administration.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-user-shield w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Administration</span>
+                </a>
+                <a href="academics.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-graduation-cap w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Academics</span>
+                </a>
+                <a href="index.html#teachers" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Teachers</span>
+                </a>
+                <a href="facilities.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-building-columns w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Facilities</span>
+                </a>
+                <a href="clubsactivities.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-trophy w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Clubs & Activities</span>
+                </a>
+                <a href="index.html#notices" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-scroll w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Notices & Results</span>
+                </a>
+                <a href="contact.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold blue-glow transition center-on-collapse">
+                    <i class="fa-solid fa-headset w-5 text-center"></i> 
+                    <span class="hide-on-collapse">Contact Us</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="pt-4 border-t border-blue-500/20">
+            <button onclick="openModal('portalLoginModal')" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> 
+                <span class="hide-on-collapse">পোর্টাল লগইন</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+        
+        <!-- HEADER / TOPBAR -->
+        <div class="bg-blue-900/30 border-b border-blue-500/20 px-6 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+            <div class="flex items-center gap-3 min-w-0 flex-1 w-full md:w-auto">
+                <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold uppercase animate-pulse shrink-0">Notice</span>
+                <marquee behavior="scroll" direction="left" class="font-medium text-cyan-500">
+                    📞 ক্যান্টনমেন্ট পাবলিক স্কুল অ্যান্ড কলেজ, সৈয়দপুর - যেকোনো যোগাযোগ বা তথ্যের জন্য সরাসরি অফিসে বা যোগাযোগ ফর্মে মেসেজ পাঠান।
+                </marquee>
+            </div>
+
+            <div class="glass-card border border-blue-500/30 p-1 rounded-xl flex items-center gap-1 shrink-0">
+                <button onclick="toggleLanguage('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                    BN
+                </button>
+                <button onclick="toggleLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white">
+                    EN
+                </button>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <div class="flex-1 p-6 md:p-8 max-w-[1600px] w-full mx-auto space-y-8">
+            
+            <!-- HEADER TITLE -->
+            <div class="glass-card p-8 rounded-3xl border border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                <div class="space-y-3 z-10 text-center md:text-left">
+                    <span class="bg-blue-500/20 border border-blue-400/30 text-cyan-400 px-4 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-yellow-400"></i> Get In Touch
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-tight card-heading">
+                        যোগাযোগ ও সহায়তা তথ্য
+                    </h1>
+                    <p class="card-text-muted text-sm md:text-base max-w-2xl">
+                        ক্যান্টনমেন্ট পাবলিক স্কুল অ্যান্ড কলেজ, সৈয়দপুর-এর প্রশাসন, ভর্তি শাখা বা যেকোনো তথ্যের জন্য সরাসরি আমাদের সাথে যোগাযোগ করুন।
+                    </p>
+                </div>
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-3xl md:text-4xl shadow-xl blue-glow shrink-0 z-10">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+            </div>
+
+            <!-- PRINCIPAL MESSAGE SECTION (FROM SIR'S IMAGE) -->
+            <div class="glass-card p-6 md:p-8 rounded-3xl border border-cyan-500/30 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-start gap-6">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-3xl shadow-lg shrink-0">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="space-y-3 flex-1">
+                        <div class="border-b border-blue-500/20 pb-3">
+                            <h2 class="text-xl md:text-2xl font-bold card-heading">Principal's Contact & Meet Notice</h2>
+                            <p class="text-xs md:text-sm text-cyan-400 font-semibold">অধ্যক্ষ মহোদয়ের সাক্ষাৎকার ও যোগাযোগের সময়সূচী</p>
+                        </div>
+                        <div class="text-sm card-text-muted leading-relaxed space-y-3">
+                            <p>
+                                <strong class="text-white">Principal's Office Meet Time:</strong> To meet the Principal, visitors and parents are requested to visit during the specified hours. 
+                                <span class="text-cyan-400 font-bold bg-cyan-500/10 px-2.5 py-1 rounded-md border border-cyan-500/30 inline-block mt-1 md:mt-0">12:00 PM to 01:30 PM</span> (Except holidays).
+                            </p>
+                            <p class="italic text-slate-300 bg-blue-950/40 p-4 rounded-xl border border-blue-500/20">
+                                "The Principal will be glad to meet any guardians on academic or administrative matters during the scheduled meeting hours. For urgent administrative inquiries outside these hours, please contact the main administrative office."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT CARDS GRID (3 CARDS) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- 1. Phone & Call -->
+                <div class="glass-card p-6 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition duration-300 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold card-heading">জরুরি ফোন নম্বরসমূহ</h3>
+                        <p class="text-xs text-cyan-400 font-medium">Phone & Helplines</p>
+                    </div>
+                    <ul class="text-xs card-text-muted space-y-2 pt-2">
+                        <li class="flex items-center justify-between bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                            <span>অফিস রুম:</span>
+                            <strong class="text-white font-mono">+880 2589963201</strong>
+                        </li>
+                        <li class="flex items-center justify-between bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                            <span>অধ্যক্ষ মহোদয়:</span>
+                            <strong class="text-white font-mono">+880 1769-663200</strong>
+                        </li>
+                        <li class="flex items-center justify-between bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                            <span>ভর্তি সংক্রান্ত তথ্য:</span>
+                            <strong class="text-cyan-400 font-mono">+880 1769-663205</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 2. Email & Web -->
+                <div class="glass-card p-6 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition duration-300 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl">
+                        <i class="fa-solid fa-at"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold card-heading">ইমেইল ও ওয়েবসাইট</h3>
+                        <p class="text-xs text-cyan-400 font-medium">Digital Channels</p>
+                    </div>
+                    <ul class="text-xs card-text-muted space-y-2 pt-2">
+                        <li class="flex items-center justify-between bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                            <span>অফিশিয়াল ইমেইল:</span>
+                            <strong class="text-cyan-400 font-mono">cpscs106484@gmail.com</strong>
+                        </li>
+                        <li class="flex items-center justify-between bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                            <span>ওয়েবসাইট:</span>
+                            <strong class="text-white font-mono">www.cpscs.edu.bd</strong>
+                        </li>
+                        <li class="flex items-center justify-between bg-slate-900/40 p-2.5 rounded-xl border border-white/5">
+                            <span>ইআইআইএন (EIIN):</span>
+                            <strong class="text-yellow-400 font-mono">106484</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 3. Address & Location -->
+                <div class="glass-card p-6 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition duration-300 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold card-heading">ক্যাম্পাস ঠিকানা</h3>
+                        <p class="text-xs text-cyan-400 font-medium">Campus Location</p>
+                    </div>
+                    <p class="text-xs card-text-muted leading-relaxed pt-2 bg-slate-900/40 p-3 rounded-xl border border-white/5">
+                        <strong class="text-white block mb-1">ক্যান্টনমেন্ট পাবলিক স্কুল অ্যান্ড কলেজ, সৈয়দপুর</strong>
+                        সৈয়দপুর সেবামহল, সৈয়দপুর সেনানিবাস,<br>
+                        জেলা: নীলফামারী, ডাকঘর: সৈয়দপুর - ৫৩১০,<br>
+                        রংপুর বিভাগ, বাংলাদেশ।
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- CONTACT FORM AND GOOGLE MAP SECTION -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- CONTACT FORM -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 space-y-6">
+                    <div class="space-y-1 border-b border-blue-500/20 pb-4">
+                        <h2 class="text-2xl font-bold card-heading flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-cyan-400 text-xl"></i> আমাদের বার্তা পাঠান
+                        </h2>
+                        <p class="text-xs card-text-muted">আপনার যেকোনো জিজ্ঞাসা বা মতামত জানাতে ফরমটি পূরণ করুন</p>
+                    </div>
+
+                    <form onsubmit="event.preventDefault(); alert('ধন্যবাদ স্যার! আপনার বার্তাটি সফলভাবে পাঠানো হয়েছে।');" class="space-y-4 text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold mb-1 card-text-muted">আপনার নাম *</label>
+                                <input type="text" required placeholder="উদাহরণ: মুজাহিদ আল জুবায়ের" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold mb-1 card-text-muted">মোবাইল নম্বর *</label>
+                                <input type="tel" required placeholder="017XXXXXXXX" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 card-text-muted">ইমেইল এড্রেস</label>
+                            <input type="email" placeholder="example@gmail.com" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 card-text-muted">বিষয় (Subject)</label>
+                            <select class="w-full bg-slate-950/80 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 transition">
+                                <option value="general">সাধারণ জিজ্ঞাসা</option>
+                                <option value="admission">ভর্তি সংক্রান্ত তথ্য</option>
+                                <option value="academic">একাডেমিক সহায়তা</option>
+                                <option value="feedback">মতামত ও পরামর্শ</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 card-text-muted">আপনার বার্তা *</label>
+                            <textarea rows="4" required placeholder="এখানে বিস্তারিত লিখুন..." class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400 transition"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:from-blue-500 hover:to-cyan-400 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> বার্তা পাঠান
+                        </button>
+                    </form>
+                </div>
+
+                <!-- GOOGLE MAP EMBED -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 flex flex-col justify-between space-y-4">
+                    <div class="space-y-1 border-b border-blue-500/20 pb-4">
+                        <h2 class="text-2xl font-bold card-heading flex items-center gap-2">
+                            <i class="fa-solid fa-map-location-dot text-cyan-400 text-xl"></i> গুগল ম্যাপস লোকেশন
+                        </h2>
+                        <p class="text-xs card-text-muted">ক্যান্টনমেন্ট পাবলিক স্কুল অ্যান্ড কলেজ, সৈয়দপুর এর মানচিত্র</p>
+                    </div>
+
+                    <div class="w-full h-[380px] rounded-2xl overflow-hidden border border-blue-500/30 shadow-inner relative">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3594.1373307613606!2d88.90327387607736!3d25.766810208422477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e352f205c065f1%3A0x6b4fbdd3b6e82a93!2sCantonment%20Public%20School%20And%20College%2C%20Saidpur!5e0!3m2!1sen!2sbd!4v1710000000000!5m2!1sen!2sbd" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs card-text-muted pt-2">
+                        <span><i class="fa-solid fa-compass text-cyan-400 mr-1"></i> জিও লোকেশন: সৈয়দপুর কেন্টনমেন্ট</span>
+                        <a href="https://maps.google.com" target="_blank" class="text-cyan-400 hover:underline flex items-center gap-1 font-semibold">
+                            গুগল ম্যাপে খুলুন <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- THEME SWITCHER WIDGET -->
+            <div class="max-w-md mx-auto pt-4">
+                <div class="glass-card p-2.5 rounded-2xl border border-blue-500/30 flex items-center justify-between gap-1 shadow-xl">
+                    <button onclick="setTheme('normal')" id="btn-normal" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Normal
+                    </button>
+                    <button onclick="setTheme('dark')" id="btn-dark" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-white">
+                        <i class="fa-solid fa-moon text-xs"></i> Dark
+                    </button>
+                    <button onclick="setTheme('light')" id="btn-light" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-blue-600">
+                        <i class="fa-solid fa-sun text-xs"></i> Light
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-auto border-t border-blue-500/20 py-5 text-center text-xs card-text-muted">
+            <p>© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning</p>
+        </footer>
+    </div>
+
+    <!-- PORTAL LOGIN MODAL -->
+    <div id="portalLoginModal" onclick="closeModalOnBackdrop(event, 'portalLoginModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-md w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('portalLoginModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 flex items-center justify-center text-base shadow-xl transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-bold card-heading">পোর্টাল লগইন</h2>
+                <p class="text-xs text-cyan-400">শিক্ষার্থী ও শিক্ষক একাউন্টে প্রবেশ করুন</p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('লগইন প্রসেস করা হচ্ছে...');" class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 card-text-muted">ইউজার আইডি / রোল</label>
+                    <input type="text" required placeholder="উদাহরণ: 2026001" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 card-text-muted">পাসওয়ার্ড</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-950/60 border border-blue-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-cyan-400">
+                </div>
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:from-blue-500 hover:to-cyan-400 transition">
+                    লগইন করুন
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // SIDEBAR TOGGLE
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            sidebar.classList.toggle('sidebar-collapsed');
+            
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+            } else {
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+            }
+        }
+
+        // THEME MANAGEMENT
+        function setTheme(theme) {
+            const html = document.documentElement;
+            html.className = '';
+            html.classList.add('theme-' + theme);
+
+            const btnNormal = document.getElementById('btn-normal');
+            const btnDark = document.getElementById('btn-dark');
+            const btnLight = document.getElementById('btn-light');
+
+            const activeClasses = ['bg-gradient-to-r', 'from-blue-600', 'to-cyan-500', 'text-white', 'shadow-md'];
+            
+            [btnNormal, btnDark, btnLight].forEach(btn => {
+                if(btn) {
+                    btn.classList.remove(...activeClasses);
+                    btn.classList.add('card-text-muted');
+                }
+            });
+
+            const activeBtn = document.getElementById('btn-' + theme);
+            if(activeBtn) {
+                activeBtn.classList.remove('card-text-muted');
+                activeBtn.classList.add(...activeClasses);
+            }
+
+            localStorage.setItem('cpscs_theme', theme);
+        }
+
+        // MODAL MANAGEMENT
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                modal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                modal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            }
+        }
+
+        function closeModalOnBackdrop(event, id) {
+            if (event.target.id === id) {
+                closeModal(id);
+            }
+        }
+
+        // INITIAL LOAD THEME
+        const savedTheme = localStorage.getItem('cpscs_theme') || 'normal';
+        setTheme(savedTheme);
+    </script>
+</body>
+</html>

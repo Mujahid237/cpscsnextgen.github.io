@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="bn" class="theme-normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academics - CPSCS NextGen Campus</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Hind Siliguri) -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* 1. NORMAL THEME (CYBER BLUE) */
+        html.theme-normal body {
+            background: linear-gradient(to bottom right, #020617, #0f172a, #020617);
+            color: #f8fafc;
+        }
+        html.theme-normal .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        html.theme-normal .glass-sidebar {
+            background: rgba(15, 23, 42, 0.92);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        html.theme-normal .glass-modal {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 50px rgba(14, 165, 233, 0.25);
+        }
+        html.theme-normal .card-text-muted { color: #cbd5e1; }
+        html.theme-normal .card-heading { color: #ffffff; }
+
+        /* 2. DARK THEME (PURE BLACK) */
+        html.theme-dark body {
+            background: #000000;
+            color: #f1f5f9;
+        }
+        html.theme-dark .glass-card {
+            background: #09090b;
+            backdrop-filter: blur(0px);
+            border: 1px solid #27272a;
+        }
+        html.theme-dark .glass-sidebar {
+            background: #09090b;
+            border-right: 1px solid #27272a;
+        }
+        html.theme-dark .glass-modal {
+            background: #09090b;
+            border: 1px solid #27272a;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+        }
+        html.theme-dark .card-text-muted { color: #a1a1aa; }
+        html.theme-dark .card-heading { color: #ffffff; }
+
+        /* 3. LIGHT THEME (CLEAN WHITE) */
+        html.theme-light body {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        html.theme-light .glass-card {
+            background: #ffffff;
+            backdrop-filter: blur(0px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        html.theme-light .glass-sidebar {
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+        }
+        html.theme-light .glass-modal {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        html.theme-light .card-text-muted { color: #475569; }
+        html.theme-light .card-heading { color: #0f172a; }
+        html.theme-light .nav-text { color: #334155 !important; }
+        html.theme-light .nav-text:hover { color: #0284c7 !important; background: #f1f5f9 !important; }
+
+        .blue-glow {
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+        }
+        .sidebar-collapsed {
+            width: 80px !important;
+        }
+        .sidebar-collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        .sidebar-collapsed .center-on-collapse {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 4px;
+        }
+
+        .modal-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: scale(1) !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex relative">
+
+    <!-- 1. LEFT SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="w-72 h-screen sticky top-0 glass-sidebar flex flex-col justify-between p-4 z-40 shrink-0 relative transition-all duration-300">
+        
+        <button onclick="toggleSidebar()" id="toggleBtn" class="absolute -right-3.5 top-10 bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-110 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-lg border border-white/20 transition duration-300 z-50">
+            <i id="toggleIcon" class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+
+        <div class="space-y-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-blue-500/20 center-on-collapse">
+                <div class="w-12 h-12 flex items-center justify-center shrink-0 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]">
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <path d="M100 10 L130 30 L170 30 L170 70 L190 100 L170 130 L170 170 L130 170 L100 190 L70 170 L30 170 L30 130 L10 100 L30 70 L30 30 L70 30 Z" fill="#38bdf8" stroke="#dc2626" stroke-width="6"/>
+                        <circle cx="100" cy="100" r="62" fill="#ffffff" stroke="#1e3a8a" stroke-width="4"/>
+                        <circle cx="100" cy="100" r="42" fill="#dc2626"/>
+                        <circle cx="100" cy="100" r="36" fill="#facc15"/>
+                        <path d="M75 90 C85 85 95 88 100 93 C105 88 115 85 125 90 L125 115 C115 110 105 113 100 118 C95 113 85 110 75 115 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="3"/>
+                        <line x1="100" y1="93" x2="100" y2="118" stroke="#1e3a8a" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="hide-on-collapse">
+                    <h1 class="font-bold text-lg card-heading leading-tight">CPSCS</h1>
+                    <p class="text-xs text-cyan-500 font-semibold tracking-wide">NextGen Campus</p>
+                </div>
+            </div>
+
+          <nav class="space-y-1.5 font-medium text-sm">
+    <a href="index.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-house w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_home">Home</span>
+    </a>
+    <button onclick="openModal('aboutUsModal')" class="w-full nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse text-left">
+        <i class="fa-solid fa-circle-info w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_about">About Us</span>
+    </button>
+    <a href="administration.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-user-shield w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_admin">Administration</span>
+    </a>
+    <a href="academics.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold blue-glow transition center-on-collapse">
+        <i class="fa-solid fa-graduation-cap w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_academics">Academics</span>
+    </a>
+    <a href="index.html#teachers" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_teachers">Teachers</span>
+    </a>
+    <a href="facilities.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-building-columns w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_facilities">Facilities</span>
+    </a>
+    <a href="clubsactivities.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-trophy w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_clubs">Clubs & Activities</span>
+    </a>
+    <a href="index.html#notices" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-scroll w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_notices">Notices & Results</span>
+    </a>
+    <a href="index.html#dashboard" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-id-card w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_dashboard">Student Dashboard</span>
+    </a>
+    <a href="contact.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+        <i class="fa-solid fa-headset w-5 text-center"></i> 
+        <span class="hide-on-collapse" data-key="nav_contact">Contact Us</span>
+    </a>
+</nav>
+        </div>
+
+        <div class="pt-4 border-t border-blue-500/20">
+            <button onclick="alert('Portal Login')" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> 
+                <span class="hide-on-collapse" data-key="portal_login">পোর্টাল লগইন</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+        
+        <!-- HEADER / TOPBAR -->
+        <div class="bg-blue-900/30 border-b border-blue-500/20 px-6 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+            <div class="flex items-center gap-3 min-w-0 flex-1 w-full md:w-auto">
+                <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold uppercase animate-pulse shrink-0" data-key="notice_tag">Notice</span>
+                <marquee behavior="scroll" direction="left" class="font-medium text-cyan-500" data-key="marquee_text">
+                    🎓 CPSCS NextGen Campus-এ স্বাগতম! | এসএসসি ২০২৬ ব্যাচের সমাপনী পরীক্ষা সংক্রান্ত বিশেষ নির্দেশিকা প্রকাশিত হয়েছে।
+                </marquee>
+            </div>
+
+            <div class="glass-card border border-blue-500/30 p-1 rounded-xl flex items-center gap-1 shrink-0">
+                <button onclick="toggleLanguage('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                    BN
+                </button>
+                <button onclick="toggleLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white">
+                    EN
+                </button>
+            </div>
+
+            <div onclick="openModal('searchModal')" class="w-full md:w-80 glass-card hover:bg-blue-500/10 border border-blue-500/30 px-3.5 py-1.5 rounded-xl flex items-center justify-between cursor-pointer transition group shrink-0">
+                <div class="flex items-center gap-2 text-slate-400 group-hover:text-cyan-400 transition text-xs">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span class="card-text-muted font-medium" data-key="search_placeholder">কী খুঁজতে চান?</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">Ctrl</kbd>
+                    <span class="text-slate-500 text-[10px]">+</span>
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">K</kbd>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACADEMICS CONTENT SECTION -->
+        <div class="flex-1 p-6 md:p-8 max-w-[1600px] w-full mx-auto space-y-8">
+            
+            <!-- HEADER TITLE -->
+            <div class="glass-card p-8 rounded-3xl border border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                <div class="space-y-3 z-10 text-center md:text-left">
+                    <span class="bg-blue-500/20 border border-blue-400/30 text-cyan-400 px-4 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-2" data-key="academics_badge">
+                        <i class="fa-solid fa-graduation-cap text-yellow-400"></i> Academics Section
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-tight card-heading" data-key="academics_title">
+                        একাডেমিক কার্যক্রম ও রিসোর্স
+                    </h1>
+                    <p class="card-text-muted text-sm md:text-base max-w-2xl" data-key="academics_subtitle">
+                        শিক্ষার্থীদের পড়াশোনার সুবিধার্থে পাঠ্যপুস্তক, সিলেবাস, ক্লাস ও পরীক্ষার রুটিন ডিজিটাল প্ল্যাটফর্মে উপলব্ধ করা হয়েছে।
+                    </p>
+                </div>
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-3xl md:text-4xl shadow-xl blue-glow shrink-0 z-10">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+            </div>
+
+            <!-- 4 ACADEMIC OPTIONS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 1. Text Book -->
+                <div onclick="openModal('textBookModal')" class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">01</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="opt_1_title">Text Book</h3>
+                        <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="opt_1_bn">পাঠ্যপুস্তক ও ডিজিটাল ই-বুক</p>
+                        <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="opt_1_desc">
+                            জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড (NCTB) অনুমোদিত সকল শ্রেণীর পিডিএফ ই-বুক সরাসরি ডাউনলোড করুন।
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <button class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view">বই ডাউনলোড করুন</span> <i class="fa-solid fa-download text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Syllabus -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">02</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="opt_2_title">Syllabus</h3>
+                        <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="opt_2_bn">একাডেমিক সিলেবাস ও পাঠ পরিকল্পনা</p>
+                        <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="opt_2_desc">
+                            সকল শ্রেণীর বার্ষিক, অর্ধবার্ষিক ও টার্ম পরীক্ষার সর্বশেষ সিলেবাস এবং নম্বর বণ্টন পদ্ধতি দেখুন।
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="alert('Syllabus section is opening...')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_syl">সিলেবাস দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Online/Offline Class Routine -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">03</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="opt_3_title">Online/Offline Class Routine</h3>
+                        <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="opt_3_bn">অনলাইন/অফলাইন ক্লাস রুটিন</p>
+                        <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="opt_3_desc">
+                            প্রতিটি সেকশন ও ভার্সনের প্রতিদিনের ক্লাসের সময়সূচী এবং অনলাইন ক্লাসের লাইভ লিঙ্ক পান।
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="alert('Class Routine section is opening...')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_routine">রুটিন দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Exam Routine -->
+                <div class="glass-card p-6 md:p-8 rounded-3xl border border-blue-500/30 hover:border-cyan-400 transition-all duration-300 space-y-5 group relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">04</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold card-heading group-hover:text-cyan-400 transition" data-key="opt_4_title">Exam Routine</h3>
+                        <p class="text-xs text-cyan-400 font-medium mt-0.5" data-key="opt_4_bn">পরীক্ষার সময়সূচী ও নির্দেশিকা</p>
+                        <p class="card-text-muted text-sm mt-3 leading-relaxed" data-key="opt_4_desc">
+                            সকল সেমিস্টার, মডেল টেস্ট ও সিটি পরীক্ষার আপডেট সময়সূচী এবং সিট প্ল্যান জেনে নিন।
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="alert('Exam Routine section is opening...')" class="w-full py-3 bg-blue-600/20 hover:bg-blue-600 text-cyan-400 hover:text-white font-semibold rounded-xl border border-blue-500/30 transition flex items-center justify-center gap-2 text-sm">
+                            <span data-key="btn_view_exam">সময়সূচী দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THEME SWITCHER WIDGET -->
+            <div class="max-w-md mx-auto pt-4">
+                <div class="glass-card p-2.5 rounded-2xl border border-blue-500/30 flex items-center justify-between gap-1 shadow-xl">
+                    <button onclick="setTheme('normal')" id="btn-normal" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Normal
+                    </button>
+                    <button onclick="setTheme('dark')" id="btn-dark" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-white">
+                        <i class="fa-solid fa-moon text-xs"></i> Dark
+                    </button>
+                    <button onclick="setTheme('light')" id="btn-light" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-blue-600">
+                        <i class="fa-solid fa-sun text-xs"></i> Light
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-auto border-t border-blue-500/20 py-5 text-center text-xs card-text-muted">
+            <p data-key="footer_text">© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning</p>
+        </footer>
+    </div>
+
+    <!-- SEARCH MODAL -->
+    <div id="searchModal" onclick="closeModalOnBackdrop(event, 'searchModal')" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-start justify-center pt-16 p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 rounded-3xl max-w-2xl w-full space-y-4 relative border border-cyan-500/40 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-blue-500/20">
+                <div class="flex items-center gap-3 w-full pr-4">
+                    <i class="fa-solid fa-magnifying-glass text-cyan-400 text-lg"></i>
+                    <input type="text" id="searchInput" oninput="performSearch()" placeholder="যেকোনো বইয়ের নাম বা শ্রেণি দিয়ে খুঁজুন..." class="w-full bg-transparent border-none outline-none text-white text-base placeholder-slate-400 font-medium">
+                </div>
+                <button onclick="closeModal('searchModal')" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition shrink-0">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div id="searchResults" class="max-h-80 overflow-y-auto space-y-2 pt-2">
+                <p class="text-xs text-slate-400 text-center py-4">এখানে টাইপ করে অনুসন্ধান করুন (যেমন: Physics, Class 10, Bangla...)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. TEXT BOOK SELECTION MODAL (POP-UP 1) -->
+    <div id="textBookModal" onclick="closeModalOnBackdrop(event, 'textBookModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-2xl w-full space-y-6 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('textBookModal')" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-10" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4 pb-4 border-b border-blue-500/20">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold card-heading" data-key="modal_tb_title">পাঠ্যপুস্তক শ্রেণি নির্বাচন</h2>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium" data-key="modal_tb_subtitle">আপনার কাঙ্ক্ষিত শ্রেণির বই ডাউনলোড করতে নির্বাচন করুন</p>
+                </div>
+            </div>
+
+            <!-- Class Grid (1 to 10) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                <button onclick="openClassModal(1)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-bookmark text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_1">Class 1</span>
+                </button>
+
+                <button onclick="openClassModal(2)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-bookmark text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_2">Class 2</span>
+                </button>
+
+                <button onclick="openClassModal(3)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-bookmark text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_3">Class 3</span>
+                </button>
+
+                <button onclick="openClassModal(4)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-bookmark text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_4">Class 4</span>
+                </button>
+
+                <button onclick="openClassModal(5)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-bookmark text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_5">Class 5</span>
+                </button>
+
+                <button onclick="openClassModal(6)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-open-reader text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_6">Class 6</span>
+                </button>
+
+                <button onclick="openClassModal(7)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-open-reader text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_7">Class 7</span>
+                </button>
+
+                <button onclick="openClassModal(8)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-open-reader text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_8">Class 8</span>
+                </button>
+
+                <button onclick="openClassModal(9)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-graduation-cap text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_9">Class 9</span>
+                </button>
+
+                <button onclick="openClassModal(10)" class="p-3.5 rounded-2xl glass-card border border-blue-500/30 hover:border-cyan-400 hover:bg-blue-600/30 text-center transition group flex flex-col items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-graduation-cap text-cyan-400 text-lg group-hover:scale-125 transition duration-300"></i>
+                    <span class="text-sm font-bold card-heading group-hover:text-cyan-400" data-key="class_10">Class 10</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNIVERSAL CLASS BOOKS MODAL (Dynamically Populated) -->
+    <div id="dynamicClassModal" onclick="closeModalOnBackdrop(event, 'dynamicClassModal')" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-4xl w-full space-y-6 relative border border-cyan-500/40 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('dynamicClassModal')" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-base shadow-xl transition-all duration-200 hover:scale-110 z-10" title="Close (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center justify-between pb-4 border-b border-blue-500/20">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                    <div>
+                        <h2 id="dynModalTitle" class="text-xl md:text-2xl font-bold card-heading">Class Text Books</h2>
+                        <p id="dynModalSub" class="text-xs md:text-sm text-cyan-400 font-medium">পাঠ্যপুস্তকের তালিকা</p>
+                    </div>
+                </div>
+                <button onclick="backToTextBookModal('dynamicClassModal')" class="px-3 py-1.5 rounded-xl bg-blue-600/20 border border-cyan-500/30 text-cyan-400 hover:bg-blue-600 hover:text-white text-xs font-semibold transition flex items-center gap-1.5 mr-8 sm:mr-0">
+                    <i class="fa-solid fa-arrow-left text-[10px]"></i> <span data-key="btn_back">পিছনে যান</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Bangla Version Column -->
+                <div class="glass-card p-5 rounded-2xl border border-blue-500/30 space-y-4">
+                    <div class="flex items-center gap-2 border-b border-blue-500/20 pb-2.5">
+                        <span class="w-3 h-3 rounded-full bg-cyan-400 animate-pulse"></span>
+                        <h3 class="font-bold card-heading text-base">Bangla Version (BV)</h3>
+                    </div>
+                    <ul id="bvBookList" class="space-y-2.5 text-sm">
+                        <!-- Items Inserted via JS -->
+                    </ul>
+                </div>
+
+                <!-- English Version Column -->
+                <div class="glass-card p-5 rounded-2xl border border-blue-500/30 space-y-4">
+                    <div class="flex items-center gap-2 border-b border-blue-500/20 pb-2.5">
+                        <span class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></span>
+                        <h3 class="font-bold card-heading text-base">English Version (EV)</h3>
+                    </div>
+                    <ul id="evBookList" class="space-y-2.5 text-sm">
+                        <!-- Items Inserted via JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- 1. ALL CLASS BOOKS DATA ---
+        const booksData = {
+            1: {
+                bv: ["আমার বাংলা বই", "English For Today", "প্রাথমিক গণিত"],
+                ev: ["Bangla Book", "English For Today", "Elementary Mathematics"]
+            },
+            2: {
+                bv: ["আমার বাংলা বই", "English For Today", "প্রাথমিক গণিত"],
+                ev: ["Bangla Book", "English For Today", "Elementary Mathematics"]
+            },
+            3: {
+                bv: ["আমার বাংলা বই", "English For Today", "প্রাথমিক গণিত", "প্রাথমিক বিজ্ঞান", "বাংলাদেশ ও বিশ্বপরিচয়", "ইসলাম শিক্ষা", "হিন্দুধর্ম শিক্ষা", "বৌদ্ধধর্ম শিক্ষা", "খ্রিস্টধর্ম শিক্ষা"],
+                ev: ["Bangla Book", "English For Today", "Elementary Mathematics", "Elementary Science", "Bangladesh & Global Studies", "Islam Education", "Hindu Religion", "Buddhist Religion", "Christian Religion"]
+            },
+            4: {
+                bv: ["আমার বাংলা বই", "English For Today", "প্রাথমিক গণিত", "প্রাথমিক বিজ্ঞান", "বাংলাদেশ ও বিশ্বপরিচয়", "ইসলাম শিক্ষা", "হিন্দুধর্ম শিক্ষা", "বৌদ্ধধর্ম শিক্ষা", "খ্রিস্টধর্ম শিক্ষা"],
+                ev: ["Bangla Book", "English For Today", "Elementary Mathematics", "Elementary Science", "Bangladesh & Global Studies", "Islam Education", "Hindu Religion", "Buddhist Religion", "Christian Religion"]
+            },
+            5: {
+                bv: ["আমার বাংলা বই", "English For Today", "প্রাথমিক গণিত", "প্রাথমিক বিজ্ঞান", "বাংলাদেশ ও বিশ্বপরিচয়", "ইসলাম শিক্ষা", "হিন্দুধর্ম শিক্ষা", "বৌদ্ধধর্ম শিক্ষা", "খ্রিস্টধর্ম শিক্ষা"],
+                ev: ["Bangla Book", "English For Today", "Elementary Mathematics", "Elementary Science", "Bangladesh & Global Studies", "Islam Education", "Hindu Religion", "Buddhist Religion", "Christian Religion"]
+            },
+            6: {
+                bv: ["বাংলা", "English", "গণিত", "বিজ্ঞান", "ইতিহাস ও সামাজিক বিজ্ঞান", "ডিজিটাল প্রযুক্তি", "জীবন ও জীবিকা", "স্বাস্থ্য সুরক্ষা", "শিল্প ও সংস্কৃতি", "ইসলাম শিক্ষা"],
+                ev: ["Bangla", "English", "Mathematics", "Science", "History & Social Science", "Digital Technology", "Life & Livelihood", "Health Protection", "Art & Culture", "Islam Education"]
+            },
+            7: {
+                bv: ["বাংলা", "English", "গণিত", "বিজ্ঞান", "ইতিহাস ও সামাজিক বিজ্ঞান", "ডিজিটাল প্রযুক্তি", "জীবন ও জীবিকা", "স্বাস্থ্য সুরক্ষা", "শিল্প ও সংস্কৃতি", "ইসলাম শিক্ষা"],
+                ev: ["Bangla", "English", "Mathematics", "Science", "History & Social Science", "Digital Technology", "Life & Livelihood", "Health Protection", "Art & Culture", "Islam Education"]
+            },
+            8: {
+                bv: ["বাংলা", "English", "গণিত", "বিজ্ঞান", "ইতিহাস ও সামাজিক বিজ্ঞান", "ডিজিটাল প্রযুক্তি", "জীবন ও জীবিকা", "স্বাস্থ্য সুরক্ষা", "শিল্প ও সংস্কৃতি", "ইসলাম শিক্ষা"],
+                ev: ["Bangla", "English", "Mathematics", "Science", "History & Social Science", "Digital Technology", "Life & Livelihood", "Art & Culture", "Islam Education"]
+            },
+            9: {
+                bv: ["বাংলা সাহিত্য", "বাংলা সহপাঠ", "English For Today", "গণিত", "পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "হিসাববিজ্ঞান", "ব্যবসায় উদ্যোগ", "ফিন্যান্স ও ব্যাংকিং", "বাংলাদেশের ইতিহাস ও বিশ্বসভ্যতা", "ভূগোল ও পরিবেশ", "পৌরনীতি ও নাগরিকতা", "তথ্য ও যোগাযোগ প্রযুক্তি", "ইসলাম ও নৈতিক শিক্ষা"],
+                ev: ["Bangla Literature", "English For Today", "Mathematics", "Physics", "Chemistry", "Biology", "Higher Mathematics", "Accounting", "Business Entrepreneurship", "Finance & Banking", "History of Bangladesh", "Geography & Environment", "Civics & Citizenship", "ICT", "Islam & Moral Education"]
+            },
+            10: {
+                bv: ["বাংলা সাহিত্য", "বাংলা সহপাঠ", "English For Today", "গণিত", "পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "হিসাববিজ্ঞান", "ব্যবসায় উদ্যোগ", "ফিন্যান্স ও ব্যাংকিং", "বাংলাদেশের ইতিহাস ও বিশ্বসভ্যতা", "ভূগোল ও পরিবেশ", "পৌরনীতি ও নাগরিকতা", "তথ্য ও যোগাযোগ প্রযুক্তি", "ইসলাম ও নৈতিক শিক্ষা"],
+                ev: ["Bangla Literature", "English For Today", "Mathematics", "Physics", "Chemistry", "Biology", "Higher Mathematics", "Accounting", "Business Entrepreneurship", "Finance & Banking", "History of Bangladesh", "Geography & Environment", "Civics & Citizenship", "ICT", "Islam & Moral Education"]
+            }
+        };
+
+        // --- 2. TRANSLATION DICTIONARY ---
+        const i18n = {
+            bn: {
+                nav_home: "হোম",
+                nav_about: "আমাদের সম্পর্কে",
+                nav_admin: "প্রশাসন",
+                nav_academics: "একাডেমিকস",
+                nav_teachers: "শিক্ষকমণ্ডলী",
+                nav_facilities: "সুযোগ-সুবিধা",
+                nav_clubs: "ক্লাব ও কার্যক্রম",
+                nav_notices: "নোটিশ ও ফলাফল",
+                nav_dashboard: "স্টুডেন্ট ড্যাশবোর্ড",
+                nav_contact: "যোগাযোগ",
+                portal_login: "পোর্টাল লগইন",
+                notice_tag: "নোটিশ",
+                marquee_text: "🎓 CPSCS NextGen Campus-এ স্বাগতম! | এসএসসি ২০২৬ ব্যাচের সমাপনী পরীক্ষা সংক্রান্ত বিশেষ নির্দেশিকা প্রকাশিত হয়েছে।",
+                search_placeholder: "কী খুঁজতে চান?",
+                academics_badge: "একাডেমিক সেকশন",
+                academics_title: "একাডেমিক কার্যক্রম ও রিসোর্স",
+                academics_subtitle: "শিক্ষার্থীদের পড়াশোনার সুবিধার্থে পাঠ্যপুস্তক, সিলেবাস, ক্লাস ও পরীক্ষার রুটিন ডিজিটাল প্ল্যাটফর্মে উপলব্ধ করা হয়েছে।",
+                opt_1_title: "Text Book",
+                opt_1_bn: "পাঠ্যপুস্তক ও ডিজিটাল ই-বুক",
+                opt_1_desc: "জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড (NCTB) অনুমোদিত সকল শ্রেণীর পিডিএফ ই-বুক সরাসরি ডাউনলোড করুন।",
+                btn_view: "বই ডাউনলোড করুন",
+                opt_2_title: "Syllabus",
+                opt_2_bn: "একাডেমিক সিলেবাস ও পাঠ পরিকল্পনা",
+                opt_2_desc: "সকল শ্রেণীর বার্ষিক, অর্ধবার্ষিক ও টার্ম পরীক্ষার সর্বশেষ সিলেবাস এবং নম্বর বণ্টন পদ্ধতি দেখুন।",
+                btn_view_syl: "সিলেবাস দেখুন",
+                opt_3_title: "Online/Offline Routine",
+                opt_3_bn: "অনলাইন/অফলাইন ক্লাস রুটিন",
+                opt_3_desc: "প্রতিটি সেকশন ও ভার্সনের প্রতিদিনের ক্লাসের সময়সূচী এবং অনলাইন ক্লাসের লাইভ লিঙ্ক পান।",
+                btn_view_routine: "রুটিন দেখুন",
+                opt_4_title: "Exam Routine",
+                opt_4_bn: "পরীক্ষার সময়সূচী ও নির্দেশিকা",
+                opt_4_desc: "সকল সেমিস্টার, মডেল টেস্ট ও সিটি পরীক্ষার আপডেট সময়সূচী এবং সিট প্ল্যান জেনে নিন।",
+                btn_view_exam: "সময়সূচী দেখুন",
+                footer_text: "© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning",
+                modal_tb_title: "পাঠ্যপুস্তক শ্রেণি নির্বাচন",
+                modal_tb_subtitle: "আপনার কাঙ্ক্ষিত শ্রেণির বই ডাউনলোড করতে নির্বাচন করুন",
+                class_1: "প্রথম শ্রেণি",
+                class_2: "দ্বিতীয় শ্রেণি",
+                class_3: "তৃতীয় শ্রেণি",
+                class_4: "চতুর্থ শ্রেণি",
+                class_5: "পঞ্চম শ্রেণি",
+                class_6: "ষষ্ঠ শ্রেণি",
+                class_7: "সপ্তম শ্রেণি",
+                class_8: "অষ্টম শ্রেণি",
+                class_9: "নবম শ্রেণি",
+                class_10: "দশম শ্রেণি",
+                btn_back: "পিছনে যান",
+                class_books_sub: "শ্রেণির সকল পাঠ্যপুস্তকের তালিকা"
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About Us",
+                nav_admin: "Administration",
+                nav_academics: "Academics",
+                nav_teachers: "Teachers",
+                nav_facilities: "Facilities",
+                nav_clubs: "Clubs & Activities",
+                nav_notices: "Notices & Results",
+                nav_dashboard: "Student Dashboard",
+                nav_contact: "Contact Us",
+                portal_login: "Portal Login",
+                notice_tag: "Notice",
+                marquee_text: "🎓 Welcome to CPSCS NextGen Campus! | Special guidelines for SSC 2026 Batch Final Exams have been published.",
+                search_placeholder: "What are you looking for?",
+                academics_badge: "Academics Section",
+                academics_title: "Academic Activities & Resources",
+                academics_subtitle: "Textbooks, syllabi, class and exam routines are available on digital platforms for the convenience of students.",
+                opt_1_title: "Text Books",
+                opt_1_bn: "Textbooks & E-Books",
+                opt_1_desc: "Download PDF e-books for all classes approved by NCTB directly.",
+                btn_view: "Download Books",
+                opt_2_title: "Syllabus",
+                opt_2_bn: "Academic Syllabus",
+                opt_2_desc: "View the latest syllabus and mark distribution for annual and term exams for all classes.",
+                btn_view_syl: "View Syllabus",
+                opt_3_title: "Class Routine",
+                opt_3_bn: "Online/Offline Class Routine",
+                opt_3_desc: "Get daily class schedules and live links for online classes for every section.",
+                btn_view_routine: "View Routine",
+                opt_4_title: "Exam Routine",
+                opt_4_bn: "Exam Schedule & Routine",
+                opt_4_desc: "Find updated exam schedules and seat plans for all semesters and model tests.",
+                btn_view_exam: "View Exam Schedule",
+                footer_text: "© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning",
+                modal_tb_title: "Select Class Textbooks",
+                modal_tb_subtitle: "Select your desired class to download books",
+                class_1: "Class 1",
+                class_2: "Class 2",
+                class_3: "Class 3",
+                class_4: "Class 4",
+                class_5: "Class 5",
+                class_6: "Class 6",
+                class_7: "Class 7",
+                class_8: "Class 8",
+                class_9: "Class 9",
+                class_10: "Class 10",
+                btn_back: "Go Back",
+                class_books_sub: "List of all textbooks for this class"
+            }
+        };
+
+        let currentLang = 'bn';
+        let currentOpenClass = 10;
+
+        // --- 3. LANGUAGE SWITCHER LOGIC ---
+        function toggleLanguage(lang) {
+            currentLang = lang;
+            const elements = document.querySelectorAll('[data-key]');
+            
+            elements.forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (i18n[lang] && i18n[lang][key]) {
+                    el.innerText = i18n[lang][key];
+                }
+            });
+
+            // Active State UI for Language Switcher
+            const bnBtn = document.getElementById('lang-bn');
+            const enBtn = document.getElementById('lang-en');
+
+            if (lang === 'bn') {
+                bnBtn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                enBtn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            } else {
+                enBtn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                bnBtn.className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            }
+
+            // Refresh open popup contents if active
+            if (document.getElementById('dynamicClassModal').classList.contains('modal-active')) {
+                renderClassBooks(currentOpenClass);
+            }
+        }
+
+        // --- 4. MODAL CONTROLS & CLASS BOOKS RENDER ---
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('modal-active');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('modal-active');
+            }
+        }
+
+        function closeModalOnBackdrop(event, modalId) {
+            if (event.target.id === modalId) {
+                closeModal(modalId);
+            }
+        }
+
+        function backToTextBookModal(currentModalId) {
+            closeModal(currentModalId);
+            openModal('textBookModal');
+        }
+
+        function openClassModal(classNum) {
+            currentOpenClass = classNum;
+            closeModal('textBookModal');
+            renderClassBooks(classNum);
+            openModal('dynamicClassModal');
+        }
+
+        function renderClassBooks(classNum) {
+            const data = booksData[classNum];
+            if (!data) return;
+
+            const titleText = currentLang === 'bn' ? `Class ${classNum} - পাঠ্যপুস্তক` : `Class ${classNum} - Text Books`;
+            const subText = currentLang === 'bn' ? `${classNum}ম শ্রেণির সকল পাঠ্যপুস্তকের তালিকা` : `List of textbooks for Class ${classNum}`;
+            
+            document.getElementById('dynModalTitle').innerText = titleText;
+            document.getElementById('dynModalSub').innerText = subText;
+
+            const bvList = document.getElementById('bvBookList');
+            const evList = document.getElementById('evBookList');
+
+            bvList.innerHTML = data.bv.map((book, idx) => `
+                <li class="p-3 rounded-xl bg-blue-600/10 border border-blue-500/20 hover:border-cyan-400/50 transition flex items-center justify-between group">
+                    <span class="font-medium card-heading group-hover:text-cyan-400 transition">${idx + 1}. ${book}</span>
+                    <button onclick="downloadBook('${book} (Class ${classNum} - BV)')" class="px-3 py-1 bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-slate-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                        <i class="fa-solid fa-download"></i> PDF
+                    </button>
+                </li>
+            `).join('');
+
+            evList.innerHTML = data.ev.map((book, idx) => `
+                <li class="p-3 rounded-xl bg-blue-600/10 border border-blue-500/20 hover:border-cyan-400/50 transition flex items-center justify-between group">
+                    <span class="font-medium card-heading group-hover:text-cyan-400 transition">${idx + 1}. ${book}</span>
+                    <button onclick="downloadBook('${book} (Class ${classNum} - EV)')" class="px-3 py-1 bg-blue-500/20 hover:bg-blue-600 text-blue-300 hover:text-white rounded-lg text-xs font-bold transition flex items-center gap-1">
+                        <i class="fa-solid fa-download"></i> PDF
+                    </button>
+                </li>
+            `).join('');
+        }
+
+        function downloadBook(bookName) {
+            alert(`"${bookName}" বইটির PDF ডাউনলোড শুরু হচ্ছে...`);
+        }
+
+        // --- 5. SEARCH FUNCTIONALITY ---
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResults');
+
+            if (query === '') {
+                resultsContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">এখানে টাইপ করে অনুসন্ধান করুন (যেমন: Physics, Class 10, Bangla...)</p>`;
+                return;
+            }
+
+            let matches = [];
+
+            // Search through books dataset
+            for (let c = 1; c <= 10; c++) {
+                const classObj = booksData[c];
+                classObj.bv.forEach(b => {
+                    if (b.toLowerCase().includes(query) || `class ${c}`.includes(query) || `${c} class`.includes(query)) {
+                        matches.push({ name: b, version: 'BV', classNum: c });
+                    }
+                });
+                classObj.ev.forEach(b => {
+                    if (b.toLowerCase().includes(query) || `class ${c}`.includes(query) || `${c} class`.includes(query)) {
+                        matches.push({ name: b, version: 'EV', classNum: c });
+                    }
+                });
+            }
+
+            if (matches.length === 0) {
+                resultsContainer.innerHTML = `<p class="text-xs text-rose-400 text-center py-4">কোনো তথ্য পাওয়া যায়নি!</p>`;
+            } else {
+                resultsContainer.innerHTML = matches.map(item => `
+                    <div class="p-3 rounded-xl bg-blue-600/10 border border-blue-500/20 hover:border-cyan-400/50 transition flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">${item.name}</h4>
+                            <p class="text-xs text-cyan-400">Class ${item.classNum} • ${item.version === 'BV' ? 'Bangla Version' : 'English Version'}</p>
+                        </div>
+                        <button onclick="downloadBook('${item.name} (Class ${item.classNum} - ${item.version})')" class="px-3 py-1.5 bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-slate-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-download"></i> PDF
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Keyboard Shortcut Ctrl+K
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                openModal('searchModal');
+                document.getElementById('searchInput').focus();
+            }
+            if (e.key === 'Escape') {
+                closeModal('searchModal');
+                closeModal('textBookModal');
+                closeModal('dynamicClassModal');
+            }
+        });
+
+        // --- 6. SIDEBAR & THEME SWITCHER LOGIC ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            sidebar.classList.toggle('sidebar-collapsed');
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                toggleIcon.className = "fa-solid fa-chevron-right text-xs";
+            } else {
+                toggleIcon.className = "fa-solid fa-chevron-left text-xs";
+            }
+        }
+
+        function setTheme(theme) {
+            const html = document.documentElement;
+            html.className = `theme-${theme}`;
+
+            const normalBtn = document.getElementById('btn-normal');
+            const darkBtn = document.getElementById('btn-dark');
+            const lightBtn = document.getElementById('btn-light');
+
+            const activeClass = "flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+            const inactiveClass = "flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-white";
+
+            normalBtn.className = theme === 'normal' ? activeClass : inactiveClass;
+            darkBtn.className = theme === 'dark' ? activeClass : inactiveClass;
+            lightBtn.className = theme === 'light' ? activeClass : inactiveClass;
+        }
+    </script>
+</body>
+</html>

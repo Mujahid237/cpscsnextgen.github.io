@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="bn" class="theme-normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPSCS NextGen Campus</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Hind Siliguri) -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* 1. NORMAL THEME (CYBER BLUE) */
+        html.theme-normal body {
+            background: linear-gradient(to bottom right, #020617, #0f172a, #020617);
+            color: #f8fafc;
+        }
+        html.theme-normal .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        html.theme-normal .glass-sidebar {
+            background: rgba(15, 23, 42, 0.92);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        html.theme-normal .glass-modal {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 50px rgba(14, 165, 233, 0.25);
+        }
+        html.theme-normal .card-text-muted { color: #cbd5e1; }
+        html.theme-normal .card-heading { color: #ffffff; }
+
+        /* 2. DARK THEME (PURE BLACK) */
+        html.theme-dark body {
+            background: #000000;
+            color: #f1f5f9;
+        }
+        html.theme-dark .glass-card {
+            background: #09090b;
+            backdrop-filter: blur(0px);
+            border: 1px solid #27272a;
+        }
+        html.theme-dark .glass-sidebar {
+            background: #09090b;
+            border-right: 1px solid #27272a;
+        }
+        html.theme-dark .glass-modal {
+            background: #09090b;
+            border: 1px solid #27272a;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+        }
+        html.theme-dark .card-text-muted { color: #a1a1aa; }
+        html.theme-dark .card-heading { color: #ffffff; }
+
+        /* 3. LIGHT THEME (CLEAN WHITE) */
+        html.theme-light body {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        html.theme-light .glass-card {
+            background: #ffffff;
+            backdrop-filter: blur(0px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        html.theme-light .glass-sidebar {
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+        }
+        html.theme-light .glass-modal {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        html.theme-light .card-text-muted { color: #475569; }
+        html.theme-light .card-heading { color: #0f172a; }
+        html.theme-light .nav-text { color: #334155 !important; }
+        html.theme-light .nav-text:hover { color: #0284c7 !important; background: #f1f5f9 !important; }
+
+        .blue-glow {
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+        }
+        .sidebar-collapsed {
+            width: 80px !important;
+        }
+        .sidebar-collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        .sidebar-collapsed .center-on-collapse {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 4px;
+        }
+
+        .modal-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: scale(1) !important;
+        }
+
+        /* --- MOTIVATION & DISCIPLINE ANIMATIONS --- */
+        @keyframes motivationMove {
+            0%   { offset-distance: 0%; opacity: 1; }
+            80%  { offset-distance: 100%; opacity: 1; }
+            90%  { offset-distance: 100%; opacity: 0; }
+            100% { offset-distance: 0%; opacity: 0; }
+        }
+        @keyframes disciplineMove {
+            0%   { offset-distance: 0%; opacity: 1; }
+            85%  { offset-distance: 100%; opacity: 1; }
+            92%  { offset-distance: 100%; opacity: 0; }
+            100% { offset-distance: 0%; opacity: 0; }
+        }
+
+        .anim-ball-motivation {
+            offset-path: path('M 10,70 Q 35,-10 60,70 Q 75,30 90,70 Q 100,50 110,70 L 260,70');
+            animation: motivationMove 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .anim-ball-discipline {
+            offset-path: path('M 10,70 Q 25,35 40,70 Q 55,35 70,70 Q 85,35 100,70 Q 115,35 130,70 Q 145,35 160,70 Q 205,35 220,70 Q 235,35 250,70');
+            animation: disciplineMove 6s infinite linear;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex relative">
+
+    <!-- 1. LEFT SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="w-72 h-screen sticky top-0 glass-sidebar flex flex-col justify-between p-4 z-40 shrink-0 relative transition-all duration-300">
+        
+        <button onclick="toggleSidebar()" id="toggleBtn" class="absolute -right-3.5 top-10 bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-110 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-lg border border-white/20 transition duration-300 z-50">
+            <i id="toggleIcon" class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+
+        <div class="space-y-6">
+            <div class="flex items-center gap-3 pb-4 border-b border-blue-500/20 center-on-collapse">
+                <div class="w-12 h-12 flex items-center justify-center shrink-0 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]">
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <path d="M100 10 L130 30 L170 30 L170 70 L190 100 L170 130 L170 170 L130 170 L100 190 L70 170 L30 170 L30 130 L10 100 L30 70 L30 30 L70 30 Z" fill="#38bdf8" stroke="#dc2626" stroke-width="6"/>
+                        <circle cx="100" cy="100" r="62" fill="#ffffff" stroke="#1e3a8a" stroke-width="4"/>
+                        <circle cx="100" cy="100" r="42" fill="#dc2626"/>
+                        <circle cx="100" cy="100" r="36" fill="#facc15"/>
+                        <path d="M75 90 C85 85 95 88 100 93 C105 88 115 85 125 90 L125 115 C115 110 105 113 100 118 C95 113 85 110 75 115 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="3"/>
+                        <line x1="100" y1="93" x2="100" y2="118" stroke="#1e3a8a" stroke-width="3"/>
+                    </svg>
+                </div>
+                <div class="hide-on-collapse">
+                    <h1 class="font-bold text-lg card-heading leading-tight">CPSCS</h1>
+                    <p class="text-xs text-cyan-500 font-semibold tracking-wide">NextGen Campus</p>
+                </div>
+            </div>
+
+            <nav class="space-y-1.5 font-medium text-sm">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold blue-glow transition center-on-collapse">
+                    <i class="fa-solid fa-house w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_home">হোম</span>
+                </a>
+                <button onclick="openModal('aboutUsModal')" class="w-full nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse text-left">
+    <i class="fa-solid fa-circle-info w-5 text-center"></i> 
+    <span class="hide-on-collapse" data-key="nav_about">আমাদের সম্পর্কে</span>
+</button>
+                <a href="administration.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-user-shield w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_admin">প্রশাসন</span>
+                </a>
+                <a href="academics.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-graduation-cap w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_academics">একাডেমিক</span>
+                </a>
+                <a href="index.html#teachers" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-chalkboard-user w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_teachers">শিক্ষকমণ্ডলী</span>
+                </a>
+                <a href="facilities.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-building-columns w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_facilities">সুযোগ-সুবিধা</span>
+                </a>
+                <a href="clubsactivities.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-trophy w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_clubs">ক্লাব ও কার্যক্রম</span>
+                </a>
+                <a href="#notices" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-scroll w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_notices">নোটিশ ও ফলাফল</span>
+                </a>
+                <a href="#dashboard" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-id-card w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_dashboard">স্টুডেন্ট ড্যাশবোর্ড</span>
+                </a>
+                <a href="contact.html" class="nav-text flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-blue-600/20 hover:text-white transition center-on-collapse">
+                    <i class="fa-solid fa-headset w-5 text-center"></i> 
+                    <span class="hide-on-collapse" data-key="nav_contact">যোগাযোগ</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="pt-4 border-t border-blue-500/20">
+            <button onclick="openModal('portalLoginModal')" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> 
+                <span class="hide-on-collapse" data-key="portal_login">পোর্টাল লগইন</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+        
+        <div class="bg-blue-900/30 border-b border-blue-500/20 px-6 py-2.5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+            
+            <div class="flex items-center gap-3 min-w-0 flex-1 w-full md:w-auto">
+                <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold uppercase animate-pulse shrink-0" data-key="notice_tag">নোটিশ</span>
+                <marquee behavior="scroll" direction="left" class="font-medium text-cyan-500" data-key="marquee_text">
+                    🎓 CPSCS NextGen Campus-এ স্বাগতম! | এসএসসি ২০২৬ ব্যাচের সমাপনী পরীক্ষা সংক্রান্ত বিশেষ নির্দেশিকা প্রকাশিত হয়েছে।
+                </marquee>
+            </div>
+
+            <div class="glass-card border border-blue-500/30 p-1 rounded-xl flex items-center gap-1 shrink-0">
+                <button onclick="toggleLanguage('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                    BN
+                </button>
+                <button onclick="toggleLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white">
+                    EN
+                </button>
+            </div>
+
+            <div onclick="openModal('searchModal')" class="w-full md:w-80 glass-card hover:bg-blue-500/10 border border-blue-500/30 px-3.5 py-1.5 rounded-xl flex items-center justify-between cursor-pointer transition group shrink-0">
+                <div class="flex items-center gap-2 text-slate-400 group-hover:text-cyan-400 transition text-xs">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span class="card-text-muted font-medium" data-key="search_placeholder">কী খুঁজতে চান?</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">Ctrl</kbd>
+                    <span class="text-slate-500 text-[10px]">+</span>
+                    <kbd class="bg-blue-950/80 border border-blue-500/40 text-cyan-400 text-[10px] font-mono px-1.5 py-0.5 rounded shadow">K</kbd>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex-1 p-6 md:p-8 flex flex-col lg:flex-row gap-8 max-w-[1600px] w-full mx-auto">
+            
+            <main class="flex-1 space-y-8 flex flex-col justify-between">
+
+                <div class="space-y-8">
+                    <!-- HERO BANNER CARD -->
+                    <section id="home" class="glass-card rounded-3xl p-8 border border-blue-500/30 relative overflow-hidden flex flex-col xl:flex-row items-center justify-between gap-8">
+                        <div class="space-y-6 max-w-xl z-10">
+                            <span class="bg-blue-500/20 border border-blue-400/30 text-cyan-400 px-4 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-2">
+                                <i class="fa-solid fa-certificate text-yellow-400"></i> <span data-key="hero_badge">ক্যান্টনমেন্ট পাবলিক স্কুল এন্ড কলেজ সৈয়দপুর</span>
+                            </span>
+                            <h1 class="text-3xl md:text-4xl font-black tracking-tight card-heading leading-tight" data-key="hero_title">
+                                ডিজিটাল শিক্ষায় <br>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400">স্মার্ট ক্যাম্পাসের নতুন অধ্যায়</span>
+                            </h1>
+                            <p class="card-text-muted text-sm md:text-base leading-relaxed" data-key="hero_desc">
+                                জ্ঞান, শৃঙ্খলা ও নৈতিকতার শক্তিতে বলীয়ান হয়ে একবিংশ শতাব্দীর চ্যালেঞ্জ মোকাবেলায় প্রস্তুত হচ্ছে আমাদের শিক্ষার্থীরা।
+                            </p>
+                            <div class="flex flex-wrap gap-4 pt-2">
+                                <a href="#academics" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg blue-glow flex items-center gap-2 text-sm">
+                                    <span data-key="btn_admission">ভর্তি তথ্য দেখুন</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </a>
+                                <button onclick="openModal('aboutUsModal')" class="glass-card hover:bg-blue-500/10 card-heading font-semibold px-6 py-3 rounded-xl transition flex items-center gap-2 text-sm">
+                                    <span data-key="btn_about">আমাদের সম্পর্কে</span> <i class="fa-solid fa-compass text-cyan-400"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="w-full xl:w-64 h-64 rounded-2xl bg-gradient-to-br from-blue-600/30 to-cyan-500/10 border border-blue-500/20 p-5 flex flex-col justify-between shadow-2xl relative shrink-0">
+                            <div class="flex justify-between items-start">
+                                <div class="w-12 h-12 flex items-center justify-center drop-shadow-[0_0_10px_rgba(56,189,248,0.5)]">
+                                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                                        <path d="M100 10 L130 30 L170 30 L170 70 L190 100 L170 130 L170 170 L130 170 L100 190 L70 170 L30 170 L30 130 L10 100 L30 70 L30 30 L70 30 Z" fill="#38bdf8" stroke="#dc2626" stroke-width="6"/>
+                                        <circle cx="100" cy="100" r="62" fill="#ffffff" stroke="#1e3a8a" stroke-width="4"/>
+                                        <circle cx="100" cy="100" r="42" fill="#dc2626"/>
+                                        <circle cx="100" cy="100" r="36" fill="#facc15"/>
+                                        <path d="M75 90 C85 85 95 88 100 93 C105 88 115 85 125 90 L125 115 C115 110 105 113 100 118 C95 113 85 110 75 115 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="3"/>
+                                        <line x1="100" y1="93" x2="100" y2="118" stroke="#1e3a8a" stroke-width="3"/>
+                                    </svg>
+                                </div>
+                                <span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-medium">A+ Grade</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold card-heading" data-key="card_title">সেরা ফলাফল ও শৃঙ্খলা</h3>
+                                <p class="text-xs text-cyan-400 mt-1" data-key="card_sub">উত্তরাঞ্চলের অন্যতম শীর্ষ শিক্ষাপ্রতিষ্ঠান</p>
+                            </div>
+                            <div class="pt-3 border-t border-blue-500/20 flex justify-between text-[11px] card-text-muted">
+                                <span data-key="card_est">স্থাপিত: ০৪ এপ্রিল ১৯৭৯</span>
+                                <span data-key="card_loc">সৈয়দপুর সেনানিবাস</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- PRINCIPAL & CHAIRMAN CORNER -->
+                    <section class="grid md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl space-y-3 border-l-4 border-l-blue-500">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-quote-left text-2xl text-blue-400"></i>
+                                <h3 class="text-lg font-bold card-heading" data-key="chair_head">সভাপতি মহোদয়ের বাণী</h3>
+                            </div>
+                            <p class="card-text-muted text-xs md:text-sm italic leading-relaxed" data-key="chair_quote">
+                                "গুণগত শিক্ষা ও সুশৃঙ্খল পরিবেশই একজন শিক্ষার্থীকে ভবিষ্যৎ নেতৃত্বের যোগ্য করে গড়ে তোলে।"
+                            </p>
+                            <p class="text-xs text-cyan-500 font-bold pt-1" data-key="chair_author">— সভাপতি, পরিচালনা পর্ষদ, CPSCS</p>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl space-y-3 border-l-4 border-l-cyan-400">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-quote-left text-2xl text-cyan-400"></i>
+                                <h3 class="text-lg font-bold card-heading" data-key="prin_head">অধ্যক্ষ মহোদয়ের বাণী</h3>
+                            </div>
+                            <p class="card-text-muted text-xs md:text-sm italic leading-relaxed" data-key="prin_quote">
+                                "আমরা প্রতিটি শিক্ষার্থীকে সৃজনশীলতা, প্রযুক্তি ও নৈতিক শিক্ষায় দক্ষ করে গড়ে তুলতে প্রতিশ্রুতিবদ্ধ।"
+                            </p>
+                            <p class="text-xs text-cyan-500 font-bold pt-1" data-key="prin_author">— অধ্যক্ষ, ক্যান্টনমেন্ট পাবলিক স্কুল এন্ড কলেজ সৈয়দপুর</p>
+                        </div>
+                    </section>
+
+                    <!-- LIVE STATS COUNTER -->
+                    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="glass-card p-4 rounded-2xl text-center space-y-1 hover:border-blue-400 transition">
+                            <h3 class="text-2xl font-extrabold text-cyan-400" data-key="stat_1_val">৫,০০০+</h3>
+                            <p class="text-xs card-text-muted font-medium" data-key="stat_1_lbl">বর্তমান শিক্ষার্থী</p>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl text-center space-y-1 hover:border-blue-400 transition">
+                            <h3 class="text-2xl font-extrabold text-blue-500" data-key="stat_2_val">৫০+</h3>
+                            <p class="text-xs card-text-muted font-medium" data-key="stat_2_lbl">অভিজ্ঞ শিক্ষকমণ্ডলী</p>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl text-center space-y-1 hover:border-blue-400 transition">
+                            <h3 class="text-2xl font-extrabold text-indigo-400" data-key="stat_3_val">১০০%</h3>
+                            <p class="text-xs card-text-muted font-medium" data-key="stat_3_lbl">পাসের হার (পাবলিক পরীক্ষা)</p>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl text-center space-y-1 hover:border-blue-400 transition">
+                            <h3 class="text-2xl font-extrabold text-teal-400" data-key="stat_4_val">১২+</h3>
+                            <p class="text-xs card-text-muted font-medium" data-key="stat_4_lbl">সক্রিয় ক্লাব ও অ্যাক্টিভিটি</p>
+                        </div>
+                    </section>
+
+                    <!-- MOTIVATION VS DISCIPLINE ANIMATION SECTION -->
+                    <section class="grid md:grid-cols-2 gap-6 pt-2">
+                        <div class="glass-card p-6 rounded-3xl border border-blue-500/30 space-y-4 hover:border-cyan-400/50 transition">
+                            <div class="flex items-center justify-between border-b border-blue-500/20 pb-3">
+                                <h3 class="font-extrabold text-cyan-400 tracking-wider text-sm uppercase flex items-center gap-2">
+                                    <i class="fa-solid fa-bolt text-yellow-400"></i> MOTIVATION
+                                </h3>
+                                <span class="text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-0.5 rounded-full font-bold">Temporary Surge</span>
+                            </div>
+                            
+                            <p class="text-xs card-text-muted leading-relaxed" data-key="anim_mot_desc">
+                                সাময়িক মোটিভেশন শুরুতে আপনাকে অনেক বড় একটা ধাক্কা দেবে, কিন্তু নির্দিষ্ট সময় পর তার গতি কমে শূন্যে চলে আসে।
+                            </p>
+
+                            <div class="relative w-full h-32 bg-blue-950/40 rounded-2xl border border-blue-500/20 flex items-center justify-center p-2 overflow-hidden">
+                                <svg viewBox="0 0 280 90" class="w-full h-full">
+                                    <path d="M 10,70 Q 35,-10 60,70 Q 75,30 90,70 Q 100,50 110,70 L 260,70" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="4 3" opacity="0.6"/>
+                                    <line x1="10" y1="70" x2="270" y2="70" stroke="#475569" stroke-width="2"/>
+                                    <circle class="anim-ball-motivation" r="6" fill="#38bdf8" filter="drop-shadow(0 0 6px #38bdf8)"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-3xl border border-blue-500/30 space-y-4 hover:border-cyan-400/50 transition">
+                            <div class="flex items-center justify-between border-b border-blue-500/20 pb-3">
+                                <h3 class="font-extrabold text-emerald-400 tracking-wider text-sm uppercase flex items-center gap-2">
+                                    <i class="fa-solid fa-shield-halved text-emerald-400"></i> DISCIPLINE
+                                </h3>
+                                <span class="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">Key to Success</span>
+                            </div>
+
+                            <p class="text-xs card-text-muted leading-relaxed" data-key="anim_dis_desc">
+                                ধারাবাহিক নিয়ম এবং শৃঙ্খলাই হল আসল চাবিকাঠি যা প্রতিদিন ছোট ছোট পদক্ষেপে আপনাকে নির্দিষ্ট সাফল্যের লক্ষ্যে পৌঁছে দেয়।
+                            </p>
+
+                            <div class="relative w-full h-32 bg-blue-950/40 rounded-2xl border border-blue-500/20 flex items-center justify-center p-2 overflow-hidden">
+                                <svg viewBox="0 0 280 90" class="w-full h-full">
+                                    <path d="M 10,70 Q 25,35 40,70 Q 55,35 70,70 Q 85,35 100,70 Q 115,35 130,70 Q 145,35 160,70 Q 205,35 220,70 Q 235,35 250,70" fill="none" stroke="#34d399" stroke-width="2.5" stroke-dasharray="4 3" opacity="0.6"/>
+                                    <line x1="10" y1="70" x2="270" y2="70" stroke="#475569" stroke-width="2"/>
+                                    <g transform="translate(250, 48)">
+                                        <line x1="0" y1="0" x2="0" y2="22" stroke="#facc15" stroke-width="2"/>
+                                        <polygon points="0,0 12,5 0,10" fill="#facc15"/>
+                                    </g>
+                                    <circle class="anim-ball-discipline" r="6" fill="#34d399" filter="drop-shadow(0 0 6px #34d399)"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 3 QUICK CONTACT BUTTONS -->
+                <div class="flex items-center justify-center gap-6 pt-6">
+                    <button onclick="openModal('phoneModal')" class="w-14 h-14 rounded-full glass-card hover:bg-blue-600/30 text-cyan-400 hover:text-white border border-blue-500/40 hover:border-cyan-400 flex items-center justify-center text-xl transition-all duration-300 hover:scale-110 blue-glow" title="Call Us">
+                        <i class="fa-solid fa-phone animate-bounce"></i>
+                    </button>
+                    <button onclick="openModal('emailModal')" class="w-14 h-14 rounded-full glass-card hover:bg-blue-600/30 text-cyan-400 hover:text-white border border-blue-500/40 hover:border-cyan-400 flex items-center justify-center text-xl transition-all duration-300 hover:scale-110 blue-glow" title="Email Us">
+                        <i class="fa-solid fa-envelope"></i>
+                    </button>
+                    <button onclick="openModal('locationModal')" class="w-14 h-14 rounded-full glass-card hover:bg-blue-600/30 text-cyan-400 hover:text-white border border-blue-500/40 hover:border-cyan-400 flex items-center justify-center text-xl transition-all duration-300 hover:scale-110 blue-glow" title="Location">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </button>
+                </div>
+
+            </main>
+
+            <!-- RIGHT SIDE WIDGETS COLUMN -->
+            <aside class="w-full lg:w-80 space-y-6 shrink-0">
+                
+                <!-- 1. DYNAMIC ACADEMIC CALENDAR WIDGET -->
+                <div class="glass-card p-6 rounded-3xl border border-blue-500/30 blue-glow relative space-y-6">
+                    <div class="flex items-center justify-between border-b border-blue-500/20 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400">
+                                <i class="fa-solid fa-calendar-days text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold card-heading text-base" data-key="acad_cal">একাডেমিক ক্যালেন্ডার</h3>
+                                <p id="liveClock" class="text-xs text-cyan-500 font-mono">00:00:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-sm font-semibold">
+                        <span id="monthYear" class="text-cyan-500 text-base font-bold">September 2026</span>
+                        <div class="flex gap-2">
+                            <button onclick="changeMonth(-1)" class="w-7 h-7 rounded-lg bg-blue-600/20 hover:bg-blue-600/40 text-cyan-400 flex items-center justify-center border border-blue-500/20 transition"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+                            <button onclick="changeMonth(1)" class="w-7 h-7 rounded-lg bg-blue-600/20 hover:bg-blue-600/40 text-cyan-400 flex items-center justify-center border border-blue-500/20 transition"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="grid grid-cols-7 gap-1 text-center text-xs">
+                            <span class="card-text-muted font-bold py-1" data-key="day_sat">Sat</span>
+                            <span class="card-text-muted font-bold py-1" data-key="day_sun">Sun</span>
+                            <span class="card-text-muted font-bold py-1" data-key="day_mon">Mon</span>
+                            <span class="card-text-muted font-bold py-1" data-key="day_tue">Tue</span>
+                            <span class="card-text-muted font-bold py-1" data-key="day_wed">Wed</span>
+                            <span class="card-text-muted font-bold py-1" data-key="day_thu">Thu</span>
+                            <span class="text-rose-500 font-bold py-1" data-key="day_fri">Fri</span>
+                        </div>
+                        <div id="calendarDays" class="grid grid-cols-7 gap-1 text-center text-xs"></div>
+                    </div>
+
+                    <div class="pt-4 border-t border-blue-500/20 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold uppercase text-cyan-400 flex items-center gap-1.5 tracking-wider">
+                                <i class="fa-solid fa-robot text-xs animate-spin"></i> Robotics Fest 2026
+                            </span>
+                            <span class="text-[10px] bg-blue-600/30 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full font-semibold" data-key="cd_status">আসন্ন</span>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-1.5 text-center">
+                            <div class="glass-card p-2 rounded-xl border border-blue-500/30">
+                                <span id="cd-days" class="text-lg font-black text-cyan-400 block leading-none">00</span>
+                                <span class="text-[9px] card-text-muted font-bold uppercase" data-key="cd_days">দিন</span>
+                            </div>
+                            <div class="glass-card p-2 rounded-xl border border-blue-500/30">
+                                <span id="cd-hours" class="text-lg font-black text-cyan-400 block leading-none">00</span>
+                                <span class="text-[9px] card-text-muted font-bold uppercase" data-key="cd_hours">ঘণ্টা</span>
+                            </div>
+                            <div class="glass-card p-2 rounded-xl border border-blue-500/30">
+                                <span id="cd-mins" class="text-lg font-black text-cyan-400 block leading-none">00</span>
+                                <span class="text-[9px] card-text-muted font-bold uppercase" data-key="cd_mins">মিনিট</span>
+                            </div>
+                            <div class="glass-card p-2 rounded-xl border border-blue-500/30">
+                                <span id="cd-secs" class="text-lg font-black text-emerald-400 block leading-none">00</span>
+                                <span class="text-[9px] card-text-muted font-bold uppercase" data-key="cd_secs">সেকেন্ড</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 2. SITE VISITORS ANALYTICS WIDGET -->
+                <div class="glass-card p-6 rounded-3xl border border-blue-500/30 relative space-y-4">
+                    <div class="flex items-center justify-between border-b border-blue-500/20 pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-400">
+                                <i class="fa-solid fa-users text-sm"></i>
+                            </div>
+                            <h3 class="font-bold card-heading text-sm" data-key="traffic_head">সাইট ভিজিটর ট্রাফিক</h3>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> লাইভ
+                        </span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="glass-card rounded-2xl p-3.5 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs card-text-muted font-medium" data-key="traffic_today">আজকের সাইট ভিজিটর</p>
+                                <p class="text-xl font-extrabold text-cyan-400 tracking-wide mt-0.5"><span data-key="traffic_today_val">১,২৪৮</span> <span class="text-[10px] font-normal text-emerald-400">↑ live</span></p>
+                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-blue-600/20 flex items-center justify-center text-blue-400">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-3.5 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs card-text-muted font-medium" data-key="traffic_yest">গতকালকের ভিজিটর</p>
+                                <p class="text-lg font-bold card-heading tracking-wide mt-0.5" data-key="traffic_yest_val">৩,৮ ৯০</p>
+                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-blue-600/10 flex items-center justify-center text-cyan-500">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between px-2 pt-1 text-xs card-text-muted">
+                            <span data-key="traffic_total">সর্বমোট ভিজিটর:</span>
+                            <span class="font-bold text-cyan-400" data-key="traffic_total_val">১,৪৫,৬২০</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. THREE THEME SWITCHER MODES -->
+                <div class="glass-card p-2.5 rounded-2xl border border-blue-500/30 flex items-center justify-between gap-1 shadow-xl">
+                    <button onclick="setTheme('normal')" id="btn-normal" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Normal
+                    </button>
+                    <button onclick="setTheme('dark')" id="btn-dark" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-white">
+                        <i class="fa-solid fa-moon text-xs"></i> Dark
+                    </button>
+                    <button onclick="setTheme('light')" id="btn-light" class="flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-blue-600">
+                        <i class="fa-solid fa-sun text-xs"></i> Light
+                    </button>
+                </div>
+
+            </aside>
+
+        </div>
+
+        <footer class="mt-auto border-t border-blue-500/20 py-5 text-center text-xs card-text-muted">
+            <p data-key="footer_text">© ২০২৬ CPSCS NextGen Campus | জ্ঞান, শৃঙ্খলা ও নৈতিকতার বাতিঘর</p>
+        </footer>
+    </div>
+
+    <!-- ABOUT US MAIN MENU POPUP MODAL -->
+    <div id="aboutUsModal" onclick="closeModalOnBackdrop(event, 'aboutUsModal')" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 scale-90">
+        <div class="glass-modal p-6 md:p-8 rounded-3xl max-w-xl w-full space-y-6 relative border border-cyan-500/40 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('aboutUsModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex items-center gap-3 border-b border-blue-500/20 pb-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white text-xl shadow-lg blue-glow shrink-0">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-black card-heading" data-key="about_modal_title">আমাদের সম্পর্কে</h3>
+                    <p class="text-xs text-cyan-400 font-semibold" data-key="about_modal_sub">ক্যান্টনমেন্ট পাবলিক স্কুল এন্ড কলেজ সৈয়দপুর</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                
+                <!-- 1. History Button -->
+                <div onclick="closeModal('aboutUsModal'); openModal('historyModal');" class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-landmark text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">01</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_hist_title">প্রতিষ্ঠার ইতিহাস</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_hist_sub">প্রতিষ্ঠার ইতিহাস ও ঐতিহ্য</p>
+                    </div>
+                </div>
+
+                <!-- 2. Mission & Vision -->
+                <div onclick="closeModal('aboutUsModal'); openModal('missionVisionModal');" class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-bullseye text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">02</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_mv_title">লক্ষ্য ও উদ্দেশ্য</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_mv_sub">লক্ষ্য ও ভবিষ্যৎ পরিকল্পনা</p>
+                    </div>
+                </div>
+
+                <!-- 3. Leadership -->
+                <div onclick="closeModal('aboutUsModal'); openModal('leadershipModal');" class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-user-tie text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">03</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_lead_title">প্রশাসন ও নেতৃত্ব</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_lead_sub">প্রশাসন ও পরিচালনা পর্ষদ</p>
+                    </div>
+                </div>
+
+                <!-- 4. Campus -->
+                <div onclick="closeModal('aboutUsModal'); openModal('campusModal');" class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-school text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">04</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_camp_title">ক্যাম্পাস চিত্র</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_camp_sub">ক্যাম্পাস অবকাঠামো ও পরিবেশ</p>
+                    </div>
+                </div>
+
+                <!-- 5. Safety & Security -->
+                <div onclick="closeModal('aboutUsModal'); openModal('safetySecurityModal');" class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-shield-halved text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">05</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_safe_title">নিরাপত্তা ও শৃঙ্খলা</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_safe_sub">নিরাপত্তা ও শৃঙ্খলা ব্যবস্থা</p>
+                    </div>
+                </div>
+
+                <!-- 6. Committee -->
+                <div class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-users-gear text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">06</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_comm_title">কমিটি</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_comm_sub">পরিচালনা পর্ষদ ও কমিটি</p>
+                    </div>
+                </div>
+
+                <!-- 7. Student Statistics -->
+                <div class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-chart-pie text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">07</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_stat_title">শিক্ষার্থী পরিসংখ্যান</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_stat_sub">শিক্ষার্থী সম্পর্কিত তথ্য ও ডেটা</p>
+                    </div>
+                </div>
+
+                <!-- 8. Board Approval -->
+                <div class="glass-card p-3.5 rounded-2xl border border-blue-500/20 hover:border-cyan-400 transition flex items-start gap-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition shrink-0">
+                        <i class="fa-solid fa-file-contract text-sm"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-cyan-400 font-mono font-bold">08</span>
+                        <h4 class="text-sm font-bold card-heading leading-tight" data-key="m_appr_title">বোর্ড অনুমোদন</h4>
+                        <p class="text-[11px] card-text-muted mt-0.5" data-key="m_appr_sub">শিক্ষা বোর্ড অনুমোদন ও স্বীকৃতি</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SAFETY & SECURITY MODAL -->
+    <div id="safetySecurityModal" onclick="closeModalOnBackdrop(event, 'safetySecurityModal')" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-all duration-300 scale-95 overflow-y-auto">
+        <div class="glass-modal p-6 md:p-10 rounded-3xl max-w-4xl w-full space-y-8 relative border border-cyan-500/40 shadow-2xl my-auto">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
+                <div class="flex items-center gap-4">
+                    <button onclick="closeModal('safetySecurityModal'); openModal('aboutUsModal');" class="w-10 h-10 rounded-xl bg-blue-600/20 hover:bg-cyan-500/20 text-cyan-400 border border-blue-500/30 flex items-center justify-center transition" title="Back to About Us">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 tracking-widest uppercase">05 / Safety & Security</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300" data-key="sec_modal_heading">Safety & Security</h2>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 self-end sm:self-auto">
+                    <a href="https://cpscs.edu.bd/safety-security/" target="_blank" class="text-xs font-bold text-cyan-400 hover:underline flex items-center gap-1 bg-cyan-500/10 px-3 py-1.5 rounded-xl border border-cyan-500/30">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Official Site Link
+                    </a>
+                    <button onclick="closeModal('safetySecurityModal')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 border border-white/10 flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+                
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-3">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2" data-key="sec_gen_head">
+                        <i class="fa-solid fa-clipboard-check text-xs"></i> General Instructions
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 card-text-muted text-sm md:text-base leading-relaxed">
+                        <li data-key="sec_gen_1">All students, staff, and visitors must comply with the institute's security protocols at all times.</li>
+                        <li data-key="sec_gen_2">Entry to the campus is strictly regulated. Unauthorized access is prohibited.</li>
+                        <li data-key="sec_gen_3">Possession of dangerous items, illegal substances, or unauthorized electronics is strictly forbidden.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-3">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2" data-key="sec_cctv_head">
+                        <i class="fa-solid fa-video text-xs"></i> Security Personnel & CCTV Surveillance
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 card-text-muted text-sm md:text-base leading-relaxed">
+                        <li data-key="sec_cctv_1">Trained security personnel are deployed at all entry and exit points and key areas around the campus.</li>
+                        <li data-key="sec_cctv_2">The campus is under 24/7 CCTV surveillance to monitor activity and ensure safety.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-3">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2" data-key="sec_id_head">
+                        <i class="fa-solid fa-id-card-clip text-xs"></i> Identity & Gate Pass System
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 card-text-muted text-sm md:text-base leading-relaxed">
+                        <li data-key="sec_id_1">Students and staff must wear their official ID cards visibly while on campus.</li>
+                        <li data-key="sec_id_2">Visitors must register at the main gate, provide valid identification, and obtain a visitor’s pass before entry.</li>
+                        <li data-key="sec_id_3">Students leaving campus during institute hours must present an authorized Gate Pass issued by the administration.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-3">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2" data-key="sec_emer_head">
+                        <i class="fa-solid fa-triangle-exclamation text-xs"></i> Emergency Preparedness
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 card-text-muted text-sm md:text-base leading-relaxed">
+                        <li data-key="sec_emer_1">Fire safety equipment, including extinguishers and alarms, are installed throughout the campus and regularly inspected.</li>
+                        <li data-key="sec_emer_2">Emergency evacuation maps are displayed in all key areas. Regular fire and emergency drills are conducted for students and staff.</li>
+                        <li data-key="sec_emer_3">In case of medical emergencies, first aid is available on campus, and emergency contact numbers are clearly displayed.</li>
+                    </ul>
+                </div>
+
+                <div class="pt-4 space-y-4">
+                    <h3 class="text-base font-extrabold text-cyan-400 tracking-wider uppercase border-b border-blue-500/20 pb-2 flex items-center gap-2" data-key="sec_gal_head">
+                        <i class="fa-solid fa-images"></i> Safety & Security Visual Gallery
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                            <div class="w-full h-52 bg-blue-950/60 overflow-hidden relative">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-06-at-9.20.33-AM-400x267.jpeg" alt="Security Checkpoint & Help Desk" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            </div>
+                            <div class="p-4 pt-0">
+                                <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition" data-key="sec_img1_title">Security Checkpoint & Help Desk</h4>
+                                <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="sec_img1_sub">নিরাপত্তা চেকপয়েন্ট ও ইনফরমেশন তথ্য কেন্দ্র</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                            <div class="w-full h-52 bg-blue-950/60 overflow-hidden relative">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-06-at-9.20.32-AM-400x267.jpeg" alt="Controlled Entry & Gate Pass Center" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            </div>
+                            <div class="p-4 pt-0">
+                                <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition" data-key="sec_img2_title">Controlled Entry & Gate Pass Center</h4>
+                                <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="sec_img2_sub">নিয়ন্ত্রিত গেটপাস ও সার্বক্ষণিক নজরদারি কেন্দ্র</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-4 border-t border-blue-500/20 flex justify-end">
+                <button onclick="closeModal('safetySecurityModal'); openModal('aboutUsModal');" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl shadow-lg blue-glow transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-chevron-left text-xs"></i> <span data-key="btn_back">ফিরে যান</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CAMPUS MODAL PAGE -->
+    <div id="campusModal" onclick="closeModalOnBackdrop(event, 'campusModal')" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-all duration-300 scale-95 overflow-y-auto">
+        <div class="glass-modal p-6 md:p-10 rounded-3xl max-w-5xl w-full space-y-8 relative border border-cyan-500/40 shadow-2xl my-auto">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
+                <div class="flex items-center gap-4">
+                    <button onclick="closeModal('campusModal'); openModal('aboutUsModal');" class="w-10 h-10 rounded-xl bg-blue-600/20 hover:bg-cyan-500/20 text-cyan-400 border border-blue-500/30 flex items-center justify-center transition" title="Back to About Us">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 tracking-widest uppercase">04 / Campus View</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300" data-key="camp_modal_heading">CPSCS Campus Gallery</h2>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 self-end sm:self-auto">
+                    <a href="https://cpscs.edu.bd/campus/" target="_blank" class="text-xs font-bold text-cyan-400 hover:underline flex items-center gap-1 bg-cyan-500/10 px-3 py-1.5 rounded-xl border border-cyan-500/30">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Official Site Link
+                    </a>
+                    <button onclick="closeModal('campusModal')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 border border-white/10 flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+                <p class="text-xs md:text-sm card-text-muted leading-relaxed" data-key="camp_desc">
+                    আমাদের সবুজ ও সুশোভিত ক্যাম্পাস অবকাঠামোর চিত্র গ্যালারি। নিচ থেকে অফিসিয়াল সাইটের ৯টি দৃষ্টিনন্দন ছবি দেখুন:
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/Main-Gate-1-400x267.jpg" alt="Main Gate-01" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Main Gate-01</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img1_sub">মূল প্রবেশদ্বার - ০১</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/Main-Gate-2-400x267.jpg" alt="Main Gate-02" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Main Gate-02</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img2_sub">মূল প্রবেশদ্বার - ০২</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-06-at-9.20.33-AM-400x267.jpeg" alt="Information Desk-1" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Information Desk-1</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img3_sub">ইনফরমেশন ডেস্ক - ১</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-06-at-9.20.32-AM-400x267.jpeg" alt="Information Desk-2" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Information Desk-2</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img4_sub">ইনফরমেশন ডেস্ক - ২</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/Bangla-Version-College-400x267.jpg" alt="Bangla-Version-College" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Bangla-Version-College</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img5_sub">বাংলা ভার্সন কলেজ</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/Bangla-Version-School-2-400x267.jpg" alt="Bangla-Version-School-1" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Bangla-Version-School-1</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img6_sub">বাংলা ভার্সন স্কুল - ১</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2026/04/unnamed-225x300.jpg" alt="Bangla-Version-School-2- Notun Kuri" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Bangla-Version-School-2</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img7_sub">নতুন কুঁড়ি ভবন (স্কুল - ২)</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2024/12/Academic-Bulding-400x267.jpeg" alt="Academic Building" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Academic Building</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img8_sub">একাডেমিক ভবন</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl border border-blue-500/30 overflow-hidden space-y-3 hover:border-cyan-400 transition group">
+                        <div class="w-full h-48 bg-blue-950/60 overflow-hidden relative">
+                            <img src="https://cpscs.edu.bd/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-06-at-9.01.46-AM-400x225.jpeg" alt="English-Version-School-College" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="p-4 pt-0">
+                            <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">English-Version-School-College</h4>
+                            <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="camp_img9_sub">ইংলিশ ভার্সন স্কুল ও কলেজ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-blue-500/20 flex justify-end">
+                <button onclick="closeModal('campusModal'); openModal('aboutUsModal');" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl shadow-lg blue-glow transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-chevron-left text-xs"></i> <span data-key="btn_back2">ফিরে যান</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- HISTORY MODAL PAGE -->
+    <div id="historyModal" onclick="closeModalOnBackdrop(event, 'historyModal')" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-all duration-300 scale-95 overflow-y-auto">
+        <div class="glass-modal p-6 md:p-10 rounded-3xl max-w-4xl w-full space-y-8 relative border border-cyan-500/40 shadow-2xl my-auto">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
+                <div class="flex items-center gap-4">
+                    <button onclick="closeModal('historyModal'); openModal('aboutUsModal');" class="w-10 h-10 rounded-xl bg-blue-600/20 hover:bg-cyan-500/20 text-cyan-400 border border-blue-500/30 flex items-center justify-center transition" title="Back to About Us">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 tracking-widest uppercase">01 / History & Heritage</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">A Chronological Overview</h2>
+                    </div>
+                </div>
+                <button onclick="closeModal('historyModal')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 border border-white/10 flex items-center justify-center transition self-end sm:self-auto">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-6 text-sm md:text-base leading-relaxed max-h-[70vh] overflow-y-auto pr-2">
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-2.5">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-feather-pointed text-xs"></i> Invocation
+                    </h3>
+                    <p class="card-text-muted">
+                        Cantonment Public School and College, Saidpur, a beacon of education in northern Bangladesh, reflects the transformative power of learning. Founded under the leadership of Colonel S.M. Shamsuzzaman and officially inaugurated by Major General H.M. Ershad on April 4, 1979, the institution owes its foundation to the Bangladesh Army’s visionary commitment. The first academic building’s foundation was laid by President Lt General Ziaur Rahman in 1980. Starting with 5 teachers and 176 students, CPSCS marked its academic journey with SSC exams in 1983 and HSC in 1986. Responding to evolving educational demands, the English Version School Section was launched in 1998 and the College Section in 2017.
+                    </p>
+                </div>
+
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-2.5">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-award text-xs"></i> Academic Accolades
+                    </h3>
+                    <p class="card-text-muted">
+                        CPSCS has consistently upheld academic excellence, winning the ‘Sena Prodhan Trophy’ twice for top HSC results among cantonment institutions. In 1993, a teacher earned the national ‘Best Teacher Award’, followed by the ‘Best Educational Institution’ title in 2002. It ranked among the top five colleges under Rajshahi Board in 2008 and gained global recognition with the British Council’s ‘International School Award’ in 2019. In 2020, it recorded the highest number of GPA-5 achievers in the Dinajpur Board, reaffirmed by strong HSC-2024 results across military institutions.
+                    </p>
+                </div>
+
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-2.5">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-medal text-xs"></i> Recognition in Co-curricular Activities
+                    </h3>
+                    <p class="card-text-muted">
+                        CPSCS excels beyond academics. Its students won gold in the National Sports Competition (1994 & 1995) and the UNICEF Grand Prix Award in 2006. Recognition followed in Islamic competitions by the Islamic Foundation, national art contests, and the National Children’s Award in 2017. A student claimed the Best Costume Award at the 2020 international ‘Colors of Voice’ contest. In 2024, three students excelled in the International Leadership Program on Education 4.0 and IOELLS in Malaysia, while others achieved honors at IYSC Malaysia and WCCA Nepal. Domestically, 35 students were top performers at the NCCA-2024.
+                    </p>
+                </div>
+
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-2.5">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-sitemap text-xs"></i> Functioning Body
+                    </h3>
+                    <p class="card-text-muted">
+                        Today, CPSCS serves around 4,400 students from Nursery to Class Twelve in both Bangla and English versions, supported by 146 faculty and 106 staff. The CPSCS Alumni Association, formed on its 38th anniversary, connects past and present students. Student leadership thrives through a 26-member prefect system. Co-curricular engagement is enriched by BNCC, Scouts, and 19 clubs. Facilities include ICT and science labs, smart classrooms, automation systems, generator backup, CCTV, and a roof truss space in the English Version Building.
+                    </p>
+                </div>
+
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-blue-500/20 space-y-2.5 border-l-4 border-l-cyan-400">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-star text-xs"></i> Closing Reflections
+                    </h3>
+                    <p class="card-text-muted italic">
+                        CPSCS continues to shape future leaders through its unwavering commitment to academic excellence, character development, and global engagement—cementing its status as a premier educational institution in Bangladesh.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-blue-500/20 flex justify-end">
+                <button onclick="closeModal('historyModal'); openModal('aboutUsModal');" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl shadow-lg blue-glow transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-chevron-left text-xs"></i> <span data-key="btn_back3">ফিরে যান</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MISSION & VISION MODAL PAGE -->
+    <div id="missionVisionModal" onclick="closeModalOnBackdrop(event, 'missionVisionModal')" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-all duration-300 scale-95 overflow-y-auto">
+        <div class="glass-modal p-6 md:p-10 rounded-3xl max-w-4xl w-full space-y-8 relative border border-cyan-500/40 shadow-2xl my-auto">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
+                <div class="flex items-center gap-4">
+                    <button onclick="closeModal('missionVisionModal'); openModal('aboutUsModal');" class="w-10 h-10 rounded-xl bg-blue-600/20 hover:bg-cyan-500/20 text-cyan-400 border border-blue-500/30 flex items-center justify-center transition" title="Back to About Us">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 tracking-widest uppercase">02 / Mission & Vision</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">Mission & Vision</h2>
+                    </div>
+                </div>
+                <button onclick="closeModal('missionVisionModal')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 border border-white/10 flex items-center justify-center transition self-end sm:self-auto">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">1</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Encourage the students to achieve the goodwill of the students in the overall welfare of the country.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">2</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Promoting the glorious spirit of freedom and liberty and values of students in patriotism.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">3</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Creating a favorable environment for education in the educational institutions, making proper attention to the lessons of the students.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">4</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Encourage honesty to take the ideal of life as a model for attaining true honesty.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">5</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">As well as syllabus lessons, develop skills and knowledge of the students through school curriculum.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">6</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Incentive to create drug-free lives.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">7</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Acquiring absolute tolerance through various competitions.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">8</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Help to become creative thinking, efficient leadership and to become confident.</p>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:border-cyan-400/50 transition">
+                    <span class="w-8 h-8 rounded-xl bg-blue-600/30 text-cyan-400 font-extrabold flex items-center justify-center text-sm border border-cyan-400/30 shrink-0">9</span>
+                    <p class="card-heading font-medium text-sm md:text-base pt-1">Being a developed virtuous man, to build a family, society or a wealth of the state.</p>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-blue-500/20 flex justify-end">
+                <button onclick="closeModal('missionVisionModal'); openModal('aboutUsModal');" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl shadow-lg blue-glow transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-chevron-left text-xs"></i> <span data-key="btn_back4">ফিরে যান</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- LEADERSHIP MODAL PAGE -->
+    <div id="leadershipModal" onclick="closeModalOnBackdrop(event, 'leadershipModal')" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 md:p-8 opacity-0 pointer-events-none transition-all duration-300 scale-95 overflow-y-auto">
+        <div class="glass-modal p-6 md:p-10 rounded-3xl max-w-5xl w-full space-y-8 relative border border-cyan-500/40 shadow-2xl my-auto">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
+                <div class="flex items-center gap-4">
+                    <button onclick="closeModal('leadershipModal'); openModal('aboutUsModal');" class="w-10 h-10 rounded-xl bg-blue-600/20 hover:bg-cyan-500/20 text-cyan-400 border border-blue-500/30 flex items-center justify-center transition" title="Back to About Us">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <span class="text-xs font-mono font-bold text-cyan-400 tracking-widest uppercase">03 / Leadership</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">CPSCS Official Leadership</h2>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 self-end sm:self-auto">
+                    <a href="https://cpscs.edu.bd/leadership/" target="_blank" class="text-xs font-bold text-cyan-400 hover:underline flex items-center gap-1 bg-cyan-500/10 px-3 py-1.5 rounded-xl border border-cyan-500/30">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Official Site Link
+                    </a>
+                    <button onclick="closeModal('leadershipModal')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 border border-white/10 flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-8 max-h-[70vh] overflow-y-auto pr-2">
+                <div class="space-y-4">
+                    <h3 class="text-sm font-extrabold text-cyan-400 tracking-wider uppercase border-b border-blue-500/20 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-user-shield"></i> Line 1: Institutional Administration
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-cyan-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-cyan-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/New-Principal-Sir-253x300.jpg" alt="Principal" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">Principal</h4>
+                                <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="lead_p1">অধ্যক্ষ</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">CPSCS Saidpur</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-cyan-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-cyan-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/05/alim-sir.jpg" alt="VP College (BV)" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">VP - College (BV)</h4>
+                                <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="lead_p2">উপাধ্যক্ষ (কলেজ - বাংলা ভার্সন)</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">College Section</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-cyan-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-cyan-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/05/Shafiqul-Islam-1.jpg" alt="VP School & College (EV)" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">VP - School & College (EV)</h4>
+                                <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="lead_p3">উপাধ্যক্ষ (ইংলিশ ভার্সন)</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">English Version</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-cyan-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-cyan-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/08/VP-School-BV-1-253x300.jpg" alt="VP School (BV)" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-cyan-400 transition">VP - School (BV)</h4>
+                                <p class="text-xs text-cyan-400 font-semibold mt-0.5" data-key="lead_p4">উপাধ্যক্ষ (স্কুল - বাংলা ভার্সন)</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">School Section</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pt-2">
+                    <h3 class="text-sm font-extrabold text-emerald-400 tracking-wider uppercase border-b border-blue-500/20 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-user-gradient"></i> Line 2: College Student Prefects
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-emerald-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-emerald-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/08/1-5-257x300.jpg" alt="College Prefect" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-emerald-400 transition">College Prefect</h4>
+                                <p class="text-xs text-emerald-400 font-semibold mt-0.5" data-key="pref_1">কলেজ প্রিফেক্ট</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">Student Leadership</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-emerald-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-emerald-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/08/2-4-257x300.jpg" alt="College Discipline Prefect" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-emerald-400 transition">College Discipline Prefect</h4>
+                                <p class="text-xs text-emerald-400 font-semibold mt-0.5" data-key="pref_2">কলেজ ডিসিপ্লিন প্রিফেক্ট</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">Discipline & Order</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-emerald-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-emerald-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/08/3-5-257x300.jpg" alt="College Cultural Prefect" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-emerald-400 transition">College Cultural Prefect</h4>
+                                <p class="text-xs text-emerald-400 font-semibold mt-0.5" data-key="pref_3">কলেজ কালচারাল প্রিফেক্ট</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">Culture & Events</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 rounded-2xl border border-blue-500/30 text-center space-y-3 hover:border-emerald-400 transition group">
+                            <div class="w-24 h-28 rounded-xl bg-blue-950/60 border border-emerald-500/30 mx-auto overflow-hidden shadow-lg relative group-hover:scale-105 transition duration-300">
+                                <img src="https://cpscs.edu.bd/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-10-at-10.22.43-AM-255x300.jpeg" alt="College Games Prefect" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold card-heading text-sm group-hover:text-emerald-400 transition">College Games Prefect</h4>
+                                <p class="text-xs text-emerald-400 font-semibold mt-0.5" data-key="pref_4">কলেজ গেমস প্রিফেক্ট</p>
+                                <p class="text-[11px] card-text-muted mt-1 font-medium">Sports & Games</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-blue-500/20 flex justify-end">
+                <button onclick="closeModal('leadershipModal'); openModal('aboutUsModal');" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-xl shadow-lg blue-glow transition flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-chevron-left text-xs"></i> <span data-key="btn_back5">ফিরে যান</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- LIVE SEARCH MODAL -->
+    <div id="searchModal" onclick="closeModalOnBackdrop(event, 'searchModal')" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-start justify-center pt-20 p-4 opacity-0 pointer-events-none transition-all duration-300 scale-95">
+        <div class="glass-modal p-6 rounded-3xl max-w-xl w-full space-y-4 relative border border-cyan-500/40 shadow-2xl">
+            <button onclick="closeModal('searchModal')" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 border border-cyan-400/50 text-cyan-400 hover:text-rose-400 hover:border-rose-400/50 hover:bg-rose-950/40 flex items-center justify-center text-sm shadow-xl transition-all duration-200 hover:scale-110 z-10" title="Close Search (Esc)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 pb-3 border-b border-blue-500/20">
+                <i class="fa-solid fa-magnifying-glass text-cyan-400 text-lg"></i>
+                <input type="text" id="searchInput" oninput="performSearch()" placeholder="Search Campus, Safety, History, Events..." class="w-full bg-transparent border-none outline-none text-white placeholder-slate-400 text-base font-medium">
+            </div>
+
+            <div id="searchResults" class="max-h-60 overflow-y-auto space-y-2 pr-1">
+                <p class="text-xs text-slate-400 text-center py-4">টাইপ করে আপনার কাঙ্ক্ষিত তথ্য খুঁজুন...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT SYSTEM & FIXES -->
+    <script>
+        // --- TRANSLATION DATA ---
+        const translations = {
+            bn: {
+                nav_home: "হোম", nav_about: "আমাদের সম্পর্কে", nav_admin: "প্রশাসন", nav_academics: "একাডেমিক",
+                nav_teachers: "শিক্ষকমণ্ডলী", nav_facilities: "সুযোগ-সুবিধা", nav_clubs: "ক্লাব ও কার্যক্রম",
+                nav_notices: "নোটিশ ও ফলাফল", nav_dashboard: "স্টুডেন্ট ড্যাশবোর্ড", nav_contact: "যোগাযোগ",
+                portal_login: "পোর্টাল লগইন", notice_tag: "নোটিশ",
+                marquee_text: "🎓 CPSCS NextGen Campus-এ স্বাগতম! | এসএসসি ২০২৬ ব্যাচের সমাপনী পরীক্ষা সংক্রান্ত বিশেষ নির্দেশিকা প্রকাশিত হয়েছে।",
+                search_placeholder: "কী খুঁজতে চান?", hero_badge: "ক্যান্টনমেন্ট পাবলিক স্কুল এন্ড কলেজ সৈয়দপুর",
+                hero_title: 'ডিজিটাল শিক্ষায় <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400">স্মার্ট ক্যাম্পাসের নতুন অধ্যায়</span>',
+                hero_desc: "জ্ঞান, শৃঙ্খলা ও নৈতিকতার শক্তিতে বলীয়ান হয়ে একবিংশ শতাব্দীর চ্যালেঞ্জ মোকাবেলায় প্রস্তুত হচ্ছে আমাদের শিক্ষার্থীরা।",
+                btn_admission: "ভর্তি তথ্য দেখুন", btn_about: "আমাদের সম্পর্কে", card_title: "সেরা ফলাফল ও শৃঙ্খলা",
+                card_sub: "উত্তরাঞ্চলের অন্যতম শীর্ষ শিক্ষাপ্রতিষ্ঠান", card_est: "স্থাপিত: ০৪ এপ্রিল ১৯৭৯", card_loc: "সৈয়দপুর সেনানিবাস",
+                chair_head: "সভাপতি মহোদয়ের বাণী", chair_quote: '"গুণগত শিক্ষা ও সুশৃঙ্খল পরিবেশই একজন শিক্ষার্থীকে ভবিষ্যৎ নেতৃত্বের যোগ্য করে গড়ে তোলে।"', chair_author: "— সভাপতি, পরিচালনা পর্ষদ, CPSCS",
+                prin_head: "অধ্যক্ষ মহোদয়ের বাণী", prin_quote: '"আমরা প্রতিটি শিক্ষার্থীকে সৃজনশীলতা, প্রযুক্তি ও নৈতিক শিক্ষায় দক্ষ করে গড়ে তুলতে প্রতিশ্রুতিবদ্ধ।"', prin_author: "— অধ্যক্ষ, ক্যান্টনমেন্ট পাবলিক স্কুল এন্ড কলেজ সৈয়দপুর",
+                stat_1_val: "৫,০০০+", stat_1_lbl: "বর্তমান শিক্ষার্থী", stat_2_val: "৫০+", stat_2_lbl: "অভিজ্ঞ শিক্ষকমণ্ডলী",
+                stat_3_val: "১০০%", stat_3_lbl: "পাসের হার (পাবলিক পরীক্ষা)", stat_4_val: "১২+", stat_4_lbl: "সক্রিয় ক্লাব ও অ্যাক্টিভিটি",
+                anim_mot_desc: "সাময়িক মোটিভেশন শুরুতে আপনাকে অনেক বড় একটা ধাক্কা দেবে, কিন্তু নির্দিষ্ট সময় পর তার গতি কমে শূন্যে চলে আসে।",
+                anim_dis_desc: "ধারাবাহিক নিয়ম এবং শৃঙ্খলাই হল আসল চাবিকাঠি যা প্রতিদিন ছোট ছোট পদক্ষেপে আপনাকে নির্দিষ্ট সাফল্যের লক্ষ্যে পৌঁছে দেয়।",
+                acad_cal: "একাডেমিক ক্যালেন্ডার", day_sat: "শনি", day_sun: "রবি", day_mon: "সোম", day_tue: "মঙ্গল", day_wed: "বুধ", day_thu: "বৃহঃ", day_fri: "শুক্রবার",
+                cd_status: "আসন্ন", cd_days: "দিন", cd_hours: "ঘণ্টা", cd_mins: "মিনিট", cd_secs: "সেকেন্ড",
+                traffic_head: "সাইট ভিজিটর ট্রাফিক", traffic_today: "আজকের সাইট ভিজিটর", traffic_today_val: "১,২৪৮",
+                traffic_yest: "গতকালকের ভিজিটর", traffic_yest_val: "৩,৮৯০", traffic_total: "সর্বমোট ভিজিটর:", traffic_total_val: "১,৪৫,৬২০",
+                footer_text: "© ২০২৬ CPSCS NextGen Campus | জ্ঞান, শৃঙ্খলা ও নৈতিকতার বাতিঘর",
+                about_modal_title: "আমাদের সম্পর্কে", about_modal_sub: "ক্যান্টনমেন্ট পাবলিক স্কুল এন্ড কলেজ সৈয়দপুর",
+                m_hist_title: "প্রতিষ্ঠার ইতিহাস", m_hist_sub: "প্রতিষ্ঠার ইতিহাস ও ঐতিহ্য",
+                m_mv_title: "লক্ষ্য ও উদ্দেশ্য", m_mv_sub: "লক্ষ্য ও ভবিষ্যৎ পরিকল্পনা",
+                m_lead_title: "প্রশাসন ও নেতৃত্ব", m_lead_sub: "প্রশাসন ও পরিচালনা পর্ষদ",
+                m_camp_title: "ক্যাম্পাস চিত্র", m_camp_sub: "ক্যাম্পাস অবকাঠামো ও পরিবেশ",
+                m_safe_title: "নিরাপত্তা ও শৃঙ্খলা", m_safe_sub: "নিরাপত্তা ও শৃঙ্খলা ব্যবস্থা",
+                m_comm_title: "কমিটি", m_comm_sub: "পরিচালনা পর্ষদ ও কমিটি",
+                m_stat_title: "শিক্ষার্থী পরিসংখ্যান", m_stat_sub: "শিক্ষার্থী সম্পর্কিত তথ্য ও ডেটা",
+                m_appr_title: "বোর্ড অনুমোদন", m_appr_sub: "শিক্ষা বোর্ড অনুমোদন ও স্বীকৃতি",
+                btn_back: "ফিরে যান", btn_back2: "ফিরে যান", btn_back3: "ফিরে যান", btn_back4: "ফিরে যান", btn_back5: "ফিরে যান",
+                sec_modal_heading: "নিরাপত্তা ও শৃঙ্খলা ব্যবস্থা", sec_gen_head: "সাধারণ দিকনির্দেশনা",
+                sec_gen_1: "সকল শিক্ষার্থী, শিক্ষক ও দর্শনার্থীদের অবশ্যই ক্যাম্পাসের নিরাপত্তা প্রটোকল মেনে চলতে হবে।",
+                sec_gen_2: "ক্যাম্পাসে প্রবেশ কঠোরভাবে নিয়ন্ত্রিত। অননুমোদিত প্রবেশ সম্পূর্ণ নিষিদ্ধ।",
+                sec_gen_3: "মারাত্মক বা বিপজ্জনক বস্তু, অননুমোদিত ডিভাইস বা নিষিদ্ধ সামগ্রী বহন সম্পূর্ণ নিষেধ।",
+                sec_cctv_head: "নিরাপত্তা কর্মী ও সিসিটিভি সার্ভেইল্যান্স",
+                sec_cctv_1: "ক্যাম্পাসের সকল গেট ও গুরুত্বপূর্ণ স্থানে দক্ষ সিকিউরিটি গার্ড মোতায়েন রয়েছে।",
+                sec_cctv_2: "সম্পূর্ণ ক্যাম্পাস ২৪/৭ সিসিটিভি ক্যামেরার আওতাভুক্ত।",
+                sec_id_head: "আইডি কার্ড ও গেট পাস সিস্টেম",
+                sec_id_1: "ক্যাম্পাসে থাকাকালীন দৃশ্যমানভাবে নিজস্ব অফিসিয়াল আইডি কার্ড পরিধান করতে হবে।",
+                sec_id_2: "দর্শনার্থীদের প্রধান ফটকে নাম রেজিস্টার করে ভিজিটর পাস গ্রহণ করতে হবে।",
+                sec_id_3: "জরুরি প্রয়োজনে ক্যাম্পাস ত্যাগের জন্য নির্ধারিত গেট পাস প্রদর্শন করতে হবে।",
+                sec_emer_head: "জরুরি সুরক্ষা ব্যবস্থা",
+                sec_emer_1: "অগ্নি নির্বাপক যন্ত্র ও জরুরি এলার্ম ব্যবস্থা সর্বক্ষণ কার্যকর রাখা হয়।",
+                sec_emer_2: "নিয়মিত ফায়ার ড্রিল ও ইমার্জেন্সি ইভাকুয়েশন ট্রেইনিং প্রদান করা হয়।",
+                sec_emer_3: "প্রাথমিক চিকিৎসার সুব্যবস্থা ও ইমার্জেন্সি মেডিকেল কন্ট্যাক্ট নম্বর দৃশ্যমান রয়েছে।",
+                sec_gal_head: "নিরাপত্তা ভিজ্যুয়াল গ্যালারি",
+                sec_img1_title: "সিকিউরিটি চেকপয়েন্ট ও হেল্প ডেস্ক", sec_img1_sub: "নিরাপত্তা চেকপয়েন্ট ও ইনফরমেশন তথ্য কেন্দ্র",
+                sec_img2_title: "নিয়ন্ত্রিত এন্ট্রি ও গেট পাস সেন্টার", sec_img2_sub: "নিয়ন্ত্রিত গেটপাস ও সার্বক্ষণিক নজরদারি কেন্দ্র",
+                camp_modal_heading: "ক্যাম্পাস ছবি গ্যালারি", camp_desc: "আমাদের সবুজ ও সুশোভিত ক্যাম্পাস অবকাঠামোর চিত্র গ্যালারি। নিচ থেকে অফিসিয়াল সাইটের ৯টি দৃষ্টিনন্দন ছবি দেখুন:",
+                camp_img1_sub: "মূল প্রবেশদ্বার - ০১", camp_img2_sub: "মূল প্রবেশদ্বার - ০২", camp_img3_sub: "ইনফরমেশন ডেস্ক - ১",
+                camp_img4_sub: "ইনফরমেশন ডেস্ক - ২", camp_img5_sub: "বাংলা ভার্সন কলেজ", camp_img6_sub: "বাংলা ভার্সন স্কুল - ১",
+                camp_img7_sub: "নতুন কুঁড়ি ভবন (স্কুল - ২)", camp_img8_sub: "একাডেমিক ভবন", camp_img9_sub: "ইংলিশ ভার্সন স্কুল ও কলেজ",
+                lead_p1: "অধ্যক্ষ", lead_p2: "উপাধ্যক্ষ (কলেজ - বাংলা ভার্সন)", lead_p3: "উপাধ্যক্ষ (ইংলিশ ভার্সন)", lead_p4: "উপাধ্যক্ষ (স্কুল - বাংলা ভার্সন)",
+                pref_1: "কলেজ প্রিফেক্ট", pref_2: "কলেজ ডিসিপ্লিন প্রিফেক্ট", pref_3: "কলেজ কালচারাল প্রিফেক্ট", pref_4: "কলেজ গেমস প্রিফেক্ট"
+            },
+            en: {
+                nav_home: "Home", nav_about: "About Us", nav_admin: "Administration", nav_academics: "Academics",
+                nav_teachers: "Teachers", nav_facilities: "Facilities", nav_clubs: "Clubs & Activities",
+                nav_notices: "Notices & Results", nav_dashboard: "Student Dashboard", nav_contact: "Contact Us",
+                portal_login: "Portal Login", notice_tag: "Notice",
+                marquee_text: "🎓 Welcome to CPSCS NextGen Campus! | Special directives published for SSC 2026 Batch Final Exams.",
+                search_placeholder: "What are you looking for?", hero_badge: "Cantonment Public School and College Saidpur",
+                hero_title: 'Digital Education <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400">Smart Campus Era</span>',
+                hero_desc: "Empowered by knowledge, discipline, and morality, our students are prepared to face 21st-century challenges.",
+                btn_admission: "View Admission Info", btn_about: "About Us", card_title: "Top Academic Excellence",
+                card_sub: "One of the Leading Educational Institutions in North Bengal", card_est: "Est: 04 April 1979", card_loc: "Saidpur Cantonment",
+                chair_head: "Chairman's Speech", chair_quote: '"Quality education and a disciplined environment prepare students for future leadership."', chair_author: "— Chairman, Governing Body, CPSCS",
+                prin_head: "Principal's Speech", prin_quote: '"We are committed to nurturing creativity, technology skills, and moral values in every student."', prin_author: "— Principal, Cantonment Public School & College Saidpur",
+                stat_1_val: "5,000+", stat_1_lbl: "Current Students", stat_2_val: "50+", stat_2_lbl: "Expert Faculty",
+                stat_3_val: "100%", stat_3_lbl: "Pass Rate (Public Exams)", stat_4_val: "12+", stat_4_lbl: "Active Clubs & Activities",
+                anim_mot_desc: "Temporary motivation provides an initial push, but slows down to zero over time.",
+                anim_dis_desc: "Consistency and discipline are the ultimate keys that push you towards goals step-by-step every single day.",
+                acad_cal: "Academic Calendar", day_sat: "Sat", day_sun: "Sun", day_mon: "Mon", day_tue: "Tue", day_wed: "Wed", day_thu: "Thu", day_fri: "Fri",
+                cd_status: "Upcoming", cd_days: "Days", cd_hours: "Hours", cd_mins: "Mins", cd_secs: "Secs",
+                traffic_head: "Site Viewers Traffic", traffic_today: "Today Site Visitors", traffic_today_val: "1,248",
+                traffic_yest: "Yesterday Visitors", traffic_yest_val: "3,890", traffic_total: "Total Lifetime Visits:", traffic_total_val: "1,45,620",
+                footer_text: "© 2026 CPSCS NextGen Campus | Designed with Excellence for Learning",
+                about_modal_title: "About Us", about_modal_sub: "Cantonment Public School and College Saidpur",
+                m_hist_title: "History", m_hist_sub: "Origin and Legacy of Institution",
+                m_mv_title: "Mission & Vision", m_mv_sub: "Aims and Strategic Roadmap",
+                m_lead_title: "Leadership", m_lead_sub: "Administration and Governing Body",
+                m_camp_title: "Campus View", m_camp_sub: "Campus Environment and Facilities",
+                m_safe_title: "Safety & Security", m_safe_sub: "Security and Discipline Protocol",
+                m_comm_title: "Committee", m_comm_sub: "Governing Council and Committees",
+                m_stat_title: "Student Statistics", m_stat_sub: "Student Demographics & Analytics",
+                m_appr_title: "Board Approval", m_appr_sub: "Education Board Accreditation",
+                btn_back: "Back to Options", btn_back2: "Back to Options", btn_back3: "Back to Options", btn_back4: "Back to Options", btn_back5: "Back to Options",
+                sec_modal_heading: "Safety & Security Protocols", sec_gen_head: "General Instructions",
+                sec_gen_1: "All students, staff, and visitors must comply with the institute's security protocols at all times.",
+                sec_gen_2: "Entry to the campus is strictly regulated. Unauthorized access is prohibited.",
+                sec_gen_3: "Possession of dangerous items, illegal substances, or unauthorized electronics is strictly forbidden.",
+                sec_cctv_head: "Security Personnel & CCTV Surveillance",
+                sec_cctv_1: "Trained security personnel are deployed at all entry and exit points and key areas around the campus.",
+                sec_cctv_2: "The campus is under 24/7 CCTV surveillance to monitor activity and ensure safety.",
+                sec_id_head: "Identity & Gate Pass System",
+                sec_id_1: "Students and staff must wear their official ID cards visibly while on campus.",
+                sec_id_2: "Visitors must register at the main gate, provide valid identification, and obtain a visitor’s pass before entry.",
+                sec_id_3: "Students leaving campus during institute hours must present an authorized Gate Pass issued by the administration.",
+                sec_emer_head: "Emergency Preparedness",
+                sec_emer_1: "Fire safety equipment, including extinguishers and alarms, are installed throughout the campus and regularly inspected.",
+                sec_emer_2: "Emergency evacuation maps are displayed in all key areas. Regular fire and emergency drills are conducted for students and staff.",
+                sec_emer_3: "In case of medical emergencies, first aid is available on campus, and emergency contact numbers are clearly displayed.",
+                sec_gal_head: "Safety & Security Visual Gallery",
+                sec_img1_title: "Security Checkpoint & Help Desk", sec_img1_sub: "Security Desk & Campus Control Center",
+                sec_img2_title: "Controlled Entry & Gate Pass Center", sec_img2_sub: "Controlled Gate Pass & 24/7 Surveillance Desk",
+                camp_modal_heading: "CPSCS Campus Gallery", camp_desc: "Photo gallery showcasing our lush green campus infrastructure. Explore 9 official campus views below:",
+                camp_img1_sub: "Main Gate - 01", camp_img2_sub: "Main Gate - 02", camp_img3_sub: "Information Desk - 1",
+                camp_img4_sub: "Information Desk - 2", camp_img5_sub: "Bangla Version College", camp_img6_sub: "Bangla Version School - 1",
+                camp_img7_sub: "Notun Kuri Building (School - 2)", camp_img8_sub: "Academic Building", camp_img9_sub: "English Version School & College",
+                lead_p1: "Principal", lead_p2: "Vice Principal (College - BV)", lead_p3: "Vice Principal (English Version)", lead_p4: "Vice Principal (School - BV)",
+                pref_1: "College Prefect", pref_2: "College Discipline Prefect", pref_3: "College Cultural Prefect", pref_4: "College Games Prefect"
+            }
+        };
+
+        let currentLang = 'bn';
+
+        function toggleLanguage(lang) {
+            currentLang = lang;
+            
+            if(lang === 'bn') {
+                document.getElementById('lang-bn').className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                document.getElementById('lang-en').className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            } else {
+                document.getElementById('lang-en').className = "px-2.5 py-1 rounded-lg text-xs font-bold transition bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                document.getElementById('lang-bn').className = "px-2.5 py-1 rounded-lg text-xs font-bold transition card-text-muted hover:text-white";
+            }
+
+            document.querySelectorAll('[data-key]').forEach(elem => {
+                const key = elem.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.innerHTML = translations[lang][key];
+                }
+            });
+        }
+
+        // --- SIDEBAR TOGGLE ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            sidebar.classList.toggle('sidebar-collapsed');
+            if(sidebar.classList.contains('sidebar-collapsed')){
+                toggleIcon.className = "fa-solid fa-chevron-right text-xs";
+            } else {
+                toggleIcon.className = "fa-solid fa-chevron-left text-xs";
+            }
+        }
+
+        // --- MODAL FUNCTIONS ---
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.add('modal-active');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('modal-active');
+            }
+        }
+
+        function closeModalOnBackdrop(event, id) {
+            if (event.target.id === id) {
+                closeModal(id);
+            }
+        }
+
+        // --- THEME SWITCHER ---
+        function setTheme(theme) {
+            const html = document.documentElement;
+            html.className = '';
+            html.classList.add('theme-' + theme);
+
+            ['normal', 'dark', 'light'].forEach(t => {
+                const btn = document.getElementById('btn-' + t);
+                if(t === theme) {
+                    btn.className = "flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md";
+                } else {
+                    btn.className = "flex-1 py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 card-text-muted hover:text-white";
+                }
+            });
+        }
+
+        // --- LIVE CLOCK & ACADEMIC CALENDAR ---
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            const clockElem = document.getElementById('liveClock');
+            if(clockElem) clockElem.innerText = timeStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        let currDate = new Date();
+        function renderCalendar() {
+            const monthYear = document.getElementById('monthYear');
+            const calendarDays = document.getElementById('calendarDays');
+            if(!calendarDays || !monthYear) return;
+
+            const year = currDate.getFullYear();
+            const month = currDate.getMonth();
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            monthYear.innerText = `${monthNames[month]} ${year}`;
+
+            calendarDays.innerHTML = "";
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // adjust for Saturday start (Sat = index 6)
+            let startingPos = (firstDayIndex + 1) % 7;
+
+            for (let i = 0; i < startingPos; i++) {
+                calendarDays.innerHTML += `<div></div>`;
+            }
+
+            const today = new Date();
+            for (let i = 1; i <= daysInMonth; i++) {
+                let isToday = (i === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+                let activeClass = isToday ? "bg-cyan-500 text-black font-extrabold rounded-lg shadow-lg" : "hover:bg-blue-600/30 rounded-lg text-slate-300";
+                calendarDays.innerHTML += `<div class="py-1.5 cursor-pointer ${activeClass}">${i}</div>`;
+            }
+        }
+
+        function changeMonth(delta) {
+            currDate.setMonth(currDate.getMonth() + delta);
+            renderCalendar();
+        }
+        renderCalendar();
+
+        // --- 3. COUNTDOWN TIMER FIXED ---
+        // Targeting Robotics Fest Date: October 25, 2026
+        const eventTargetDate = new Date("October 25, 2026 10:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventTargetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("cd-days").innerText = "00";
+                document.getElementById("cd-hours").innerText = "00";
+                document.getElementById("cd-mins").innerText = "00";
+                document.getElementById("cd-secs").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("cd-days").innerText = days < 10 ? '0' + days : days;
+            document.getElementById("cd-hours").innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById("cd-mins").innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById("cd-secs").innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- 2. LIVE SEARCH ENGINE FIXED ---
+        const searchableItems = [
+            { name: "About Us (আমাদের সম্পর্কে)", action: () => openModal('aboutUsModal') },
+            { name: "Safety & Security (নিরাপত্তা ও শৃঙ্খলা)", action: () => openModal('safetySecurityModal') },
+            { name: "Campus Gallery (ক্যাম্পাস গ্যালারি ও চিত্র)", action: () => openModal('campusModal') },
+            { name: "History & Heritage (প্রতিষ্ঠার ইতিহাস)", action: () => openModal('historyModal') },
+            { name: "Mission & Vision (লক্ষ্য ও উদ্দেশ্য)", action: () => openModal('missionVisionModal') },
+            { name: "Leadership & Principal (প্রশাসন ও পরিচালনা পর্ষদ)", action: () => openModal('leadershipModal') },
+            { name: "Robotics Fest 2026 (আসন্ন রোবোটিক্স ফেস্ট)", action: () => window.location.hash = "#notices" },
+            { name: "Academic Calendar (একাডেমিক ক্যালেন্ডার)", action: () => window.location.hash = "#academics" },
+            { name: "Admission Info (ভর্তি সংক্রান্ত তথ্য)", action: () => window.location.hash = "#academics" },
+            { name: "Student Dashboard & Portal Login (পোর্টাল লগইন)", action: () => openModal('portalLoginModal') }
+        ];
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '';
+
+            if (query === '') {
+                resultsContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">টাইপ করে আপনার কাঙ্ক্ষিত তথ্য খুঁজুন...</p>';
+                return;
+            }
+
+            const filtered = searchableItems.filter(item => item.name.toLowerCase().includes(query));
+
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-xs text-rose-400 text-center py-4">কোনো তথ্য খুঁজে পাওয়া যায়নি!</p>';
+            } else {
+                filtered.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = "p-3 rounded-xl bg-blue-950/40 hover:bg-cyan-500/20 border border-blue-500/20 text-sm font-semibold cursor-pointer text-cyan-300 transition flex items-center justify-between";
+                    div.innerHTML = `<span><i class="fa-solid fa-arrow-right-to-bracket text-xs mr-2"></i> ${item.name}</span> <i class="fa-solid fa-chevron-right text-xs"></i>`;
+                    div.onclick = () => {
+                        closeModal('searchModal');
+                        item.action();
+                    };
+                    resultsContainer.appendChild(div);
+                });
+            }
+        }
+
+        // CTRL + K SHORTCUT FOR SEARCH
+        window.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                openModal('searchModal');
+                document.getElementById('searchInput').focus();
+            }
+            if (e.key === 'Escape') {
+                closeModal('searchModal');
+            }
+        });
+    </script>
+</body>
+</html>

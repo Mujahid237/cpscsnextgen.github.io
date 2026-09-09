@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-normal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - CPSCS NextGen Campus</title>
+    <!-- FontAwesome & Tailwind CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        /* সাইডবার বেসিক স্টাইল */
+        aside {
+            width: 280px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            z-index: 100;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        aside.collapsed {
+            width: 85px;
+            padding: 20px 10px;
+        }
+        aside.collapsed .hide-on-collapse {
+            display: none !important;
+        }
+        aside.collapsed .school-brand {
+            justify-content: center;
+        }
+        aside.collapsed .portal-btn span {
+            display: none;
+        }
+        aside.collapsed .portal-btn {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        /* মেইন কন্টেন্ট */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        .admin-card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            cursor: pointer;
+        }
+        .admin-card:hover {
+            transform: translateY(-5px);
+            border-color: #0ea5e9;
+            box-shadow: 0 12px 40px rgba(14, 165, 233, 0.2);
+            background: rgba(30, 41, 59, 0.8);
+        }
+        .admin-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .admin-info h3 {
+            margin: 0 0 6px 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .admin-info p {
+            margin: 0;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .page-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .page-header h1 {
+            margin: 0;
+            font-size: 26px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0 0;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+        /* লোগো ও কোল্যাপস বাটন স্টাইল */
+        .school-logo {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.4));
+        }
+        .collapse-btn {
+            position: absolute;
+            right: -14px;
+            top: 25px;
+            width: 28px;
+            height: 28px;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            z-index: 200;
+            transition: transform 0.3s ease;
+        }
+        .collapse-btn:hover {
+            background: #0284c7;
+            transform: scale(1.1);
+        }
+
+        /* 3D Success Journey Animation Section */
+        .animation-container-card {
+            margin-top: 35px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .animation-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+        .stairs-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 750px;
+            height: 320px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            perspective: 800px;
+        }
+        .stair-step {
+            position: absolute;
+            width: 85px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 3px solid #ef4444;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 13px;
+            color: #f87171;
+            box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        /* Positioning 6 Steps */
+        .step-1 { left: 5%;  height: 40px;  bottom: 0; }
+        .step-2 { left: 18%; height: 80px;  bottom: 0; }
+        .step-3 { left: 31%; height: 120px; bottom: 0; }
+        .step-4 { left: 44%; height: 160px; bottom: 0; }
+        .step-5 { left: 57%; height: 200px; bottom: 0; }
+        .step-6 { left: 70%; height: 240px; bottom: 0; background: linear-gradient(135deg, #0ea5e9, #2563eb); border-top-color: #38bdf8; color: #fff; }
+
+        /* Flag Component */
+        .flag-wrapper {
+            position: absolute;
+            left: 73%;
+            bottom: 240px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse-flag 2s infinite ease-in-out;
+        }
+        .flag-icon {
+            font-size: 26px;
+            color: #22c55e;
+            filter: drop-shadow(0 0 8px #22c55e);
+        }
+        .flag-text {
+            font-size: 16px;
+            font-weight: 800;
+            color: #4ade80;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+            background: rgba(34, 197, 94, 0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        /* 3D Character */
+        .character-3d {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #ffffff;
+            box-shadow: 0 0 20px #38bdf8;
+            z-index: 10;
+            animation: climbStairs 9s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes climbStairs {
+            0% { left: 0%; bottom: 0px; transform: scale(0.9); }
+            /* Step 1 */
+            12% { left: 8%; bottom: 45px; }
+            /* Step 2 */
+            25% { left: 21%; bottom: 85px; }
+            /* Step 3 */
+            38% { left: 34%; bottom: 125px; }
+            /* Step 4 */
+            50% { left: 47%; bottom: 165px; }
+            /* Step 5 */
+            63% { left: 60%; bottom: 205px; }
+            /* Step 6 - Reached Success */
+            75%, 90% { left: 73%; bottom: 245px; transform: scale(1.15); background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 0 25px #22c55e; }
+            100% { left: 0%; bottom: 0px; transform: scale(0.9); }
+        }
+
+        @keyframes pulse-flag {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Pop-up Modal Style */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            padding: 30px;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .close-btn:hover {
+            background: #ef4444;
+        }
+        .modal-body {
+            display: flex;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        @media (max-width: 768px) {
+            .modal-body {
+                flex-direction: column;
+            }
+            .stairs-wrapper {
+                transform: scale(0.7);
+                margin-left: -15%;
+            }
+        }
+        .profile-side {
+            flex: 0 0 240px;
+            text-align: center;
+        }
+        .profile-side img {
+            width: 100%;
+            max-width: 240px;
+            border-radius: 12px;
+            border: 2px solid #0ea5e9;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
+            object-fit: cover;
+            min-height: 280px;
+            background: #1e293b;
+        }
+        .profile-side h4 {
+            margin: 12px 0 0 0;
+            font-size: 15px;
+            color: #38bdf8;
+            font-weight: 700;
+        }
+        .message-side {
+            flex: 1;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .message-side p {
+            margin-bottom: 12px;
+        }
+        .message-side h2 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        .signature-block {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+            font-size: 13px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- বাম পাশের সাইডবার -->
+    <aside id="sidebar">
+        <!-- কোল্যাপস বাটন -->
+        <button class="collapse-btn" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left" id="collapse-icon"></i>
+        </button>
+
+        <div>
+            <!-- স্কুল লোগো সেকশন -->
+            <div class="school-brand" style="display: flex; align-items: center; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <svg class="school-logo" viewBox="0 0 200 200" width="44" height="44">
+                    <path d="M100 10 L130 30 L170 30 L170 70 L190 100 L170 130 L170 170 L130 170 L100 190 L70 170 L30 170 L30 130 L10 100 L30 70 L30 30 L70 30 Z" fill="#38bdf8" stroke="#dc2626" stroke-width="6"/>
+                    <circle cx="100" cy="100" r="62" fill="#ffffff" stroke="#1e3a8a" stroke-width="4"/>
+                    <circle cx="100" cy="100" r="42" fill="#dc2626"/>
+                    <circle cx="100" cy="100" r="36" fill="#facc15"/>
+                    <path d="M75 90 C85 85 95 88 100 93 C105 88 115 85 125 90 L125 115 C115 110 105 113 100 118 C95 113 85 110 75 115 Z" fill="#ffffff" stroke="#1e3a8a" stroke-width="3"/>
+                    <line x1="100" y1="93" x2="100" y2="118" stroke="#1e3a8a" stroke-width="3"/>
+                </svg>
+                <div class="hide-on-collapse">
+                    <h3 style="margin: 0; font-size: 16px; font-weight: bold; color: white; letter-spacing: 0.5px;">CPSCS</h3>
+                    <p style="margin: 0; font-size: 11px; color: #38bdf8; font-weight: 500;">NextGen Campus</p>
+                </div>
+            </div>
+
+            <!-- মেনু অপশনসমূহ -->
+          <ul class="sidebar-menu">
+                <li><a href="index.html" class="nav-item"><i class="fa-solid fa-house w-5 text-center"></i> <span class="hide-on-collapse">Home</span></a></li>
+                <li><a href="#" class="nav-item"><i class="fa-solid fa-circle-info w-5 text-center"></i> <span class="hide-on-collapse">About Us</span></a></li>
+                <li><a href="administration.html" class="nav-item active"><i class="fa-solid fa-user-shield w-5 text-center"></i> <span class="hide-on-collapse">Administration</span></a></li>
+                <li><a href="academics.html" class="nav-item"><i class="fa-solid fa-graduation-cap w-5 text-center"></i> <span class="hide-on-collapse">Academics</span></a></li>
+                <li><a href="index.html#teachers" class="nav-item"><i class="fa-solid fa-chalkboard-user w-5 text-center"></i> <span class="hide-on-collapse">Teachers</span></a></li>
+                <li><a href="facilities.html" class="nav-item"><i class="fa-solid fa-building-columns w-5 text-center"></i> <span class="hide-on-collapse">Facilities</span></a></li>
+                <li><a href="clubsactivities.html" class="nav-item"><i class="fa-solid fa-trophy w-5 text-center"></i> <span class="hide-on-collapse">Clubs & Activities</span></a></li>
+                <li><a href="index.html#notices" class="nav-item"><i class="fa-solid fa-scroll w-5 text-center"></i> <span class="hide-on-collapse">Notices & Results</span></a></li>
+                <li><a href="index.html#dashboard" class="nav-item"><i class="fa-solid fa-id-card w-5 text-center"></i> <span class="hide-on-collapse">Student Dashboard</span></a></li>
+                <li><a href="contact.html" class="nav-item"><i class="fa-solid fa-headset w-5 text-center"></i> <span class="hide-on-collapse">Contact Us</span></a></li>
+            </ul>
+        </div>
+
+        <!-- পোর্টাল লগইন বাটন -->
+        <div>
+            <a href="#" class="portal-btn" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);">
+                <i class="fa-solid fa-right-to-bracket"></i> <span class="hide-on-collapse">পোর্টাল লগইন</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- মূল কন্টেন্ট এরিয়া -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Administration Panel</h1>
+            <p style="color: #94a3b8; margin-top: 5px;">Cantonment Public School and College, Saidpur</p>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Chief Patron Card -->
+            <div class="admin-card" onclick="openPatronModal()">
+                <div class="admin-icon"><i class="fa-solid fa-landmark"></i></div>
+                <div class="admin-info">
+                    <h3>Message of Chief Patron</h3>
+                    <p>Read inspiring words from the honorable Chief Patron.</p>
+                </div>
+            </div>
+
+            <!-- Chairman's Message Card -->
+            <div class="admin-card" onclick="openChairmanModal()">
+                <div class="admin-icon"><i class="fa-solid fa-user-tie"></i></div>
+                <div class="admin-info">
+                    <h3>Chairman's Message</h3>
+                    <p>Guidance and vision from the Chairman.</p>
+                </div>
+            </div>
+
+            <!-- Principal's Message Card (Pop-up Enabled) -->
+            <div class="admin-card" onclick="openPrincipalModal()">
+                <div class="admin-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                <div class="admin-info">
+                    <h3>Principal's Message</h3>
+                    <p>Direct message from our respected Principal.</p>
+                </div>
+            </div>
+
+            <a href="vp-college-message.html" class="admin-card">
+                <div class="admin-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <div class="admin-info">
+                    <h3>Message of Vice Principal - College (BV)</h3>
+                    <p>Insights for college section students.</p>
+                </div>
+            </a>
+
+            <a href="principal-ev-message.html" class="admin-card">
+                <div class="admin-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+                <div class="admin-info">
+                    <h3>Message of Principal (EV)</h3>
+                    <p>English Version updates and speech.</p>
+                </div>
+            </a>
+
+            <a href="governing-body.html" class="admin-card">
+                <div class="admin-icon"><i class="fa-solid fa-users-rectangle"></i></div>
+                <div class="admin-info">
+                    <h3>Governing Body</h3>
+                    <p>List of honorable members of the governing body.</p>
+                </div>
+            </a>
+
+            <a href="all-chief-patrons.html" class="admin-card">
+                <div class="admin-icon"><i class="fa-solid fa-award"></i></div>
+                <div class="admin-info">
+                    <h3>All Chief Patrons</h3>
+                    <p>Historical archive of all Chief Patrons.</p>
+                </div>
+            </a>
+
+            <a href="all-chairmen.html" class="admin-card">
+                <div class="admin-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="admin-info">
+                    <h3>All Chairmen</h3>
+                    <p>Honored past and present Chairmen.</p>
+                </div>
+            </a>
+
+            <a href="all-principals.html" class="admin-card">
+                <div class="admin-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="admin-info">
+                    <h3>All Principals</h3>
+                    <p>Legacy of leadership through the years.</p>
+                </div>
+            </a>
+
+            <a href="teachers-staff.html" class="admin-card">
+                <div class="admin-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="admin-info">
+                    <h3>Teacher & Staff</h3>
+                    <p>Directory of our dedicated faculty and staff members.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- 3D Success Journey Animation Section -->
+        <div class="animation-container-card">
+            <div class="animation-title"><i class="fa-solid fa-stairs"></i> The Journey to Success: Failure is the Pillar of Success 🚀</div>
+            <div class="stairs-wrapper">
+                <!-- 3D Character -->
+                <div class="character-3d">
+                    <i class="fa-solid fa-user-ninja"></i>
+                </div>
+
+                <!-- Stairs with Fail Labels -->
+                <div class="stair-step step-1">Fail</div>
+                <div class="stair-step step-2">Fail</div>
+                <div class="stair-step step-3">Fail</div>
+                <div class="stair-step step-4">Fail</div>
+                <div class="stair-step step-5">Fail</div>
+                <div class="stair-step step-6">Peak</div>
+
+                <!-- Flag with Success Label -->
+                <div class="flag-wrapper">
+                    <i class="fa-solid fa-flag-checkered flag-icon"></i>
+                    <span class="flag-text">Success 🎉</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. Message Of Chief Patron Pop-up Modal -->
+    <div class="modal-overlay" id="patronModal" onclick="closePatronModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closePatronModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <div class="profile-side">
+                    <img src="https://cpscs.edu.bd/wp-content/uploads/2026/04/1-2-853x1024.jpeg" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=cpscs.edu.bd/wp-content/uploads/2026/04/1-2-853x1024.jpeg';" alt="Chief Patron Image">
+                    <h4>Maj Gen A B M Faisal Baten,ndc, psc</h4>
+                </div>
+                <div class="message-side">
+                    <h2>Message of Chief Patron</h2>
+                    <p>Inspired by the epoch-making ideal “The sky is the limit”, Cantonment Public School and College, Saidpur (CPSCS) has grown into a beacon of enlightenment, aspiration, and academic excellence. Since its founding, the institution has been dedicated to shaping young minds through holistic and transformative education.</p>
+                    
+                    <p>At CPSCS, we believe true education goes beyond textbooks. We aim to instill intellectual excellence, moral integrity, and practical life skills—empowering students to meet modern challenges with confidence, resilience, and creativity. Our focus on science, technology, and ethical reasoning forms the foundation for lifelong growth and success. In today’s digital era, strong technological infrastructure is essential. As Chief Patron of CPSCS, I am proud to launch our interactive website and digital management system—a platform designed to enhance transparency, engagement, and learning for students, parents, and educators.</p>
+                    
+                    <p>This digital initiative serves as a vital link between guardians and the school’s academic and administrative bodies, fostering collaboration, improving communication, and supporting continuous progress.</p>
+                    
+                    <p>I offer my heartfelt best wishes for the success of this endeavor. May this platform grow and enrich all it touches, and may everyone at CPSCS be blessed with wisdom, innovation, and success.</p>
+                    
+                    <p>We heartily welcome your profound insights as we move forward together.</p>
+                    
+                    <div class="signature-block">
+                        <p style="margin: 0; font-weight: 600; color: #ffffff;">Warm Regards,</p>
+                        <p style="margin: 4px 0 0 0; color: #38bdf8; font-weight: bold;">Maj Gen A B M Faisal Baten, ndc, psc</p>
+                        <p style="margin: 2px 0 0 0;">GOC<br>66 Infantry Division and Area Commander<br>Rangpur Cantonment<br>Rangpur</p>
+                        <p style="margin: 6px 0 0 0; font-weight: 600; color: #ffffff;">Chief Patron<br>Cantonment Public School & College, Saidpur.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Chairman's Message Pop-up Modal -->
+    <div class="modal-overlay" id="chairmanModal" onclick="closeChairmanModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeChairmanModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <div class="profile-side">
+                    <img src="https://cpscs.edu.bd/wp-content/uploads/2025/11/Chairman-Sir-819x1024.jpeg" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=cpscs.edu.bd/wp-content/uploads/2025/11/Chairman-Sir-819x1024.jpeg';" alt="Chairman Image">
+                    <h4>Brig Gen Muhammad Masudur Rahman,psc</h4>
+                </div>
+                <div class="message-side">
+                    <h2>Chairman's Message</h2>
+                    <p>Education is more than acquiring information, the spirit of “Knowledge is power”, it awakens consciousness, dispels ignorance, and unlocks human potentials. It nurtures purpose, identity, and pride. Patriotism flourishes when grounded in a clear understanding of our history, culture, and literature—the pillars of our national heritage. In this fast-changing digital era, embracing educational innovation is essential. At Cantonment Public School and College, Saidpur (CPSCS), we are committed to nurturing adaptable, lifelong learners who can lead our nation toward a brighter future.</p>
+                    
+                    <p>We believe that student success depends on overall well-being. Apart from academic mentoring process, CPSCS ensures physical and mental health support through an on-campus medical officer, medical assistant, and a dedicated student counselor for emotional guidance and motivation. To support students from distant areas, we provide secure hostel facilities for both boys and girls. Furthermore, school transportation is available from Parbatipur and Nilphamari to ensure a smooth commute.</p>
+                    
+                    <p>I warmly invite our respected guardians, dear students, and valued visitors to regularly visit our official website for updates on CPSCS activities and achievements. Your continued engagement is vital to our shared success.</p>
+                    
+                    <p>Let us unite in shaping a future rooted in excellence, integrity, and progress.</p>
+                    
+                    <div class="signature-block">
+                        <p style="margin: 0; font-weight: 600; color: #ffffff;">Warm Regards,</p>
+                        <p style="margin: 4px 0 0 0; color: #38bdf8; font-weight: bold;">Brig Gen Muhammad Masudur Rahman, psc</p>
+                        <p style="margin: 2px 0 0 0;">Commander 222 Infantry Brigade & Station Commander, Saidpur Cantonment.</p>
+                        <p style="margin: 6px 0 0 0; font-weight: 600; color: #ffffff;">Chairman<br>Governing Body<br>Cantonment Public School & College, Saidpur.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Principal's Message Pop-up Modal (Fixed Image Issue) -->
+    <div class="modal-overlay" id="principalModal" onclick="closePrincipalModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closePrincipalModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <div class="profile-side">
+                    <img src="https://cpscs.edu.bd/wp-content/uploads/2024/09/New-Principal-Sir-253x300.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='https://images.weserv.nl/?url=cpscs.edu.bd/wp-content/uploads/2024/09/New-Principal-Sir-253x300.jpg';" alt="Principal Image">
+                    <h4>Lt Col Syed Shafiul Islam Meraz,psc, G</h4>
+                </div>
+                <div class="message-side">
+                    <h2>Principal's Message</h2>
+                    <p>Education lays the bedrock of national progress—it nurtures minds, empowers individuals, and inspires generations. Guided by our motto, “The sky is the limit,” Cantonment Public School and College, Saidpur (CPSCS) began its journey on April 4, 1979, with a vision to shape skilled, enlightened, and value-driven citizens. Over the years, CPSCS has emerged as a symbol of academic excellence both nationally and internationally. The institution has received the Best Educational Institution Award multiple times and most recently ranked 4th among all Bangladesh Army-administered institutions. Our students have also earned global recognition by winning prestigious international awards.</p>
+                    
+                    <p>In pursuit of quality education, CPSCS implements diverse strategies—multimedia classrooms, special assessments, tutorial sessions, and motivational programs. A prefect system promotes student leadership, while various co-curricular clubs foster individual talents. To personalize instruction, we use a classification model identifying students as: Willing and Able, Willing but Unable, Unwilling but Able, and Unwilling and Unable.</p>
+
+                    <p>This approach allows our experienced faculty to provide targeted support, ensuring every learner receives the guidance they need. CPSCS also prioritizes teacher development through regular training programs to enhance instructional quality. Our digital automation system and interactive website offer easy access to results, attendance, fees, and reports—promoting transparency and timely communication. Creativity remains central to our approach, with creative learning boards encouraging critical thinking and innovation. Our alumni continue to excel at home and abroad, while many current students have secured admission to medical, engineering, and top public universities nationwide.</p>
+
+                    <p>As Principal, I am proud to lead a committed team dedicated to educational excellence. CPSCS stands firm in its mission to develop future leaders who are academically strong, socially responsible, and globally aware.</p>
+
+                    <p>I welcome our guardians, students, and well-wishers to share your ideas and join us in shaping a brighter future. May Allah bless us in all endeavors.</p>
+                    
+                    <div class="signature-block">
+                        <p style="margin: 0; font-weight: 600; color: #ffffff;">Warm Regards,</p>
+                        <p style="margin: 4px 0 0 0; color: #38bdf8; font-weight: bold;">Principal</p>
+                        <p style="margin: 2px 0 0 0; color: #ffffff; font-weight: 600;">Lt Col Syed Shafiul Islam Meraz</p>
+                        <p style="margin: 2px 0 0 0;">psc, G</p>
+                        <p style="margin: 6px 0 0 0; font-weight: 600; color: #ffffff;">Cantonment Public School and College, Saidpur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- সাইডবার ও পপ-আপ স্ক্রিপ্ট -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('collapse-icon');
+            sidebar.classList.toggle('collapsed');
+            
+            if (sidebar.classList.contains('collapsed')) {
+                icon.className = 'fa-solid fa-chevron-right';
+            } else {
+                icon.className = 'fa-solid fa-chevron-left';
+            }
+        }
+
+        // Chief Patron Modal
+        function openPatronModal() {
+            document.getElementById('patronModal').classList.add('active');
+        }
+        function closePatronModal(e) {
+            document.getElementById('patronModal').classList.remove('active');
+        }
+
+        // Chairman Modal
+        function openChairmanModal() {
+            document.getElementById('chairmanModal').classList.add('active');
+        }
+        function closeChairmanModal(e) {
+            document.getElementById('chairmanModal').classList.remove('active');
+        }
+
+        // Principal Modal
+        function openPrincipalModal() {
+            document.getElementById('principalModal').classList.add('active');
+        }
+        function closePrincipalModal(e) {
+            document.getElementById('principalModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
